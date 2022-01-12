@@ -44,6 +44,22 @@
 #include <png.h>
 #endif
 
+// The version of SDL that we depend upon may itself depend upon a version
+// of libpng that's at 1.4 or greater, and version 1.4 of libpng dropped a
+// few definitions (see https://stackoverflow.com/a/2567610) that we depend
+// upon, so we conditionally define these needed ones ourselves.
+#ifndef png_infopp_NULL
+#define png_infopp_NULL (png_infopp)NULL
+#endif
+
+#ifndef int_p_NULL
+#define int_p_NULL (int*)NULL
+#endif
+
+#ifndef png_error_ptr_NULL
+#define png_error_ptr_NULL (png_error_ptr)NULL
+#endif
+
 #include "doomstat.h"
 #include "doomdef.h"
 #include "doomtype.h"
