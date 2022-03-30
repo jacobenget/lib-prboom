@@ -9,4 +9,4 @@ MAINTAINERCLEANFILES=prboom.wad
 
 $(builddir)/prboom.wad: $(srcdir)/prboom.txt $(wildcard $(srcdir)graphics/*.ppm $(srcdir)sprites/*.ppm $(srcdir)lumps/*.lmp $(srcdir)sounds/*.wav)
 	-rm -f $@
-	cd $(srcdir); deutex -make prboom.txt $(abs_builddir)/$@
+	cd $(srcdir); DOOMWADDIR=$(DOOMWADDIR) deutex -make prboom.txt $(abs_builddir)/$@
