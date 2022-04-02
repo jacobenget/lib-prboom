@@ -22,8 +22,8 @@ section.
      this file is in):
         cd prboom2
 
-  5. Run the 'bootstrap' script in order to create the 'configure' script.
-        ./bootstrap
+  5. Run 'autoreconf' (part of the GNU autotools suite) in order to create the 'configure' script.
+        autoreconf --install
      If you get this error:
         aclocal: configure.ac: 153: macro `AM_PATH_SDL' not found in library
      Then you have to locate sdl.m4 and copy it to ./autotools/sdl.m4 in your
