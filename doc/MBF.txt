@@ -4,7 +4,7 @@ Marine's Best Friend
 
 Programmer:         Lee Killough
 
-Artist:             Len Pitre    
+Artist:             Len Pitre
 
 PlayTesters:        Ky (Rez) Moffet, Len Pitre, James (Quasar) Haley
 
@@ -50,7 +50,7 @@ Features
   + Other Press Release version behaviors (e.g. invisibility, invulnerability)
 
 * Improved Video Options
- 
+
   + 640x400 high-detail mode, without bad side effects:
     - Doom world scenes and automap are rendered in 640x400 for higher detail
     - Doom's aspect ratio is preserved exactly (no elongated textures/sprites)
@@ -186,7 +186,7 @@ Features
     - God mode cheat is absolute
     - Linedef effects with tag 0, e.g. all-lights-off effects
 
-  + Bobbing / friction 
+  + Bobbing / friction
     - Bobbing based only on player-applied thrust, instead of total speed
     - Friction algorithm made more efficient, and made sector-based
     - Fixed bug which stopped all momentum when up against wall
@@ -233,7 +233,7 @@ Features
 
   + Tagged DR doors' lighting effects made gradual, instead of totally on/off
 
-  + Menu confirmation messages (yes/no) no longer limited to 40 characters 
+  + Menu confirmation messages (yes/no) no longer limited to 40 characters
     (Garbage at end of QuickLoad message fixed)
 
   + Sounds heard randomly in wrong locations (e.g. weapons fire, player death)
@@ -291,7 +291,7 @@ Features
 * User-comments allowed to be embedded inside of .cfg files, and are preserved
 
 * Performance Tuning
-  + Assembly blit routines tuned for machines above and below P6-class 
+  + Assembly blit routines tuned for machines above and below P6-class
   + Monster target searches made faster by way of a multithreaded target list
   + Fixed-point arithmetic made faster
   + Sprite edge sorting made faster
@@ -320,9 +320,9 @@ Features
   + TNT cheat code prefixes removed
     - TNTEM replaced with KILLEM
     - TNTKA replaced with IDK, without introducing .deh incompatibilities
-  
+
   + "Boom" filename strings replaced (boomsav[0-7].dsg, boom.cfg, etc.)
-  
+
   + ENDBOOM lump replaced with ENDOOM, restoring Doom behavior on end screens
 
 -------------------------------------------------------------------------------
@@ -349,7 +349,7 @@ examples.zip    Small demonstrations of MBF features
 
 -------------------------------------------------------------------------------
 
-DISCLAIMERS 
+DISCLAIMERS
 
 MBF is unsupported software. There are no warranties as to its fitness for any
 particular purpose. There are also no plans for future updates.
@@ -363,4 +363,3 @@ id Software. Don't ask them about MBF.
 
 -------------------------------------------------------------------------------
 Lee Killough		                                Last Updated 12/22/1998
-

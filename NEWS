@@ -563,4 +563,3 @@ Note that LxDoom v0.* was a seperate line of development.
   machine to exit lxdoom with 'Segmentation Violation'. The version of PRBoom I
   have also exhibits these symptoms, though obviously I can't be sure that this
   is the cause; Boom v2.0 and v2.01 had this bug.
-

@@ -117,7 +117,7 @@ void D_InitNetGame (void)
 
     do
     {
-      do { 
+      do {
 	// Send init packet
 	initpacket.pn = doom_htons(wanted_player_number);
 	packet_set(&initpacket.head, PKT_INIT, 0);
@@ -491,8 +491,8 @@ void TryRunTics (void)
       //if ((displaytime) < (tic_vars.next-SDL_GetTicks()))
       {
         WasRenderedInTryRunTics = true;
-        if (V_GetMode() == VID_MODEGL ? 
-            movement_smooth : 
+        if (V_GetMode() == VID_MODEGL ?
+            movement_smooth :
             movement_smooth && gamestate==wipegamestate)
         {
           isExtraDDisplay = true;

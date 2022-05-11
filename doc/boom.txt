@@ -8,7 +8,7 @@ Final Phase 1 Release
 
 By TeamTNT
 
-Programmers: 
+Programmers:
 
 Lee Killough, Jim Flynn, Rand Phares, Ty Halderman, and Stan Gula
 
@@ -19,7 +19,7 @@ Andre Majorel           Paul Schmitz
 Bob Evans (odessa)      Richard Nagel (*Weeds*)
 Chris Couleur           Steve McCrea
 Lisa Moore (pup)        William.D.Whitaker
-Adam Landefeld          Dave Brachman           
+Adam Landefeld          Dave Brachman
 Dave Armstrong          Jeremy Wagner
 
 
@@ -161,7 +161,7 @@ Note: In general, and by default, the cursor movement keys are used to
       something other than the default settings, you'll need to think 'new key'
       when reading 'default key' in the following text.
 
-      The mouse and joystick may also be used to navigate the menus. 
+      The mouse and joystick may also be used to navigate the menus.
 
 Note: If a joystick is connected, it's possible that the system may receive
       false left or right movements when the joystick is idle. This can affect
@@ -417,7 +417,7 @@ Note: Each screen has its own reset button. There is no single reset
       button that covers _all_ options that appear in all Setup screens. If
       you want to reset _all_ options to their default values, you'll need
       to activate each button separately.
-   
+
 
 
 Editing the BOOM.CFG file
@@ -613,7 +613,7 @@ Command line parameters
  If a full path is specified it must exist, and be a valid IWAD, and
  becomes the one used.
 
- If a directory is specified, it is searched for each of DOOM2F.WAD, 
+ If a directory is specified, it is searched for each of DOOM2F.WAD,
  DOOM2.WAD, PLUTONIA.WAD, TNT.WAD, DOOM.WAD, or DOOM1.WAD, in that order if
  multiple IWADs exist there.
 
@@ -622,7 +622,7 @@ Command line parameters
  the BOOM exe's dir, the dir specfified by the environment variable
  DOOMWADDIR, and the dir specified by the environment variable HOME
  are searched in that order for a file by that name. The file located
- must have an IWAD tag in the header or an error occurs. Game mode 
+ must have an IWAD tag in the header or an error occurs. Game mode
  (Shareware DOOM, Registered DOOM, Ultimate DOOM, or DOOM II) is
  determined by the levels present in the file, and all appropriate to
  the mode must be present for correct identification, though. A DOOM II
@@ -764,7 +764,7 @@ Command line parameters
  thru the startup menus. In DOOM, two numbers are required, first the
  episode number 1-4, then the mission number 1-9.  In DOOM2 only a single
  number is required, the Map or level number 1-32.
- *New: if no level number is specified with -warp, BOOM will automatically 
+ *New: if no level number is specified with -warp, BOOM will automatically
        warp to the first level present in any pwads that have been loaded.
 
 -episode <n>
@@ -938,7 +938,7 @@ Editors with full or partial support for BOOM
 DETH v4.14b (freeware) provides full BOOM support, and is available from the
 same location you obtained BOOM:
 
-http://www.teamtnt.com. 
+http://www.teamtnt.com.
 
 This program is in beta and should be used with caution. DETH runs under
 DOS, Win'95's MS-DOS mode, or in a FULL SCREEN Win'95 Dos Window.
@@ -952,7 +952,7 @@ the TeamTNT archive. DCK will only run under DOS, or Win'95s MS-DOS mode.
 DeeP '97 (shareware) provides full BOOM support.  DeeP '97 runs in Win'95.
 You may get DeeP '97 from ftp.cdrom.com or http://www.sbsoftware.com.
 
-WadAuthor (shareware) partially supports BOOM thru use of a custom BOOM.WCF 
+WadAuthor (shareware) partially supports BOOM thru use of a custom BOOM.WCF
 file, available at the site above for BOOM and DETH. We are working on
 getting full support for BOOM in WadAuthor soon.
 
@@ -1086,8 +1086,8 @@ BOOM are released usability of savegames will not be guaranteed.
 2) Demos
 
 BOOM supports demos made with previous engines in a limited fashion.
-Some will go out of sync, though none will cause the engine to crash. This 
-is almost unavoidable due to the large number of changes made in the engine. 
+Some will go out of sync, though none will cause the engine to crash. This
+is almost unavoidable due to the large number of changes made in the engine.
 Internal demos may now contain revenants without losing sync.
 
 The demo_insurance option in BOOM.CFG allows one to make tradeoffs between
@@ -1266,4 +1266,3 @@ with BOOM.
 And finally thanks to all the DOOMers still out there who have kept the
 game alive so long, and who gave us many fine ideas thru the newsgroups
 and mail. Keep on Doomin'!
-

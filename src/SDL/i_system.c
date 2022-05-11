@@ -206,7 +206,7 @@ const char* I_SigString(char* buf, size_t sz, int signum)
 }
 
 
-/* 
+/*
  * I_Read
  *
  * cph 2001/11/18 - wrapper for read(2) which handles partial reads and aborts

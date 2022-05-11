@@ -3,8 +3,8 @@ Entrys marked by a * are fixed.
 --------------------------------------------------------------------------
 33. (2000/12/24) Single key quit
 
-Colin: opulent wants the old 'q quits demo recording' feature back. 
- I suggest making it a configurable key setting, not bound to any 
+Colin: opulent wants the old 'q quits demo recording' feature back.
+ I suggest making it a configurable key setting, not bound to any
  key by default.
 Proff: For 2.2.4?
 

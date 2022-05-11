@@ -2225,7 +2225,7 @@ void gld_AddWall(seg_t *seg)
       // e6y
       // The fix for wrong middle texture drawing
       // if it exceeds the boundaries of its floor and ceiling
-      
+
       /*CALC_Y_VALUES(wall, lineheight, floor_height, ceiling_height);
       CALC_TEX_VALUES_MIDDLE2S(
         wall, seg, (LINE->flags & ML_DONTPEGBOTTOM)>0,

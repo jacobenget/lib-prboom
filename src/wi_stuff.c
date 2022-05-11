@@ -884,7 +884,7 @@ void WI_initShowNextLoc(void)
 
   state = ShowNextLoc;
   acceleratestage = 0;
-  
+
   // e6y: That was pretty easy - only a HEX editor and luck
   // There is no more desync on ddt-tas.zip\e4tux231.lmp
   // --------- tasdoom.idb ---------

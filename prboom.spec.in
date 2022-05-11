@@ -20,7 +20,7 @@ selling games ever; it totally outclassed any  3D world games that preceded
 it, with amazing speed, flexibility, and outstanding gameplay. The specs to
 the game were released, and thousands of extra levels were written by fans of
 the game; even today new levels are written for Doom faster then any one person
-could play them. 
+could play them.
 
 %prep
 rm -rf $RPM_BUILD_ROOT
@@ -44,4 +44,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_docdir}
 /usr/games
 %{_datadir}/games/doom/prboom.wad
-

@@ -7,16 +7,16 @@
 CFG=Doom - Win32 Debug OpenGL NOASM
 !MESSAGE Dies ist kein gültiges Makefile. Zum Erstellen dieses Projekts mit NMAKE
 !MESSAGE verwenden Sie den Befehl "Makefile exportieren" und führen Sie den Befehl
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "Doom.mak".
-!MESSAGE 
+!MESSAGE
 !MESSAGE Sie können beim Ausführen von NMAKE eine Konfiguration angeben
 !MESSAGE durch Definieren des Makros CFG in der Befehlszeile. Zum Beispiel:
-!MESSAGE 
+!MESSAGE
 !MESSAGE NMAKE /f "Doom.mak" CFG="Doom - Win32 Debug OpenGL NOASM"
-!MESSAGE 
+!MESSAGE
 !MESSAGE Für die Konfiguration stehen zur Auswahl:
-!MESSAGE 
+!MESSAGE
 !MESSAGE "Doom - Win32 Release" (basierend auf  "Win32 (x86) Application")
 !MESSAGE "Doom - Win32 Debug" (basierend auf  "Win32 (x86) Application")
 !MESSAGE "Doom - Win32 Release OpenGL" (basierend auf  "Win32 (x86) Application")
@@ -25,7 +25,7 @@ CFG=Doom - Win32 Debug OpenGL NOASM
 !MESSAGE "Doom - Win32 Release OpenGL NOASM" (basierend auf  "Win32 (x86) Application")
 !MESSAGE "Doom - Win32 Debug NOASM" (basierend auf  "Win32 (x86) Application")
 !MESSAGE "Doom - Win32 Debug OpenGL NOASM" (basierend auf  "Win32 (x86) Application")
-!MESSAGE 
+!MESSAGE
 
 # Begin Project
 # PROP AllowPerConfigDependencies 0
@@ -260,7 +260,7 @@ LINK32=link.exe
 # ADD LINK32 opengl32.lib glu32.lib user32.lib gdi32.lib sdl.lib sdl_mixer.lib sdl_net.lib /nologo /subsystem:windows /debug /machine:I386 /out:"DebugNOASMGL/glboom.exe"
 # SUBTRACT LINK32 /profile
 
-!ENDIF 
+!ENDIF
 
 # Begin Target
 
@@ -405,7 +405,7 @@ SOURCE=..\src\f_wipe.c
 
 # PROP BASE Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -430,7 +430,7 @@ SOURCE=..\src\f_wipe.h
 
 # PROP BASE Exclude_From_Build 1
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -971,7 +971,7 @@ SOURCE=..\src\gl_intern.h
 
 !ELSEIF  "$(CFG)" == "Doom - Win32 Debug OpenGL NOASM"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1004,7 +1004,7 @@ SOURCE=..\src\gl_main.c
 
 !ELSEIF  "$(CFG)" == "Doom - Win32 Debug OpenGL NOASM"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1037,7 +1037,7 @@ SOURCE=..\src\gl_struct.h
 
 !ELSEIF  "$(CFG)" == "Doom - Win32 Debug OpenGL NOASM"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # Begin Source File
@@ -1070,7 +1070,7 @@ SOURCE=..\src\gl_texture.c
 
 !ELSEIF  "$(CFG)" == "Doom - Win32 Debug OpenGL NOASM"
 
-!ENDIF 
+!ENDIF
 
 # End Source File
 # End Group

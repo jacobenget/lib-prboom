@@ -747,7 +747,7 @@ void R_StoreWallRange(const int start, const int stop)
   ds_p->rw_offset = rw_offset;
   ds_p->rw_distance = rw_distance;
   ds_p->rw_centerangle = rw_centerangle;
-      
+
   // if a floor / ceiling plane is on the wrong side of the view
   // plane, it is definitely invisible and doesn't need to be marked.
 

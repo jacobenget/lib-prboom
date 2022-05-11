@@ -512,20 +512,20 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
   float t;
   int paletteNum = (V_GetMode() == VID_MODEGL ? 0 : currentPaletteIndex);
   static int usegammaOnLastPaletteGeneration = -1;
-  
+
   int pplump = W_GetNumForName("PLAYPAL");
   int gtlump = (W_CheckNumForName)("GAMMATBL",ns_prboom);
   const byte *pal = W_CacheLumpNum(pplump);
   // opengl doesn't use the gamma
-  const byte *const gtable = 
-    (const byte *)W_CacheLumpNum(gtlump) + 
+  const byte *const gtable =
+    (const byte *)W_CacheLumpNum(gtlump) +
     (V_GetMode() == VID_MODEGL ? 0 : 256*(usegamma))
   ;
 
   int numPals = W_LumpLength(pplump) / (3*256);
   const float dontRoundAbove = 220;
   float roundUpR, roundUpG, roundUpB;
-  
+
   if (usegammaOnLastPaletteGeneration != usegamma) {
     if (Palettes15) free(Palettes15);
     if (Palettes16) free(Palettes16);
@@ -533,9 +533,9 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
     Palettes15 = NULL;
     Palettes16 = NULL;
     Palettes32 = NULL;
-    usegammaOnLastPaletteGeneration = usegamma;      
+    usegammaOnLastPaletteGeneration = usegamma;
   }
-  
+
   if (mode == VID_MODE32) {
     if (!Palettes32) {
       // set int palette
@@ -545,13 +545,13 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
           r = gtable[pal[(256*p+i)*3+0]];
           g = gtable[pal[(256*p+i)*3+1]];
           b = gtable[pal[(256*p+i)*3+2]];
-          
+
           // ideally, we should always round up, but very bright colors
           // overflow the blending adds, so they don't get rounded.
           roundUpR = (r > dontRoundAbove) ? 0 : 0.5f;
           roundUpG = (g > dontRoundAbove) ? 0 : 0.5f;
           roundUpB = (b > dontRoundAbove) ? 0 : 0.5f;
-                  
+
           for (w=0; w<VID_NUMCOLORWEIGHTS; w++) {
             t = (float)(w)/(float)(VID_NUMCOLORWEIGHTS-1);
             nr = (int)(r*t+roundUpR);
@@ -575,13 +575,13 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
           r = gtable[pal[(256*p+i)*3+0]];
           g = gtable[pal[(256*p+i)*3+1]];
           b = gtable[pal[(256*p+i)*3+2]];
-          
+
           // ideally, we should always round up, but very bright colors
           // overflow the blending adds, so they don't get rounded.
           roundUpR = (r > dontRoundAbove) ? 0 : 0.5f;
           roundUpG = (g > dontRoundAbove) ? 0 : 0.5f;
           roundUpB = (b > dontRoundAbove) ? 0 : 0.5f;
-                   
+
           for (w=0; w<VID_NUMCOLORWEIGHTS; w++) {
             t = (float)(w)/(float)(VID_NUMCOLORWEIGHTS-1);
             nr = (int)((r>>3)*t+roundUpR);
@@ -605,13 +605,13 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
           r = gtable[pal[(256*p+i)*3+0]];
           g = gtable[pal[(256*p+i)*3+1]];
           b = gtable[pal[(256*p+i)*3+2]];
-          
+
           // ideally, we should always round up, but very bright colors
           // overflow the blending adds, so they don't get rounded.
           roundUpR = (r > dontRoundAbove) ? 0 : 0.5f;
           roundUpG = (g > dontRoundAbove) ? 0 : 0.5f;
           roundUpB = (b > dontRoundAbove) ? 0 : 0.5f;
-                   
+
           for (w=0; w<VID_NUMCOLORWEIGHTS; w++) {
             t = (float)(w)/(float)(VID_NUMCOLORWEIGHTS-1);
             nr = (int)((r>>3)*t+roundUpR);
@@ -625,8 +625,8 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
       }
     }
     V_Palette15 = Palettes15 + paletteNum*256*VID_NUMCOLORWEIGHTS;
-  }       
-   
+  }
+
   W_UnlockLumpNum(pplump);
   W_UnlockLumpNum(gtlump);
 }
@@ -656,7 +656,7 @@ static void V_DestroyTrueColorPalette(video_mode_t mode) {
 void V_DestroyUnusedTrueColorPalettes(void) {
   if (V_GetMode() != VID_MODE15) V_DestroyTrueColorPalette(VID_MODE15);
   if (V_GetMode() != VID_MODE16) V_DestroyTrueColorPalette(VID_MODE16);
-  if (V_GetMode() != VID_MODE32) V_DestroyTrueColorPalette(VID_MODE32);  
+  if (V_GetMode() != VID_MODE32) V_DestroyTrueColorPalette(VID_MODE32);
 }
 
 //

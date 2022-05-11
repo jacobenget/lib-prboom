@@ -56,7 +56,7 @@ NET_CLIENT_SRC = d_client.c
 if BUILD_GL
 USE_GL_SRC = gl_intern.h  gl_main.c  gl_struct.h  gl_texture.c
 else
-USE_GL_SRC = 
+USE_GL_SRC =
 endif
 
 if WAD_MMAP

@@ -319,7 +319,7 @@ void P_ArchiveThinkers (void)
         *save_p++ = tc_mobj;
         PADSAVEP();
         mobj = (mobj_t *)save_p;
-	/* cph 2006/07/30 - 
+	/* cph 2006/07/30 -
 	 * The end of mobj_t changed from
 	 *  boolean invisible;
 	 *  mobj_t* lastenemy;
@@ -474,7 +474,7 @@ void P_UnArchiveThinkers (void)
       mobj_p[size] = mobj;
 
       PADSAVEP();
-      /* cph 2006/07/30 - 
+      /* cph 2006/07/30 -
        * The end of mobj_t changed from
        *  boolean invisible;
        *  mobj_t* lastenemy;
@@ -487,7 +487,7 @@ void P_UnArchiveThinkers (void)
        *  fixed_t PrevX, PrevY, PrevZ;
        * at prboom 2.4.4. There is code here to preserve the savegame format.
        *
-       * touching_sectorlist is reconstructed anyway, so we now read in all 
+       * touching_sectorlist is reconstructed anyway, so we now read in all
        * but the last 5 words from the savegame (filling all but the last 2
        * fields of our current mobj_t. We then pull lastenemy from the 2nd of
        * the 5 leftover words, and skip the others.
@@ -1026,4 +1026,3 @@ void P_UnArchiveMap(void)
       save_p += markpointnum * sizeof *markpoints;
     }
 }
-

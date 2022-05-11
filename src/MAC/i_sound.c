@@ -239,7 +239,7 @@ static int playFile(const char *filename)
   }
 
   // Now we'll open the file using Carbon and QuickTime.
-  pathStr = CFStringCreateWithCString(NULL, filename, 
+  pathStr = CFStringCreateWithCString(NULL, filename,
             CFStringGetSystemEncoding());
   url = CFURLCreateWithString(NULL, pathStr, NULL);
   CFRelease(pathStr);
@@ -254,7 +254,7 @@ static int playFile(const char *filename)
   }
   CFRelease(url);
   url = NULL;
-  if(FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &fsSpec, NULL) 
+  if(FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &fsSpec, NULL)
      != noErr)
   {
     lprintf(LO_ERROR, "Music: Error on FSGetCatalogInfo");
@@ -267,7 +267,7 @@ static int playFile(const char *filename)
     lprintf(LO_ERROR, "Music: Error on OpenMovie");
     return 0;
   }
-  error = NewMovieFromFile(&movie, refNum, NULL, NULL, 
+  error = NewMovieFromFile(&movie, refNum, NULL, NULL,
           newMovieActive & newMovieDontAskUnresolvedDataRefs, NULL);
   CloseMovieFile(refNum);
   if(error != noErr)

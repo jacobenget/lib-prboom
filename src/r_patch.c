@@ -691,7 +691,7 @@ const rpatch_t *R_CachePatchNum(int id) {
 
 #ifdef SIMPLECHECKS
   if (!((patches[id].locks+1) & 0xf))
-    lprintf(LO_DEBUG, "R_CachePatchNum: High lock on %8s (%d)\n", 
+    lprintf(LO_DEBUG, "R_CachePatchNum: High lock on %8s (%d)\n",
 	    lumpinfo[id].name, patches[id].locks);
 #endif
 
@@ -703,11 +703,11 @@ void R_UnlockPatchNum(int id)
   const int unlocks = 1;
 #ifdef SIMPLECHECKS
   if ((signed short)patches[id].locks < unlocks)
-    lprintf(LO_DEBUG, "R_UnlockPatchNum: Excess unlocks on %8s (%d-%d)\n", 
+    lprintf(LO_DEBUG, "R_UnlockPatchNum: Excess unlocks on %8s (%d-%d)\n",
 	    lumpinfo[id].name, patches[id].locks, unlocks);
 #endif
   patches[id].locks -= unlocks;
-  /* cph - Note: must only tell z_zone to make purgeable if currently locked, 
+  /* cph - Note: must only tell z_zone to make purgeable if currently locked,
    * else it might already have been purged
    */
   if (unlocks && !patches[id].locks)
@@ -740,7 +740,7 @@ const rpatch_t *R_CacheTextureCompositePatchNum(int id) {
 
 #ifdef SIMPLECHECKS
   if (!((texture_composites[id].locks+1) & 0xf))
-    lprintf(LO_DEBUG, "R_CacheTextureCompositePatchNum: High lock on %8s (%d)\n", 
+    lprintf(LO_DEBUG, "R_CacheTextureCompositePatchNum: High lock on %8s (%d)\n",
 	    textures[id]->name, texture_composites[id].locks);
 #endif
 
@@ -753,11 +753,11 @@ void R_UnlockTextureCompositePatchNum(int id)
   const int unlocks = 1;
 #ifdef SIMPLECHECKS
   if ((signed short)texture_composites[id].locks < unlocks)
-    lprintf(LO_DEBUG, "R_UnlockTextureCompositePatchNum: Excess unlocks on %8s (%d-%d)\n", 
+    lprintf(LO_DEBUG, "R_UnlockTextureCompositePatchNum: Excess unlocks on %8s (%d-%d)\n",
 	    textures[id]->name, texture_composites[id].locks, unlocks);
 #endif
   texture_composites[id].locks -= unlocks;
-  /* cph - Note: must only tell z_zone to make purgeable if currently locked, 
+  /* cph - Note: must only tell z_zone to make purgeable if currently locked,
    * else it might already have been purged
    */
   if (unlocks && !texture_composites[id].locks)
@@ -783,4 +783,3 @@ const rcolumn_t *R_GetPatchColumn(const rpatch_t *patch, int columnIndex) {
   if (patch->isNotTileable) return R_GetPatchColumnClamped(patch, columnIndex);
   else return R_GetPatchColumnWrapped(patch, columnIndex);
 }
-

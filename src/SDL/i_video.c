@@ -471,14 +471,14 @@ static void I_ClosestResolution (int *width, int *height, int flags)
 
       if (twidth > MAX_SCREENWIDTH || theight> MAX_SCREENHEIGHT)
         continue;
-      
+
       if (twidth == *width && theight == *height)
         return;
 
       //if (iteration == 0 && (twidth < *width || theight < *height))
       //  continue;
 
-      dist = (twidth - *width) * (twidth - *width) + 
+      dist = (twidth - *width) * (twidth - *width) +
              (theight - *height) * (theight - *height);
 
       if (dist < closest)
@@ -495,7 +495,7 @@ static void I_ClosestResolution (int *width, int *height, int flags)
       return;
     }
   }
-}  
+}
 
 // CPhipps -
 // I_CalculateRes
@@ -509,7 +509,7 @@ void I_CalculateRes(unsigned int width, unsigned int height)
   */
 
 // e6y
-// GLBoom will try to set the closest supported resolution 
+// GLBoom will try to set the closest supported resolution
 // if the requested mode can't be set correctly.
 // For example glboom.exe -geom 1025x768 -nowindow will set 1024x768.
 // It affects only fullscreen modes.

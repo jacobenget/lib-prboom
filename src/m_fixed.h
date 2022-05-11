@@ -99,7 +99,7 @@ __inline static fixed_t FixedMul(fixed_t a, fixed_t b)
 # else /* _MSC_VER */
 /* killough 5/10/98: In djgpp, use inlined assembly for performance
  * CPhipps - made __inline__ to inline, as specified in the gcc docs
- * Also made const. Also __asm__ to asm, as in docs. 
+ * Also made const. Also __asm__ to asm, as in docs.
  * Replaced inline asm with Julian's version for Eternity dated 6/7/2001
  */
 inline

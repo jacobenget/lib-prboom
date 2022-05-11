@@ -105,4 +105,3 @@ int flashing_hom;     // killough 10/98
 int doom_weapon_toggles; // killough 10/98
 
 int monkeys, default_monkeys;
-

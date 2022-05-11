@@ -104,7 +104,7 @@ const byte *R_GetTextureColumn(const rpatch_t *texpatch, int col) {
   while (col < 0)
     col += texpatch->width;
   col &= texpatch->widthmask;
-  
+
   return texpatch->columns[col].pixels;
 }
 
@@ -401,7 +401,7 @@ int R_ColormapNumForName(const char *name)
 /*
  * R_ColourMap
  *
- * cph 2001/11/17 - unify colour maping logic in a single place; 
+ * cph 2001/11/17 - unify colour maping logic in a single place;
  *  obsoletes old c_scalelight stuff
  */
 

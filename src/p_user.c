@@ -121,7 +121,7 @@ void P_CalcHeight (player_t* player)
         FixedMul(player->momy,player->momy))>>2 : 0;
 
     //e6y
-    if (compatibility_level >= boom_202_compatibility && 
+    if (compatibility_level >= boom_202_compatibility &&
         compatibility_level <= lxdoom_1_compatibility &&
         player->mo->friction > ORIG_FRICTION) // ice?
     {

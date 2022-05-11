@@ -19,11 +19,11 @@ AC_TRY_COMPILE(,[
         # marginal gains from aligning code
   i386-*) ;;
   i486-*) CPU_CFLAGS="-mtune=i486" ;;
-        # nothing special for pentium  
+        # nothing special for pentium
         # CMOV op on ppro/II/686 can help us
   i686-*) CPU_CFLAGS="-march=i686" ;;
   esac
-  AC_C_COMPILE_FLAGS($CPU_CFLAGS) 
+  AC_C_COMPILE_FLAGS($CPU_CFLAGS)
 ])
 ])
 ])

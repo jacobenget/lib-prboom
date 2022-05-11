@@ -125,7 +125,7 @@ char *AddDefaultExtension(char *path, const char *ext)
 // CPhipps - source is an enum
 //
 // proff - changed using pointer to wadfile_info_t
-static void W_AddFile(wadfile_info_t *wadfile) 
+static void W_AddFile(wadfile_info_t *wadfile)
 // killough 1/31/98: static, const
 {
   wadinfo_t   header;
@@ -144,8 +144,8 @@ static void W_AddFile(wadfile_info_t *wadfile)
   if (wadfile->handle == -1 && D_NetGetWad(wadfile->name)) // CPhipps
     wadfile->handle = open(wadfile->name,O_RDONLY | O_BINARY);
 #endif
-    
-  if (wadfile->handle == -1) 
+
+  if (wadfile->handle == -1)
     {
       if (  strlen(wadfile->name)<=4 ||      // add error check -- killough
 	         (strcasecmp(wadfile->name+strlen(wadfile->name)-4 , ".lmp" ) &&
@@ -159,9 +159,9 @@ static void W_AddFile(wadfile_info_t *wadfile)
   lprintf (LO_INFO," adding %s\n",wadfile->name);
   startlump = numlumps;
 
-  if (  strlen(wadfile->name)<=4 || 
+  if (  strlen(wadfile->name)<=4 ||
 	      (
-          strcasecmp(wadfile->name+strlen(wadfile->name)-4,".wad") && 
+          strcasecmp(wadfile->name+strlen(wadfile->name)-4,".wad") &&
 	        strcasecmp(wadfile->name+strlen(wadfile->name)-4,".gwa")
         )
      )
@@ -400,7 +400,7 @@ void W_Init(void)
 
   numlumps = 0; lumpinfo = NULL;
 
-  { // CPhipps - new wadfiles array used 
+  { // CPhipps - new wadfiles array used
     // open all the files, load headers, and count lumps
     int i;
     for (i=0; (size_t)i<numwadfiles; i++)
@@ -473,4 +473,3 @@ void W_ReadLump(int lump, void *dest)
       }
     }
 }
-

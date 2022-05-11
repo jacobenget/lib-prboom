@@ -11,7 +11,7 @@ currently:
 Number	Name			Description
 0	doom_12_compatibility	Emulate Doom v1.2 game details where possible
 1	doom_1666_compatibility	Behave like Doom v1.666 as far as possible
-2	doom2_19_compatibility	As compatible as possible for playing original 
+2	doom2_19_compatibility	As compatible as possible for playing original
 				Doom demos
 3	ultdoom_compatibility	Ultimate Doom made a few changes
 4	finaldoom_compatibility	Compatible with Final Doom & Doom95 - needed
@@ -47,7 +47,7 @@ like me play a lot of old levels, so need to be able to enable compatibility
 with some old bugs. And some people may want to record demos for older game
 versions.
 
-When you play a demo, PrBoom sets the compatibility level and settings 
+When you play a demo, PrBoom sets the compatibility level and settings
 automatically. When you load a savegame, the settings are restored.
 
 When you start a new game, the compatibility level is got from (in order of
@@ -61,7 +61,7 @@ settings are read from the comp_* config file options, as in MBF. Otherwise,
 the settings are put to the defaults for that game version.
 
 You can adjust the compatibility settings during play from the menus
-(Options->Setup->Doom Compatibility). 
+(Options->Setup->Doom Compatibility).
 
 The sort of people interested in these things will already know the MBF
 options, so I'll just list the changes:
@@ -90,4 +90,3 @@ Of course, demo recording is no more reliable than demo playback; original
 Doom demos will usually but not always work. MBF support should be perfect.
 
 - Colin <cph@moria.org.uk>
-

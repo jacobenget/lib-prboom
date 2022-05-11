@@ -34,7 +34,7 @@
 
 #include "doomstat.h"
 
-#define SMOOTH_PLAYING_MAXFACTOR 16 
+#define SMOOTH_PLAYING_MAXFACTOR 16
 
 extern int demo_smoothturns;
 extern int demo_smoothturnsfactor;

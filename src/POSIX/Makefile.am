@@ -7,5 +7,3 @@ CFLAGS=@CFLAGS@
 noinst_LIBRARIES = libposixdoom.a
 
 libposixdoom_a_SOURCES = i_system.c
-
-

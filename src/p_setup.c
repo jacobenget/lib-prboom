@@ -720,12 +720,12 @@ static void P_LoadLineDefs (int lump)
       ld->sidenum[0] = SHORT(mld->sidenum[0]);
       ld->sidenum[1] = SHORT(mld->sidenum[1]);
 
-      { 
+      {
         /* cph 2006/09/30 - fix sidedef errors right away.
          * cph 2002/07/20 - these errors are fatal if not fixed, so apply them
          * in compatibility mode - a desync is better than a crash! */
         int j;
-        
+
         for (j=0; j < 2; j++)
         {
           if (ld->sidenum[j] != NO_INDEX && ld->sidenum[j] >= numsides) {
@@ -733,15 +733,15 @@ static void P_LoadLineDefs (int lump)
             lprintf(LO_WARN, "P_LoadLineDefs: linedef %d has out-of-range sidedef number\n",numlines-i-1);
           }
         }
-        
+
         // killough 11/98: fix common wad errors (missing sidedefs):
-        
+
         if (ld->sidenum[0] == NO_INDEX) {
           ld->sidenum[0] = 0;  // Substitute dummy sidedef for missing right side
           // cph - print a warning about the bug
           lprintf(LO_WARN, "P_LoadLineDefs: linedef %d missing first sidedef\n",numlines-i-1);
         }
-        
+
         if ((ld->sidenum[1] == NO_INDEX) && (ld->flags & ML_TWOSIDED)) {
           ld->flags &= ~ML_TWOSIDED;  // Clear 2s flag for missing left side
           // cph - print a warning about the bug
@@ -1232,7 +1232,7 @@ static void P_LoadBlockMap (int lump)
 // P_LoadReject - load the reject table, padding it if it is too short
 // totallines must be the number returned by P_GroupLines()
 // an underflow will be padded with zeroes, or a doom.exe z_zone header
-// 
+//
 // this function incorporates e6y's RejectOverrunAddInt code:
 // e6y: REJECT overrun emulation code
 // It's emulated successfully if the size of overflow no more than 16 bytes.

@@ -108,7 +108,7 @@ A: Blatant rendering errors like HOM and slime trails were fixed. Even if they
 
    The criteria used when making changes were:
 
-   Rendering errors (e.g. HOM, slime trails): Fixed. 
+   Rendering errors (e.g. HOM, slime trails): Fixed.
 
    Aesthetic errors (e.g. wall texture choices, texture alignment): Not Fixed.
 
@@ -120,7 +120,7 @@ Q: Why does the beta chaingun lower when I fire it in fullscreen mode?
 
 A: This is to workaround a problem with the Press Release version's chaingun
    sprites. The sprites were pre-clipped with respect to the status bar, and
-   the status bar was always turned on in the Press Release version. With 
+   the status bar was always turned on in the Press Release version. With
    the status bar turned on, the -beta chaingun looks like the original. In
    fullscreen mode, however, it must be lowered while it is being fired, or
    else parts of the chaingun will not be updated, and it will look funny.

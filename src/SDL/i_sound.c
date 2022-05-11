@@ -605,7 +605,7 @@ void I_InitMusic(void)
       if (fd<0) {
         lprintf(LO_ERROR, "I_InitMusic: failed to create music temp file %s", music_tmp);
         free(music_tmp); return;
-      } else 
+      } else
         close(fd);
     }
 #else /* !_WIN32 */
@@ -748,4 +748,3 @@ void I_SetMusicVolume(int volume)
 }
 
 #endif /* HAVE_OWN_MUSIC */
-

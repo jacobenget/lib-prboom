@@ -39,7 +39,7 @@ typedef enum {
   RDRAW_EDGESLOPE_BOT_UP   = (1<<2),
   RDRAW_EDGESLOPE_BOT_DOWN = (1<<3),
   RDRAW_EDGESLOPE_TOP_MASK = 0x3,
-  RDRAW_EDGESLOPE_BOT_MASK = 0xc,  
+  RDRAW_EDGESLOPE_BOT_MASK = 0xc,
 } edgeslope_t;
 
 typedef struct {
@@ -58,16 +58,16 @@ typedef struct {
   int width;
   int height;
   unsigned  widthmask;
-    
+
   unsigned char isNotTileable;
-  
+
   int leftoffset;
   int topoffset;
-  
-  // this is the single malloc'ed/free'd array 
+
+  // this is the single malloc'ed/free'd array
   // for this patch
   unsigned char *data;
-  
+
   // these are pointers into the data array
   unsigned char *pixels;
   rcolumn_t *columns;
