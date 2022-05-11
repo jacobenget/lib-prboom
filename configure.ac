@@ -7,7 +7,7 @@ dnl --- Check for target system type - before initialising Automake
 AC_CANONICAL_TARGET
 
 dnl --- Fire up automake
-AM_INIT_AUTOMAKE([check-news foreign -Woverride -Wobsolete -Wportability -Wsyntax -Wunsupported])
+AM_INIT_AUTOMAKE([check-news foreign -Woverride -Wobsolete -Wportability -Wsyntax -Wunsupported subdir-objects])
 AM_CONFIG_HEADER(config.h)
 
 AC_MSG_CHECKING([checking whether to use x86 asm versions of some functions])
@@ -35,8 +35,9 @@ AC_DEFINE_UNQUOTED(DOOMWADDIR,"$DOOMWADDIR",[Define to be the path where Doom WA
 
 dnl --- Check for programs
 AC_PROG_CC
+AC_PROG_CXX
 AC_PROG_LN_S
-AC_PROG_RANLIB
+LT_INIT
 
 if test "x$GCC" = "xyes"; then
   AC_DEFINE(PACKEDATTR,[__attribute__((packed))],[Set to the attribute to apply to struct definitions to make them packed])
@@ -229,4 +230,4 @@ AC_SUBST(CFLAGS)
 AC_SUBST(DOOMWADDIR)
 
 dnl --- output
-AC_OUTPUT(Makefile src/Makefile src/POSIX/Makefile src/SDL/Makefile src/MAC/Makefile doc/Makefile data/Makefile ICONS/Makefile VisualC6/Makefile VisualC8/Makefile prboom.spec)
+AC_OUTPUT(Makefile src/Makefile src/POSIX/Makefile src/SDL/Makefile src/MAC/Makefile doc/Makefile data/Makefile ICONS/Makefile VisualC6/Makefile VisualC8/Makefile tests/Makefile prboom.spec)
