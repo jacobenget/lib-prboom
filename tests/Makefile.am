@@ -15,9 +15,9 @@ libgtest_la_CPPFLAGS = -isystem $(srcdir)/googletest/googletest/include -I$(srcd
 libgtest_la_LDFLAGS = -pthread
 
 # Build an example unit test suite, that leverages googletest, that runs when 'make check' is executed
-check_PROGRAMS = testmain
-testmain_SOURCES = testmain.cpp
-testmain_LDADD = libgtest.la
-testmain_CPPFLAGS = -isystem $(srcdir)/googletest/googletest/include -I$(srcdir)/googletest/googletest
+check_PROGRAMS = unittests
+unittests_SOURCES = test_example.cpp $(srcdir)/googletest/googletest/src/gtest_main.cc
+unittests_LDADD = libgtest.la
+unittests_CPPFLAGS = -isystem $(srcdir)/googletest/googletest/include -I$(srcdir)/googletest/googletest
 
-TESTS = testmain
+TESTS = unittests
