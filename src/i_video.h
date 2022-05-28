@@ -42,19 +42,20 @@
 #endif
 
 void I_PreInitGraphics(void); /* CPhipps - do stuff immediately on start */
-void I_CalculateRes(unsigned int width, unsigned int height); /* calculate resolution */
-void I_SetRes(void); /* set resolution */
-void I_InitGraphics (void);
+void I_CalculateRes(unsigned int width,
+                    unsigned int height); /* calculate resolution */
+void I_SetRes(void);                      /* set resolution */
+void I_InitGraphics(void);
 void I_UpdateVideoMode(void);
 void I_ShutdownGraphics(void);
 
 /* Takes full 8 bit values. */
 void I_SetPalette(int pal); /* CPhipps - pass down palette number */
 
-void I_UpdateNoBlit (void);
-void I_FinishUpdate (void);
+void I_UpdateNoBlit(void);
+void I_FinishUpdate(void);
 
-int I_ScreenShot (const char *fname);
+int I_ScreenShot(const char *fname);
 
 /* I_StartTic
  * Called by D_DoomLoop,
@@ -62,7 +63,7 @@ int I_ScreenShot (const char *fname);
  * Quick syncronous operations are performed here.
  * Can call D_PostEvent.
  */
-void I_StartTic (void);
+void I_StartTic(void);
 
 /* I_StartFrame
  * Called by D_DoomLoop,
@@ -73,10 +74,11 @@ void I_StartTic (void);
  * Can call D_PostEvent.
  */
 
-void I_StartFrame (void);
+void I_StartFrame(void);
 
-extern int use_doublebuffer;  /* proff 2001-7-4 - controls wether to use doublebuffering*/
-extern int use_fullscreen;  /* proff 21/05/2000 */
-extern int desired_fullscreen; //e6y
+extern int use_doublebuffer;   /* proff 2001-7-4 - controls wether to use
+                                  doublebuffering*/
+extern int use_fullscreen;     /* proff 21/05/2000 */
+extern int desired_fullscreen; // e6y
 
 #endif

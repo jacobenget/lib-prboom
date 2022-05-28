@@ -45,19 +45,20 @@
 #define MAXHEALTH maxhealth
 
 /* follow a player exlusively for 3 seconds */
-#define BASETHRESHOLD   (100)
+#define BASETHRESHOLD (100)
 
 boolean P_GivePower(player_t *, int);
 void P_TouchSpecialThing(mobj_t *special, mobj_t *toucher);
-void P_DamageMobj(mobj_t *target,mobj_t *inflictor,mobj_t *source,int damage);
+void P_DamageMobj(mobj_t *target, mobj_t *inflictor, mobj_t *source,
+                  int damage);
 
 /* killough 5/2/98: moved from d_deh.c, g_game.c, m_misc.c, others: */
 
-extern int god_health;   /* Ty 03/09/98 - deh support, see also p_inter.c */
+extern int god_health; /* Ty 03/09/98 - deh support, see also p_inter.c */
 extern int idfa_armor;
 extern int idfa_armor_class;
 extern int idkfa_armor;
-extern int idkfa_armor_class;  /* Ty - end */
+extern int idkfa_armor_class; /* Ty - end */
 /* Ty 03/13/98 - externalized initial settings for respawned player */
 extern int initial_health;
 extern int initial_bullets;

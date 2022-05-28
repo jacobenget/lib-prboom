@@ -53,15 +53,15 @@ static struct {
   int locktic;
 #endif
   unsigned int locks;
-} *cachelump;
+} * cachelump;
 
 #ifdef HEAPDUMP
-void W_PrintLump(FILE* fp, void* p) {
+void W_PrintLump(FILE *fp, void *p) {
   int i;
-  for (i=0; i<numlumps; i++)
+  for (i = 0; i < numlumps; i++)
     if (cachelump[i].cache == p) {
-      fprintf(fp, " %8.8s %6u %2d %6d", lumpinfo[i].name,
-	      W_LumpLength(i), cachelump[i].locks, gametic - cachelump[i].locktic);
+      fprintf(fp, " %8.8s %6u %2d %6d", lumpinfo[i].name, W_LumpLength(i),
+              cachelump[i].locks, gametic - cachelump[i].locktic);
       return;
     }
   fprintf(fp, " not found");
@@ -69,14 +69,14 @@ void W_PrintLump(FILE* fp, void* p) {
 #endif
 
 #ifdef TIMEDIAG
-static void W_ReportLocks(void)
-{
+static void W_ReportLocks(void) {
   int i;
   lprintf(LO_DEBUG, "W_ReportLocks:\nLump     Size   Locks  Tics\n");
-  for (i=0; i<numlumps; i++) {
+  for (i = 0; i < numlumps; i++) {
     if (cachelump[i].locks)
       lprintf(LO_DEBUG, "%8.8s %6u %2d   %6d\n", lumpinfo[i].name,
-	      W_LumpLength(i), cachelump[i].locks, gametic - cachelump[i].locktic);
+              W_LumpLength(i), cachelump[i].locks,
+              gametic - cachelump[i].locktic);
   }
 }
 #endif
@@ -85,21 +85,18 @@ static void W_ReportLocks(void)
  *
  * cph 2001/07/07 - split from W_Init
  */
-void W_InitCache(void)
-{
+void W_InitCache(void) {
   // set up caching
   cachelump = calloc(sizeof *cachelump, numlumps);
   if (!cachelump)
-    I_Error ("W_Init: Couldn't allocate lumpcache");
+    I_Error("W_Init: Couldn't allocate lumpcache");
 
 #ifdef TIMEDIAG
   atexit(W_ReportLocks);
 #endif
 }
 
-void W_DoneCache(void)
-{
-}
+void W_DoneCache(void) {}
 
 /* W_CacheLumpNum
  * killough 4/25/98: simplified
@@ -107,20 +104,20 @@ void W_DoneCache(void)
  *           returns a const*
  */
 
-const void *W_CacheLumpNum(int lump)
-{
+const void *W_CacheLumpNum(int lump) {
   const int locks = 1;
 #ifdef RANGECHECK
   if ((unsigned)lump >= (unsigned)numlumps)
-    I_Error ("W_CacheLumpNum: %i >= numlumps",lump);
+    I_Error("W_CacheLumpNum: %i >= numlumps", lump);
 #endif
 
-  if (!cachelump[lump].cache)      // read the lump in
-    W_ReadLump(lump, Z_Malloc(W_LumpLength(lump), PU_CACHE, &cachelump[lump].cache));
+  if (!cachelump[lump].cache) // read the lump in
+    W_ReadLump(lump,
+               Z_Malloc(W_LumpLength(lump), PU_CACHE, &cachelump[lump].cache));
 
   /* cph - if wasn't locked but now is, tell z_zone to hold it */
   if (!cachelump[lump].locks && locks) {
-    Z_ChangeTag(cachelump[lump].cache,PU_STATIC);
+    Z_ChangeTag(cachelump[lump].cache, PU_STATIC);
 #ifdef TIMEDIAG
     cachelump[lump].locktic = gametic;
 #endif
@@ -128,18 +125,15 @@ const void *W_CacheLumpNum(int lump)
   cachelump[lump].locks += locks;
 
 #ifdef SIMPLECHECKS
-  if (!((cachelump[lump].locks+1) & 0xf))
+  if (!((cachelump[lump].locks + 1) & 0xf))
     lprintf(LO_DEBUG, "W_CacheLumpNum: High lock on %8s (%d)\n",
-	    lumpinfo[lump].name, cachelump[lump].locks);
+            lumpinfo[lump].name, cachelump[lump].locks);
 #endif
 
   return cachelump[lump].cache;
 }
 
-const void *W_LockLumpNum(int lump)
-{
-  return W_CacheLumpNum(lump);
-}
+const void *W_LockLumpNum(int lump) { return W_CacheLumpNum(lump); }
 
 /*
  * W_UnlockLumpNum
@@ -147,13 +141,12 @@ const void *W_LockLumpNum(int lump)
  * CPhipps - this changes (should reduce) the number of locks on a lump
  */
 
-void W_UnlockLumpNum(int lump)
-{
+void W_UnlockLumpNum(int lump) {
   const int unlocks = 1;
 #ifdef SIMPLECHECKS
   if ((signed short)cachelump[lump].locks < unlocks)
     lprintf(LO_DEBUG, "W_UnlockLumpNum: Excess unlocks on %8s (%d-%d)\n",
-	    lumpinfo[lump].name, cachelump[lump].locks, unlocks);
+            lumpinfo[lump].name, cachelump[lump].locks, unlocks);
 #endif
   cachelump[lump].locks -= unlocks;
   /* cph - Note: must only tell z_zone to make purgeable if currently locked,

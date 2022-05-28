@@ -31,17 +31,14 @@
  *
  *-----------------------------------------------------------------------------*/
 
-
 #ifndef __D_NET__
 #define __D_NET__
 
 #include "d_player.h"
 
-
 #ifdef __GNUG__
 #pragma interface
 #endif
-
 
 //
 // Network play related stuff.
@@ -51,34 +48,30 @@
 //  be transmitted.
 //
 
-#define DOOMCOM_ID              0x12345678l
+#define DOOMCOM_ID 0x12345678l
 
 // Max computers/players in a game.
-#define MAXNETNODES             8
+#define MAXNETNODES 8
 
-
-typedef enum
-{
-    CMD_SEND    = 1,
-    CMD_GET     = 2
+typedef enum {
+  CMD_SEND = 1,
+  CMD_GET = 2
 
 } command_t;
-
 
 //
 // Network packet data.
 //
-typedef struct
-{
-    // High bit is retransmit request.
-    unsigned            checksum;
-    // Only valid if NCMD_RETRANSMIT.
-    byte                retransmitfrom;
+typedef struct {
+  // High bit is retransmit request.
+  unsigned checksum;
+  // Only valid if NCMD_RETRANSMIT.
+  byte retransmitfrom;
 
-    byte                starttic;
-    byte                player;
-    byte                numtics;
-    ticcmd_t            cmds[BACKUPTICS];
+  byte starttic;
+  byte player;
+  byte numtics;
+  ticcmd_t cmds[BACKUPTICS];
 
 } doomdata_t;
 
@@ -94,24 +87,23 @@ typedef struct
 // Note: for phase 1 we need to add monsters_remember, variable_friction,
 //       weapon_recoil, allow_pushers, over_under, player_bobbing,
 //       fastparm, demo_insurance, and the rngseed
-//Stick all options into bytes so we don't need to mess with bitfields
-//WARNING: make sure this doesn't exceed the size of the ticcmds area!
-//sizeof(ticcmd_t)*BACKUPTICS
-//This is the current length of our extra stuff
+// Stick all options into bytes so we don't need to mess with bitfields
+// WARNING: make sure this doesn't exceed the size of the ticcmds area!
+// sizeof(ticcmd_t)*BACKUPTICS
+// This is the current length of our extra stuff
 //
-//killough 5/2/98: this should all be replaced by calls to G_WriteOptions()
-//and G_ReadOptions(), which were specifically designed to set up packets.
-//By creating a separate struct and functions to read/write the options,
-//you now have two functions and data to maintain instead of just one.
-//If the array in g_game.c which G_WriteOptions()/G_ReadOptions() operates
-//on, is too large (more than sizeof(ticcmd_t)*BACKUPTICS), it can
-//either be shortened, or the net code needs to divide it up
-//automatically into packets. The STARTUPLEN below is non-portable.
-//There's a portable way to do it without having to know the sizes.
+// killough 5/2/98: this should all be replaced by calls to G_WriteOptions()
+// and G_ReadOptions(), which were specifically designed to set up packets.
+// By creating a separate struct and functions to read/write the options,
+// you now have two functions and data to maintain instead of just one.
+// If the array in g_game.c which G_WriteOptions()/G_ReadOptions() operates
+// on, is too large (more than sizeof(ticcmd_t)*BACKUPTICS), it can
+// either be shortened, or the net code needs to divide it up
+// automatically into packets. The STARTUPLEN below is non-portable.
+// There's a portable way to do it without having to know the sizes.
 
 #define STARTUPLEN 12
-typedef struct
-{
+typedef struct {
   byte monsters_remember;
   byte variable_friction;
   byte weapon_recoil;
@@ -121,94 +113,94 @@ typedef struct
   byte fastparm;
   byte demo_insurance;
   unsigned long rngseed;
-  char filler[sizeof(ticcmd_t)*BACKUPTICS-STARTUPLEN];
+  char filler[sizeof(ticcmd_t) * BACKUPTICS - STARTUPLEN];
 } startup_t;
 
 typedef enum {
-  // Leave space, so low values corresponding to normal netgame setup packets can be ignored
+  // Leave space, so low values corresponding to normal netgame setup packets
+  // can be ignored
   nm_plcolour = 3,
   nm_savegamename = 4,
 } netmisctype_t;
 
-typedef struct
-{
+typedef struct {
   netmisctype_t type;
   size_t len;
-  byte value[sizeof(ticcmd_t)*BACKUPTICS - sizeof(netmisctype_t) - sizeof(size_t)];
+  byte value[sizeof(ticcmd_t) * BACKUPTICS - sizeof(netmisctype_t) -
+             sizeof(size_t)];
 } netmisc_t;
 
-typedef struct
-{
-    // Supposed to be DOOMCOM_ID?
-    long                id;
+typedef struct {
+  // Supposed to be DOOMCOM_ID?
+  long id;
 
-    // DOOM executes an int to execute commands.
-    short               intnum;
-    // Communication between DOOM and the driver.
-    // Is CMD_SEND or CMD_GET.
-    short               command;
-    // Is dest for send, set by get (-1 = no packet).
-    short               remotenode;
+  // DOOM executes an int to execute commands.
+  short intnum;
+  // Communication between DOOM and the driver.
+  // Is CMD_SEND or CMD_GET.
+  short command;
+  // Is dest for send, set by get (-1 = no packet).
+  short remotenode;
 
-    // Number of bytes in doomdata to be sent
-    short               datalength;
+  // Number of bytes in doomdata to be sent
+  short datalength;
 
-    // Info common to all nodes.
-    // Console is allways node 0.
-    short               numnodes;
-    // Flag: 1 = no duplication, 2-5 = dup for slow nets.
-    short               ticdup;
-    // Flag: 1 = send a backup tic in every packet.
-    short               extratics;
-    // Flag: 1 = deathmatch.
-    short               deathmatch;
-    // Flag: -1 = new game, 0-5 = load savegame
-    short               savegame;
-    short               episode;        // 1-3
-    short               map;            // 1-9
-    short               skill;          // 1-5
+  // Info common to all nodes.
+  // Console is allways node 0.
+  short numnodes;
+  // Flag: 1 = no duplication, 2-5 = dup for slow nets.
+  short ticdup;
+  // Flag: 1 = send a backup tic in every packet.
+  short extratics;
+  // Flag: 1 = deathmatch.
+  short deathmatch;
+  // Flag: -1 = new game, 0-5 = load savegame
+  short savegame;
+  short episode; // 1-3
+  short map;     // 1-9
+  short skill;   // 1-5
 
-    // Info specific to this node.
-    short               consoleplayer;
-    short               numplayers;
+  // Info specific to this node.
+  short consoleplayer;
+  short numplayers;
 
-    // These are related to the 3-display mode,
-    //  in which two drones looking left and right
-    //  were used to render two additional views
-    //  on two additional computers.
-    // Probably not operational anymore.
-    // 1 = left, 0 = center, -1 = right
-    short               angleoffset;
-    // 1 = drone
-    short               drone;
+  // These are related to the 3-display mode,
+  //  in which two drones looking left and right
+  //  were used to render two additional views
+  //  on two additional computers.
+  // Probably not operational anymore.
+  // 1 = left, 0 = center, -1 = right
+  short angleoffset;
+  // 1 = drone
+  short drone;
 
-    // The packet data to be sent.
-    doomdata_t          data;
+  // The packet data to be sent.
+  doomdata_t data;
 
 } doomcom_t;
 
 // Create any new ticcmds and broadcast to other players.
 #ifdef HAVE_NET
-void NetUpdate (void);
+void NetUpdate(void);
 #else
 void D_BuildNewTiccmds(void);
 #endif
 
 //? how many ticks to run?
-void TryRunTics (void);
+void TryRunTics(void);
 
 // CPhipps - move to header file
-void D_InitNetGame (void); // This does the setup
+void D_InitNetGame(void);  // This does the setup
 void D_CheckNetGame(void); // This waits for game start
 
 // CPhipps - misc info broadcast
-void D_NetSendMisc(netmisctype_t type, size_t len, void* data);
+void D_NetSendMisc(netmisctype_t type, size_t len, void *data);
 
 // CPhipps - ask server for a wad file we need
-boolean D_NetGetWad(const char* name);
+boolean D_NetGetWad(const char *name);
 
 // Netgame stuff (buffers and pointers, i.e. indices).
-extern  doomcom_t  *doomcom;
-extern  doomdata_t *netbuffer;  // This points inside doomcom.
+extern doomcom_t *doomcom;
+extern doomdata_t *netbuffer; // This points inside doomcom.
 
 #endif

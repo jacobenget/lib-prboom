@@ -71,7 +71,7 @@
 
 static int playFile(const char *filename);
 
-char* music_tmp; /* cph - name of music temporary file */
+char *music_tmp; /* cph - name of music temporary file */
 static boolean qtInited = false;
 static boolean inLoopedMode = false;
 static unsigned songSize = 0;
@@ -79,11 +79,10 @@ static char *song;
 static Movie movie = NULL;
 static short movieVolume = kFullVolume;
 
-void I_ShutdownMusic(void)
-{
-  if(song)
+void I_ShutdownMusic(void) {
+  if (song)
     free(song);
-  if(movie)
+  if (movie)
     DisposeMovie(movie);
 
   if (music_tmp) {
@@ -99,16 +98,17 @@ void I_ShutdownMusic(void)
   movie = NULL;
 }
 
-void I_InitMusic(void)
-{
+void I_InitMusic(void) {
   qtInited = true;
   EnterMovies();
   music_tmp = strdup("/tmp/prboom-music-XXXXXX");
   {
     int fd = mkstemp(music_tmp);
-    if (fd<0) {
-      lprintf(LO_ERROR, "I_InitMusic: failed to create music temp file %s", music_tmp);
-      free(music_tmp); return;
+    if (fd < 0) {
+      lprintf(LO_ERROR, "I_InitMusic: failed to create music temp file %s",
+              music_tmp);
+      free(music_tmp);
+      return;
     } else
       close(fd);
   }
@@ -117,8 +117,7 @@ void I_InitMusic(void)
   atexit(I_ShutdownMusic);
 }
 
-void I_PlaySong(int handle, int looping)
-{
+void I_PlaySong(int handle, int looping) {
   inLoopedMode = looping;
 
   GoToBeginningOfMovie(movie);
@@ -126,69 +125,66 @@ void I_PlaySong(int handle, int looping)
   SetMovieVolume(movie, movieVolume);
 }
 
-void I_UpdateMusic(void)
-{
-  if(!movie) return;
+void I_UpdateMusic(void) {
+  if (!movie)
+    return;
 
   MoviesTask(movie, 0);
 
-  if(IsMovieDone(movie) && inLoopedMode)
-  {
+  if (IsMovieDone(movie) && inLoopedMode) {
     GoToBeginningOfMovie(movie);
     StartMovie(movie);
   }
 }
 
-void I_PauseSong (int handle)
-{
-  if(!movie) return;
+void I_PauseSong(int handle) {
+  if (!movie)
+    return;
 
   StopMovie(movie);
 }
 
-void I_ResumeSong (int handle)
-{
-  if(!movie) return;
+void I_ResumeSong(int handle) {
+  if (!movie)
+    return;
 
   StartMovie(movie);
 }
 
-void I_StopSong(int handle)
-{
-  if(!movie) return;
+void I_StopSong(int handle) {
+  if (!movie)
+    return;
 
   StopMovie(movie);
 }
 
-void I_UnRegisterSong(int handle)
-{
-  if(!movie) return;
+void I_UnRegisterSong(int handle) {
+  if (!movie)
+    return;
 
   DisposeMovie(movie);
 }
 
-int I_RegisterSong(const void *data, size_t len)
-{
+int I_RegisterSong(const void *data, size_t len) {
   MIDI *mididata;
   FILE *midfile;
 
-  if ( music_tmp == NULL )
+  if (music_tmp == NULL)
     return 0;
   midfile = fopen(music_tmp, "wb");
-  if ( midfile == NULL ) {
-    lprintf(LO_ERROR,"Couldn't write MIDI to %s\n", music_tmp);
+  if (midfile == NULL) {
+    lprintf(LO_ERROR, "Couldn't write MIDI to %s\n", music_tmp);
     return 0;
   }
   /* Convert MUS chunk to MIDI? */
-  if ( memcmp(data, "MUS", 3) == 0 )
-  {
+  if (memcmp(data, "MUS", 3) == 0) {
     UBYTE *mid;
     int midlen;
 
     mididata = malloc(sizeof(MIDI));
     mmus2mid(data, mididata, 89, 0);
-    MIDIToMidi(mididata,&mid,&midlen);
-    M_WriteFile(music_tmp,mid,midlen);
+    MIDIToMidi(mididata, &mid, &midlen);
+    M_WriteFile(music_tmp, mid, midlen);
     free(mid);
     free_mididata(mididata);
     free(mididata);
@@ -200,24 +196,20 @@ int I_RegisterSong(const void *data, size_t len)
   return playFile(music_tmp);
 }
 
-int I_RegisterMusic( const char* filename, musicinfo_t *song )
-{
+int I_RegisterMusic(const char *filename, musicinfo_t *song) {
   // TODO
   return 1;
 }
 
-void I_SetMusicVolume(int value)
-{
+void I_SetMusicVolume(int value) {
   movieVolume = 0x000000ff * value / 15;
-  if(movie)
-  {
+  if (movie) {
     // Update the volume of the running movie.
     SetMovieVolume(movie, movieVolume);
   }
 }
 
-static int playFile(const char *filename)
-{
+static int playFile(const char *filename) {
   OSErr error = noErr;
   CFStringRef pathStr;
   CFURLRef url;
@@ -225,28 +217,25 @@ static int playFile(const char *filename)
   FSSpec fsSpec;
   short refNum;
 
-  if(!qtInited)
-  {
+  if (!qtInited) {
     lprintf(LO_ERROR, "Music: Music system not initialized");
     return 0;
   }
 
   // Free any previously loaded music.
-  if(movie)
-  {
+  if (movie) {
     DisposeMovie(movie);
     movie = NULL;
   }
 
   // Now we'll open the file using Carbon and QuickTime.
-  pathStr = CFStringCreateWithCString(NULL, filename,
-            CFStringGetSystemEncoding());
+  pathStr =
+      CFStringCreateWithCString(NULL, filename, CFStringGetSystemEncoding());
   url = CFURLCreateWithString(NULL, pathStr, NULL);
   CFRelease(pathStr);
 
   // We've got the URL, get the FSSpec.
-  if(!CFURLGetFSRef(url, &fsRef))
-  {
+  if (!CFURLGetFSRef(url, &fsRef)) {
     // File does not exist??
     CFRelease(url);
     lprintf(LO_ERROR, "Music: Error on CFURLGetFSRef");
@@ -254,24 +243,22 @@ static int playFile(const char *filename)
   }
   CFRelease(url);
   url = NULL;
-  if(FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &fsSpec, NULL)
-     != noErr)
-  {
+  if (FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &fsSpec, NULL) !=
+      noErr) {
     lprintf(LO_ERROR, "Music: Error on FSGetCatalogInfo");
     return 0;
   }
 
   // Open the 'movie' from the specified file.
-  if(OpenMovieFile(&fsSpec, &refNum, fsRdPerm) != noErr)
-  {
+  if (OpenMovieFile(&fsSpec, &refNum, fsRdPerm) != noErr) {
     lprintf(LO_ERROR, "Music: Error on OpenMovie");
     return 0;
   }
   error = NewMovieFromFile(&movie, refNum, NULL, NULL,
-          newMovieActive & newMovieDontAskUnresolvedDataRefs, NULL);
+                           newMovieActive & newMovieDontAskUnresolvedDataRefs,
+                           NULL);
   CloseMovieFile(refNum);
-  if(error != noErr)
-  {
+  if (error != noErr) {
     lprintf(LO_ERROR, "Music: Error on NewMovie");
     return 0;
   }

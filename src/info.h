@@ -42,8 +42,7 @@
 /********************************************************************
  * Sprite name enumeration - must match info.c                      *
  ********************************************************************/
-typedef enum
-{
+typedef enum {
   SPR_TROO,
   SPR_SHTG,
   SPR_PUNG,
@@ -188,7 +187,7 @@ typedef enum
   SPR_DOGS, /* killough 7/19/98: Marine's best friend :) */
 #endif
 
-  NUMSPRITES  /* counter of how many there are */
+  NUMSPRITES /* counter of how many there are */
 
 } spritenum_t;
 
@@ -196,8 +195,7 @@ typedef enum
  * States (frames) enumeration -- must match info.c                 *
  ********************************************************************/
 
-typedef enum
-{
+typedef enum {
   S_NULL,
   S_LIGHTDONE,
   S_PUNCH,
@@ -1167,13 +1165,13 @@ typedef enum
   S_TECH2LAMP4,
   S_TNT1, /* add state for invisible sprite          phares 3/8/98  */
 
-  S_GRENADE,   /* killough 8/9/98: grenade launcher */
-  S_DETONATE,  /* killough 8/9/98: detonation of objects */
+  S_GRENADE,  /* killough 8/9/98: grenade launcher */
+  S_DETONATE, /* killough 8/9/98: detonation of objects */
   S_DETONATE2,
   S_DETONATE3,
 
   // always count dog states, even if dogs are disabled
-  S_DOGS_STND,      /* killough 7/19/98: Marine's best friend :) */
+  S_DOGS_STND, /* killough 7/19/98: Marine's best friend :) */
   S_DOGS_STND2,
   S_DOGS_RUN1,
   S_DOGS_RUN2,
@@ -1203,11 +1201,11 @@ typedef enum
 
   // add dummy beta bfg / lost soul frames for dehacked compatibility
   // fixes bug #1576151 (part 2)
-  S_OLDBFG1,  // killough 7/11/98: the old BFG's 43 firing frames
-  S_OLDBFG42 = S_OLDBFG1+41,
+  S_OLDBFG1, // killough 7/11/98: the old BFG's 43 firing frames
+  S_OLDBFG42 = S_OLDBFG1 + 41,
   S_OLDBFG43,
 
-  S_PLS1BALL,      // killough 7/19/98: first plasma fireball in the beta
+  S_PLS1BALL, // killough 7/19/98: first plasma fireball in the beta
   S_PLS1BALL2,
   S_PLS1EXP,
   S_PLS1EXP2,
@@ -1215,7 +1213,7 @@ typedef enum
   S_PLS1EXP4,
   S_PLS1EXP5,
 
-  S_PLS2BALL,     // killough 7/19/98: second plasma fireball in the beta
+  S_PLS2BALL, // killough 7/19/98: second plasma fireball in the beta
   S_PLS2BALL2,
   S_PLS2BALLX1,
   S_PLS2BALLX2,
@@ -1244,9 +1242,9 @@ typedef enum
   S_BSKUL_DIE7,
   S_BSKUL_DIE8,
 
-  S_MUSHROOM,  /* killough 10/98: mushroom explosion effect */
+  S_MUSHROOM, /* killough 10/98: mushroom explosion effect */
 
-  NUMSTATES  /* Counter of how many there are */
+  NUMSTATES /* Counter of how many there are */
 
 } statenum_t;
 
@@ -1254,18 +1252,17 @@ typedef enum
  * Definition of the state (frames) structure                       *
  ********************************************************************/
 
-typedef struct
-{
-  spritenum_t sprite;       /* sprite number to show                       */
-  long        frame;        /* which frame/subframe of the sprite is shown */
-  long        tics;         /* number of gametics this frame should last   */
-  actionf_t   action;       /* code pointer to function for action if any  */
-  statenum_t  nextstate;    /* linked list pointer to next state or zero   */
-  long        misc1, misc2; /* apparently never used in DOOM               */
+typedef struct {
+  spritenum_t sprite;   /* sprite number to show                       */
+  long frame;           /* which frame/subframe of the sprite is shown */
+  long tics;            /* number of gametics this frame should last   */
+  actionf_t action;     /* code pointer to function for action if any  */
+  statenum_t nextstate; /* linked list pointer to next state or zero   */
+  long misc1, misc2;    /* apparently never used in DOOM               */
 } state_t;
 
 /* these are in info.c */
-extern state_t  states[NUMSTATES];
+extern state_t states[NUMSTATES];
 extern const char *sprnames[]; /* 1/17/98 killough - CPhipps - const */
 
 /********************************************************************
@@ -1412,11 +1409,11 @@ typedef enum {
   MT_MISC84,
   MT_MISC85,
   MT_MISC86,
-  MT_PUSH,    /* controls push source - phares */
-  MT_PULL,    /* controls pull source - phares 3/20/98 */
+  MT_PUSH, /* controls push source - phares */
+  MT_PULL, /* controls pull source - phares 3/20/98 */
 
 #ifdef DOGS
-  MT_DOGS,    /* killough 7/19/98: Marine's best friend */
+  MT_DOGS, /* killough 7/19/98: Marine's best friend */
 #endif
 
   /* proff 11/22/98: Andy Baker's stealth monsters (next 12)
@@ -1434,7 +1431,7 @@ typedef enum {
   MT_STEALTHSHOTGUY,
   MT_STEALTHZOMBIE,
 
-  NUMMOBJTYPES  // Counter of how many there are
+  NUMMOBJTYPES // Counter of how many there are
 } mobjtype_t;
 
 /********************************************************************
@@ -1445,8 +1442,7 @@ typedef enum {
  * sound doesn't apply (like lamps generally don't attack or whistle).
  */
 
-typedef struct
-{
+typedef struct {
   int doomednum;    /* Thing number used in id's editor, and now
        probably by every other editor too */
   int spawnstate;   /* The state (frame) index when this Thing is

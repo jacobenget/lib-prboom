@@ -50,7 +50,4 @@ int skytexturemid;
 // R_InitSkyMap
 // Called whenever the view size changes.
 //
-void R_InitSkyMap (void)
-{
-  skytexturemid = 100*FRACUNIT;
-}
+void R_InitSkyMap(void) { skytexturemid = 100 * FRACUNIT; }

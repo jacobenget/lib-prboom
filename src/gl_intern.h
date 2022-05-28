@@ -34,8 +34,7 @@
 #ifndef _GL_INTERN_H
 #define _GL_INTERN_H
 
-typedef enum
-{
+typedef enum {
   GLDT_UNREGISTERED,
   GLDT_BROKEN,
   GLDT_PATCH,
@@ -43,16 +42,15 @@ typedef enum
   GLDT_FLAT
 } GLTexType;
 
-typedef struct
-{
+typedef struct {
   int index;
-  int width,height;
-  int leftoffset,topoffset;
-  int tex_width,tex_height;
+  int width, height;
+  int leftoffset, topoffset;
+  int tex_width, tex_height;
   int realtexwidth, realtexheight;
-  int buffer_width,buffer_height;
+  int buffer_width, buffer_height;
   int buffer_size;
-  int glTexID[CR_LIMIT+MAXPLAYERS];
+  int glTexID[CR_LIMIT + MAXPLAYERS];
   GLTexType textype;
   boolean mipmap;
 } GLTexture;
@@ -71,7 +69,8 @@ extern unsigned char gld_palmap[256];
 extern GLTexture *last_gltexture;
 extern int last_cm;
 
-//e6y: in some cases textures with a zero index (NO_TEXTURE) should be registered
+// e6y: in some cases textures with a zero index (NO_TEXTURE) should be
+// registered
 GLTexture *gld_RegisterTexture(int texture_num, boolean mipmap, boolean force);
 void gld_BindTexture(GLTexture *gltexture);
 GLTexture *gld_RegisterPatch(int lump, int cm);

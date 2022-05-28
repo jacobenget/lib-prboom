@@ -38,10 +38,10 @@
 
 #include "p_mobj.h"
 
-void P_NoiseAlert (mobj_t *target, mobj_t *emmiter);
+void P_NoiseAlert(mobj_t *target, mobj_t *emmiter);
 void P_SpawnBrainTargets(void); /* killough 3/26/98: spawn icon landings */
 
-extern struct brain_s {         /* killough 3/26/98: global state of boss brain */
+extern struct brain_s { /* killough 3/26/98: global state of boss brain */
   int easy, targeton;
 } brain;
 
@@ -105,14 +105,14 @@ void A_SpawnSound();
 void A_SpawnFly();
 void A_BrainExplode();
 void A_Die();
-void A_Detonate();        /* killough 8/9/98: detonate a bomb or other device */
-void A_Mushroom();        /* killough 10/98: mushroom effect */
-void A_Spawn();           // killough 11/98
-void A_Turn();            // killough 11/98
-void A_Face();            // killough 11/98
-void A_Scratch();         // killough 11/98
-void A_PlaySound();       // killough 11/98
-void A_RandomJump();      // killough 11/98
-void A_LineEffect();      // killough 11/98
+void A_Detonate();   /* killough 8/9/98: detonate a bomb or other device */
+void A_Mushroom();   /* killough 10/98: mushroom effect */
+void A_Spawn();      // killough 11/98
+void A_Turn();       // killough 11/98
+void A_Face();       // killough 11/98
+void A_Scratch();    // killough 11/98
+void A_PlaySound();  // killough 11/98
+void A_RandomJump(); // killough 11/98
+void A_LineEffect(); // killough 11/98
 
 #endif // __P_ENEMY__

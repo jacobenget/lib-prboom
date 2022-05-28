@@ -67,23 +67,23 @@ enum sloped_edge_type_e {
 
 // Packaged into a struct - POPE
 typedef struct {
-  int                 x;
-  int                 yl;
-  int                 yh;
-  fixed_t             z; // the current column z coord
-  fixed_t             iscale;
-  fixed_t             texturemid;
-  int                 texheight;    // killough
-  fixed_t             texu; // the current column u coord
-  const byte          *source; // first pixel in a column
-  const byte          *prevsource; // first pixel in previous column
-  const byte          *nextsource; // first pixel in next column
-  const lighttable_t  *colormap;
-  const lighttable_t  *nextcolormap;
-  const byte          *translation;
-  int                 edgeslope; // OR'ed RDRAW_EDGESLOPE_*
+  int x;
+  int yl;
+  int yh;
+  fixed_t z; // the current column z coord
+  fixed_t iscale;
+  fixed_t texturemid;
+  int texheight;          // killough
+  fixed_t texu;           // the current column u coord
+  const byte *source;     // first pixel in a column
+  const byte *prevsource; // first pixel in previous column
+  const byte *nextsource; // first pixel in next column
+  const lighttable_t *colormap;
+  const lighttable_t *nextcolormap;
+  const byte *translation;
+  int edgeslope; // OR'ed RDRAW_EDGESLOPE_*
   // 1 if R_DrawColumn* is currently drawing a masked column, otherwise 0
-  int                 drawingmasked;
+  int drawingmasked;
   enum sloped_edge_type_e edgetype;
 } draw_column_vars_t;
 
@@ -92,26 +92,26 @@ void R_SetDefaultDrawColumnVars(draw_column_vars_t *dcvars);
 void R_VideoErase(int x, int y, int count);
 
 typedef struct {
-  int                 y;
-  int                 x1;
-  int                 x2;
-  fixed_t             z; // the current span z coord
-  fixed_t             xfrac;
-  fixed_t             yfrac;
-  fixed_t             xstep;
-  fixed_t             ystep;
-  const byte          *source; // start of a 64*64 tile image
-  const lighttable_t  *colormap;
-  const lighttable_t  *nextcolormap;
+  int y;
+  int x1;
+  int x2;
+  fixed_t z; // the current span z coord
+  fixed_t xfrac;
+  fixed_t yfrac;
+  fixed_t xstep;
+  fixed_t ystep;
+  const byte *source; // start of a 64*64 tile image
+  const lighttable_t *colormap;
+  const lighttable_t *nextcolormap;
 } draw_span_vars_t;
 
 typedef struct {
-  byte           *byte_topleft;
+  byte *byte_topleft;
   unsigned short *short_topleft;
-  unsigned int   *int_topleft;
-  int   byte_pitch;
-  int   short_pitch;
-  int   int_pitch;
+  unsigned int *int_topleft;
+  int byte_pitch;
+  int short_pitch;
+  int int_pitch;
 
   enum draw_filter_type_e filterwall;
   enum draw_filter_type_e filterfloor;
@@ -130,8 +130,9 @@ typedef struct {
 
 extern draw_vars_t drawvars;
 
-extern byte playernumtotrans[MAXPLAYERS]; // CPhipps - what translation table for what player
-extern byte       *translationtables;
+extern byte playernumtotrans[MAXPLAYERS]; // CPhipps - what translation table
+                                          // for what player
+extern byte *translationtables;
 
 typedef void (*R_DrawColumn_f)(draw_column_vars_t *dcvars);
 R_DrawColumn_f R_GetDrawColumnFunc(enum column_pipeline_e type,

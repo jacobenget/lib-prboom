@@ -34,10 +34,10 @@
  *-----------------------------------------------------------------------------*/
 
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include "config.h"
 #endif
 #ifdef HAVE_NETINET_IN_H
-# include <netinet/in.h>
+#include <netinet/in.h>
 #endif
 #include <stdlib.h>
 #include <errno.h>
@@ -75,42 +75,32 @@ UDP_PACKET *udp_packet;
  *
  * Shutdown the network code
  */
-void I_ShutdownNetwork(void)
-{
-        SDLNet_FreePacket(udp_packet);
-        SDLNet_Quit();
+void I_ShutdownNetwork(void) {
+  SDLNet_FreePacket(udp_packet);
+  SDLNet_Quit();
 }
 
 /* I_InitNetwork
  *
  * Sets up the network code
  */
-void I_InitNetwork(void)
-{
+void I_InitNetwork(void) {
   SDLNet_Init();
   atexit(I_ShutdownNetwork);
   udp_packet = SDLNet_AllocPacket(10000);
 }
 
-UDP_PACKET *I_AllocPacket(int size)
-{
-  return(SDLNet_AllocPacket(size));
-}
+UDP_PACKET *I_AllocPacket(int size) { return (SDLNet_AllocPacket(size)); }
 
-void I_FreePacket(UDP_PACKET *packet)
-{
-  SDLNet_FreePacket(packet);
-}
-
+void I_FreePacket(UDP_PACKET *packet) { SDLNet_FreePacket(packet); }
 
 /* cph - I_WaitForPacket - use select(2) via SDL_net's interface
  * No more I_uSleep loop kludge */
 
-void I_WaitForPacket(int ms)
-{
+void I_WaitForPacket(int ms) {
   SDLNet_SocketSet ss = SDLNet_AllocSocketSet(1);
   SDLNet_UDP_AddSocket(ss, udp_socket);
-  SDLNet_CheckSockets(ss,ms);
+  SDLNet_CheckSockets(ss, ms);
   SDLNet_FreeSocketSet(ss);
 #if (defined _WIN32 && !defined PRBOOM_SERVER)
   I_UpdateConsole();
@@ -123,25 +113,23 @@ void I_WaitForPacket(int ms)
  */
 IPaddress serverIP;
 
-int I_ConnectToServer(const char *serv)
-{
+int I_ConnectToServer(const char *serv) {
   char server[500], *p;
   Uint16 port;
 
   /* Split serv into address and port */
-  if (strlen(serv)>500) return 0;
-  strcpy(server,serv);
+  if (strlen(serv) > 500)
+    return 0;
+  strcpy(server, serv);
   p = strchr(server, ':');
-  if(p)
-  {
+  if (p) {
     *p++ = '\0';
     port = atoi(p);
-  }
-  else
+  } else
     port = 5030; /* Default server port */
 
   SDLNet_ResolveHost(&serverIP, server, port);
-  if ( serverIP.host == INADDR_NONE )
+  if (serverIP.host == INADDR_NONE)
     return -1;
 
   if (SDLNet_UDP_Bind(udp_socket, 0, &serverIP) == -1)
@@ -154,21 +142,20 @@ int I_ConnectToServer(const char *serv)
  *
  * Disconnect from server
  */
-void I_Disconnect(void)
-{
-/*  int i;
-  UDP_PACKET *packet;
-  packet_header_t *pdata = (packet_header_t *)packet->data;
-  packet = I_AllocPacket(sizeof(packet_header_t) + 1);
+void I_Disconnect(void) {
+  /*  int i;
+    UDP_PACKET *packet;
+    packet_header_t *pdata = (packet_header_t *)packet->data;
+    packet = I_AllocPacket(sizeof(packet_header_t) + 1);
 
-  packet->data[sizeof(packet_header_t)] = consoleplayer;
-        pdata->type = PKT_QUIT; pdata->tic = gametic;
+    packet->data[sizeof(packet_header_t)] = consoleplayer;
+          pdata->type = PKT_QUIT; pdata->tic = gametic;
 
-  for (i=0; i<4; i++) {
-    I_SendPacket(packet);
-    I_uSleep(10000);
-    }
-  I_FreePacket(packet);*/
+    for (i=0; i<4; i++) {
+      I_SendPacket(packet);
+      I_uSleep(10000);
+      }
+    I_FreePacket(packet);*/
   SDLNet_UDP_Unbind(udp_socket, 0);
 }
 
@@ -178,32 +165,26 @@ void I_Disconnect(void)
  * Sets the given socket non-blocking, binds to the given port, or first
  * available if none is given
  */
-UDP_SOCKET I_Socket(Uint16 port)
-{
-  if(port)
+UDP_SOCKET I_Socket(Uint16 port) {
+  if (port)
     return (SDLNet_UDP_Open(port));
   else {
     UDP_SOCKET sock;
     port = IPPORT_RESERVED;
-    while( (sock = SDLNet_UDP_Open(port)) == NULL )
+    while ((sock = SDLNet_UDP_Open(port)) == NULL)
       port++;
     return sock;
   }
 }
 
-void I_CloseSocket(UDP_SOCKET sock)
-{
-  SDLNet_UDP_Close(sock);
-}
+void I_CloseSocket(UDP_SOCKET sock) { SDLNet_UDP_Close(sock); }
 
-UDP_CHANNEL I_RegisterPlayer(IPaddress *ipaddr)
-{
+UDP_CHANNEL I_RegisterPlayer(IPaddress *ipaddr) {
   static int freechannel;
-  return(SDLNet_UDP_Bind(udp_socket, freechannel++, ipaddr));
+  return (SDLNet_UDP_Bind(udp_socket, freechannel++, ipaddr));
 }
 
-void I_UnRegisterPlayer(UDP_CHANNEL channel)
-{
+void I_UnRegisterPlayer(UDP_CHANNEL channel) {
   SDLNet_UDP_Unbind(udp_socket, channel);
 }
 
@@ -212,12 +193,11 @@ void I_UnRegisterPlayer(UDP_CHANNEL channel)
  *
  * Returns the checksum of a given network packet
  */
-static byte ChecksumPacket(const packet_header_t* buffer, size_t len)
-{
-  const byte* p = (const void*)buffer;
+static byte ChecksumPacket(const packet_header_t *buffer, size_t len) {
+  const byte *p = (const void *)buffer;
   byte sum = 0;
 
-  if (len==0)
+  if (len == 0)
     return 0;
 
   while (p++, --len)
@@ -226,67 +206,64 @@ static byte ChecksumPacket(const packet_header_t* buffer, size_t len)
   return sum;
 }
 
-size_t I_GetPacket(packet_header_t* buffer, size_t buflen)
-{
+size_t I_GetPacket(packet_header_t *buffer, size_t buflen) {
   int checksum;
   size_t len;
   int status;
 
   status = SDLNet_UDP_Recv(udp_socket, udp_packet);
   len = udp_packet->len;
-  if (buflen<len)
-    len=buflen;
-  if ( (status!=0) && (len>0) )
+  if (buflen < len)
+    len = buflen;
+  if ((status != 0) && (len > 0))
     memcpy(buffer, udp_packet->data, len);
-  sentfrom=udp_packet->channel;
+  sentfrom = udp_packet->channel;
 #ifndef SDL_NET_UDP_PACKET_SRC
-  sentfrom_addr=udp_packet->address;
+  sentfrom_addr = udp_packet->address;
 #else
-  sentfrom_addr=udp_packet->src; /* cph - allow for old SDL_net library */
+  sentfrom_addr = udp_packet->src; /* cph - allow for old SDL_net library */
 #endif
-  checksum=buffer->checksum;
-  buffer->checksum=0;
-  if ( (status!=0) && (len>0)) {
+  checksum = buffer->checksum;
+  buffer->checksum = 0;
+  if ((status != 0) && (len > 0)) {
     byte psum = ChecksumPacket(buffer, udp_packet->len);
-/*    fprintf(stderr, "recvlen = %u, stolen = %u, csum = %u, psum = %u\n",
-  udp_packet->len, len, checksum, psum); */
-    if (psum == checksum) return len;
+    /*    fprintf(stderr, "recvlen = %u, stolen = %u, csum = %u, psum = %u\n",
+      udp_packet->len, len, checksum, psum); */
+    if (psum == checksum)
+      return len;
   }
   return 0;
 }
 
-void I_SendPacket(packet_header_t* packet, size_t len)
-{
+void I_SendPacket(packet_header_t *packet, size_t len) {
   packet->checksum = ChecksumPacket(packet, len);
   memcpy(udp_packet->data, packet, udp_packet->len = len);
   SDLNet_UDP_Send(udp_socket, 0, udp_packet);
 }
 
-void I_SendPacketTo(packet_header_t* packet, size_t len, UDP_CHANNEL *to)
-{
+void I_SendPacketTo(packet_header_t *packet, size_t len, UDP_CHANNEL *to) {
   packet->checksum = ChecksumPacket(packet, len);
   memcpy(udp_packet->data, packet, udp_packet->len = len);
   SDLNet_UDP_Send(udp_socket, *to, udp_packet);
 }
 
-void I_PrintAddress(FILE* fp, UDP_CHANNEL *addr)
-{
-/*
-  char *addy;
-  Uint16 port;
-  IPaddress *address;
+void I_PrintAddress(FILE *fp, UDP_CHANNEL *addr) {
+  /*
+    char *addy;
+    Uint16 port;
+    IPaddress *address;
 
-  address = SDLNet_UDP_GetPeerAddress(udp_socket, player);
+    address = SDLNet_UDP_GetPeerAddress(udp_socket, player);
 
-//FIXME: if it cant resolv it may freeze up
-  addy = SDLNet_ResolveIP(address);
-  port = address->port;
+  //FIXME: if it cant resolv it may freeze up
+    addy = SDLNet_ResolveIP(address);
+    port = address->port;
 
-  if(addy != NULL)
-      fprintf(fp, "%s:%d", addy, port);
-  else
-    fprintf(fp, "Error");
-*/
+    if(addy != NULL)
+        fprintf(fp, "%s:%d", addy, port);
+    else
+      fprintf(fp, "Error");
+  */
 }
 
 #endif /* HAVE_NET */

@@ -41,7 +41,7 @@
 #include "wi_stuff.h"
 #include "s_sound.h"
 #include "sounds.h"
-#include "lprintf.h"  // jff 08/03/98 - declaration of lprintf
+#include "lprintf.h" // jff 08/03/98 - declaration of lprintf
 #include "r_draw.h"
 
 // Ty 03/17/98: flag that new par times have been loaded in d_deh
@@ -60,85 +60,76 @@ extern boolean deh_pars;
 //  release (aka DOOM II), which had 34 maps
 //  in one episode. So there.
 #define NUMEPISODES 4
-#define NUMMAPS     9
-
+#define NUMMAPS 9
 
 // Not used
 // in tics
-//U #define PAUSELEN    (TICRATE*2)
-//U #define SCORESTEP    100
-//U #define ANIMPERIOD    32
+// U #define PAUSELEN    (TICRATE*2)
+// U #define SCORESTEP    100
+// U #define ANIMPERIOD    32
 // pixel distance from "(YOU)" to "PLAYER N"
-//U #define STARDIST  10
-//U #define WK 1
-
+// U #define STARDIST  10
+// U #define WK 1
 
 // GLOBAL LOCATIONS
-#define WI_TITLEY      2
-#define WI_SPACINGY   33
+#define WI_TITLEY 2
+#define WI_SPACINGY 33
 
 // SINGLE-PLAYER STUFF
-#define SP_STATSX     50
-#define SP_STATSY     50
+#define SP_STATSX 50
+#define SP_STATSY 50
 
-#define SP_TIMEX      8
+#define SP_TIMEX 8
 // proff/nicolas 09/20/98 -- changed for hi-res
-#define SP_TIMEY      160
+#define SP_TIMEY 160
 //#define SP_TIMEY      (SCREENHEIGHT-32)
 
-
 // NET GAME STUFF
-#define NG_STATSY     50
-#define NG_STATSX     (32 + V_NamePatchWidth(star)/2 + 32*!dofrags)
+#define NG_STATSY 50
+#define NG_STATSX (32 + V_NamePatchWidth(star) / 2 + 32 * !dofrags)
 
-#define NG_SPACINGX   64
-
+#define NG_SPACINGX 64
 
 // Used to display the frags matrix at endgame
 // DEATHMATCH STUFF
-#define DM_MATRIXX    42
-#define DM_MATRIXY    68
+#define DM_MATRIXX 42
+#define DM_MATRIXY 68
 
-#define DM_SPACINGX   40
+#define DM_SPACINGX 40
 
-#define DM_TOTALSX   269
+#define DM_TOTALSX 269
 
-#define DM_KILLERSX   10
-#define DM_KILLERSY  100
-#define DM_VICTIMSX    5
-#define DM_VICTIMSY   50
-
+#define DM_KILLERSX 10
+#define DM_KILLERSY 100
+#define DM_VICTIMSX 5
+#define DM_VICTIMSY 50
 
 // These animation variables, structures, etc. are used for the
 // DOOM/Ultimate DOOM intermission screen animations.  This is
 // totally different from any sprite or texture/flat animations
-typedef enum
-{
-  ANIM_ALWAYS,   // determined by patch entry
-  ANIM_RANDOM,   // occasional
-  ANIM_LEVEL     // continuous
+typedef enum {
+  ANIM_ALWAYS, // determined by patch entry
+  ANIM_RANDOM, // occasional
+  ANIM_LEVEL   // continuous
 } animenum_t;
 
-typedef struct
-{
-  int   x;       // x/y coordinate pair structure
-  int   y;
+typedef struct {
+  int x; // x/y coordinate pair structure
+  int y;
 } point_t;
-
 
 //
 // Animation.
 // There is another anim_t used in p_spec.
 //
-typedef struct
-{
-  animenum_t  type;
+typedef struct {
+  animenum_t type;
 
   // period in tics between animations
-  int   period;
+  int period;
 
   // number of animation frames
-  int   nanims;
+  int nanims;
 
   // location of animation
   point_t loc;
@@ -146,12 +137,12 @@ typedef struct
   // ALWAYS: n/a,
   // RANDOM: period deviation (<256),
   // LEVEL: level
-  int   data1;
+  int data1;
 
   // ALWAYS: n/a,
   // RANDOM: random base period,
   // LEVEL: n/a
-  int   data2;
+  int data2;
 
   /* actual graphics for frames of animations
    * cphipps - const
@@ -161,118 +152,97 @@ typedef struct
   // following must be initialized to zero before use!
 
   // next value of bcnt (used in conjunction with period)
-  int   nexttic;
+  int nexttic;
 
   // last drawn animation frame
-  int   lastdrawn;
+  int lastdrawn;
 
   // next frame number to animate
-  int   ctr;
+  int ctr;
 
   // used by RANDOM and LEVEL when animating
-  int   state;
+  int state;
 } anim_t;
 
+static point_t lnodes[NUMEPISODES][NUMMAPS] = {
+    // Episode 0 World Map
+    {
+        {185, 164}, // location of level 0 (CJ)
+        {148, 143}, // location of level 1 (CJ)
+        {69, 122},  // location of level 2 (CJ)
+        {209, 102}, // location of level 3 (CJ)
+        {116, 89},  // location of level 4 (CJ)
+        {166, 55},  // location of level 5 (CJ)
+        {71, 56},   // location of level 6 (CJ)
+        {135, 29},  // location of level 7 (CJ)
+        {71, 24}    // location of level 8 (CJ)
+    },
 
-static point_t lnodes[NUMEPISODES][NUMMAPS] =
-{
-  // Episode 0 World Map
-  {
-    { 185, 164 }, // location of level 0 (CJ)
-    { 148, 143 }, // location of level 1 (CJ)
-    { 69, 122 },  // location of level 2 (CJ)
-    { 209, 102 }, // location of level 3 (CJ)
-    { 116, 89 },  // location of level 4 (CJ)
-    { 166, 55 },  // location of level 5 (CJ)
-    { 71, 56 },   // location of level 6 (CJ)
-    { 135, 29 },  // location of level 7 (CJ)
-    { 71, 24 }    // location of level 8 (CJ)
-  },
+    // Episode 1 World Map should go here
+    {
+        {254, 25},  // location of level 0 (CJ)
+        {97, 50},   // location of level 1 (CJ)
+        {188, 64},  // location of level 2 (CJ)
+        {128, 78},  // location of level 3 (CJ)
+        {214, 92},  // location of level 4 (CJ)
+        {133, 130}, // location of level 5 (CJ)
+        {208, 136}, // location of level 6 (CJ)
+        {148, 140}, // location of level 7 (CJ)
+        {235, 158}  // location of level 8 (CJ)
+    },
 
-  // Episode 1 World Map should go here
-  {
-    { 254, 25 },  // location of level 0 (CJ)
-    { 97, 50 },   // location of level 1 (CJ)
-    { 188, 64 },  // location of level 2 (CJ)
-    { 128, 78 },  // location of level 3 (CJ)
-    { 214, 92 },  // location of level 4 (CJ)
-    { 133, 130 }, // location of level 5 (CJ)
-    { 208, 136 }, // location of level 6 (CJ)
-    { 148, 140 }, // location of level 7 (CJ)
-    { 235, 158 }  // location of level 8 (CJ)
-  },
-
-  // Episode 2 World Map should go here
-  {
-    { 156, 168 }, // location of level 0 (CJ)
-    { 48, 154 },  // location of level 1 (CJ)
-    { 174, 95 },  // location of level 2 (CJ)
-    { 265, 75 },  // location of level 3 (CJ)
-    { 130, 48 },  // location of level 4 (CJ)
-    { 279, 23 },  // location of level 5 (CJ)
-    { 198, 48 },  // location of level 6 (CJ)
-    { 140, 25 },  // location of level 7 (CJ)
-    { 281, 136 }  // location of level 8 (CJ)
-  }
-};
-
+    // Episode 2 World Map should go here
+    {
+        {156, 168}, // location of level 0 (CJ)
+        {48, 154},  // location of level 1 (CJ)
+        {174, 95},  // location of level 2 (CJ)
+        {265, 75},  // location of level 3 (CJ)
+        {130, 48},  // location of level 4 (CJ)
+        {279, 23},  // location of level 5 (CJ)
+        {198, 48},  // location of level 6 (CJ)
+        {140, 25},  // location of level 7 (CJ)
+        {281, 136}  // location of level 8 (CJ)
+    }};
 
 //
 // Animation locations for episode 0 (1).
 // Using patches saves a lot of space,
 //  as they replace 320x200 full screen frames.
 //
-static anim_t epsd0animinfo[] =
-{
-  { ANIM_ALWAYS, TICRATE/3, 3, { 224, 104 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 184, 160 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 112, 136 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 72, 112 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 88, 96 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 64, 48 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 192, 40 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 136, 16 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 80, 16 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 64, 24 } }
-};
+static anim_t epsd0animinfo[] = {{ANIM_ALWAYS, TICRATE / 3, 3, {224, 104}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {184, 160}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {112, 136}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {72, 112}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {88, 96}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {64, 48}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {192, 40}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {136, 16}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {80, 16}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {64, 24}}};
 
-static anim_t epsd1animinfo[] =
-{
-  { ANIM_LEVEL,  TICRATE/3, 1, { 128, 136 }, 1 },
-  { ANIM_LEVEL,  TICRATE/3, 1, { 128, 136 }, 2 },
-  { ANIM_LEVEL,  TICRATE/3, 1, { 128, 136 }, 3 },
-  { ANIM_LEVEL,  TICRATE/3, 1, { 128, 136 }, 4 },
-  { ANIM_LEVEL,  TICRATE/3, 1, { 128, 136 }, 5 },
-  { ANIM_LEVEL,  TICRATE/3, 1, { 128, 136 }, 6 },
-  { ANIM_LEVEL,  TICRATE/3, 1, { 128, 136 }, 7 },
-  { ANIM_LEVEL,  TICRATE/3, 3, { 192, 144 }, 8 },
-  { ANIM_LEVEL,  TICRATE/3, 1, { 128, 136 }, 8 }
-};
+static anim_t epsd1animinfo[] = {{ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 1},
+                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 2},
+                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 3},
+                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 4},
+                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 5},
+                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 6},
+                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 7},
+                                 {ANIM_LEVEL, TICRATE / 3, 3, {192, 144}, 8},
+                                 {ANIM_LEVEL, TICRATE / 3, 1, {128, 136}, 8}};
 
-static anim_t epsd2animinfo[] =
-{
-  { ANIM_ALWAYS, TICRATE/3, 3, { 104, 168 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 40, 136 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 160, 96 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 104, 80 } },
-  { ANIM_ALWAYS, TICRATE/3, 3, { 120, 32 } },
-  { ANIM_ALWAYS, TICRATE/4, 3, { 40, 0 } }
-};
+static anim_t epsd2animinfo[] = {{ANIM_ALWAYS, TICRATE / 3, 3, {104, 168}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {40, 136}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {160, 96}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {104, 80}},
+                                 {ANIM_ALWAYS, TICRATE / 3, 3, {120, 32}},
+                                 {ANIM_ALWAYS, TICRATE / 4, 3, {40, 0}}};
 
-static int NUMANIMS[NUMEPISODES] =
-{
-  sizeof(epsd0animinfo)/sizeof(anim_t),
-  sizeof(epsd1animinfo)/sizeof(anim_t),
-  sizeof(epsd2animinfo)/sizeof(anim_t)
-};
+static int NUMANIMS[NUMEPISODES] = {sizeof(epsd0animinfo) / sizeof(anim_t),
+                                    sizeof(epsd1animinfo) / sizeof(anim_t),
+                                    sizeof(epsd2animinfo) / sizeof(anim_t)};
 
-static anim_t *anims[NUMEPISODES] =
-{
-  epsd0animinfo,
-  epsd1animinfo,
-  epsd2animinfo
-};
-
+static anim_t *anims[NUMEPISODES] = {epsd0animinfo, epsd1animinfo,
+                                     epsd2animinfo};
 
 //
 // GENERAL DATA
@@ -283,59 +253,57 @@ static anim_t *anims[NUMEPISODES] =
 //
 #define FB 0
 
-
 // States for single-player
-#define SP_KILLS    0
-#define SP_ITEMS    2
-#define SP_SECRET   4
-#define SP_FRAGS    6
-#define SP_TIME     8
-#define SP_PAR      ST_TIME
+#define SP_KILLS 0
+#define SP_ITEMS 2
+#define SP_SECRET 4
+#define SP_FRAGS 6
+#define SP_TIME 8
+#define SP_PAR ST_TIME
 
-#define SP_PAUSE    1
+#define SP_PAUSE 1
 
 // in seconds
-#define SHOWNEXTLOCDELAY  4
+#define SHOWNEXTLOCDELAY 4
 //#define SHOWLASTLOCDELAY  SHOWNEXTLOCDELAY
 
-
 // used to accelerate or skip a stage
-int   acceleratestage;           // killough 3/28/98: made global
+int acceleratestage; // killough 3/28/98: made global
 
 // wbs->pnum
-static int    me;
+static int me;
 
- // specifies current state
-static stateenum_t  state;
+// specifies current state
+static stateenum_t state;
 
 // contains information passed into intermission
-static wbstartstruct_t* wbs;
+static wbstartstruct_t *wbs;
 
-static wbplayerstruct_t* plrs;  // wbs->plyr[]
+static wbplayerstruct_t *plrs; // wbs->plyr[]
 
 // used for general timing
-static int    cnt;
+static int cnt;
 
 // used for timing of background animation
-static int    bcnt;
+static int bcnt;
 
 // signals to refresh everything for one frame
-static int    firstrefresh;
+static int firstrefresh;
 
-static int    cnt_time;
-static int    cnt_total_time;
-static int    cnt_par;
-static int    cnt_pause;
+static int cnt_time;
+static int cnt_total_time;
+static int cnt_par;
+static int cnt_pause;
 
 //
 //  GRAPHICS
 //
 
 // You Are Here graphic
-static const char* yah[2] = { "WIURH0", "WIURH1" };
+static const char *yah[2] = {"WIURH0", "WIURH1"};
 
 // splat
-static const char* splat = "WISPLAT";
+static const char *splat = "WISPLAT";
 
 // %, : graphics
 static const char percent[] = {"WIPCNT"};
@@ -394,8 +362,7 @@ static void WI_endNetgameStats(void);
  * Args:    Episode and level, and buffer (must by 9 chars) to write to
  * Returns: void
  */
-void WI_levelNameLump(int epis, int map, char* buf)
-{
+void WI_levelNameLump(int epis, int map, char *buf) {
   if (gamemode == commercial) {
     sprintf(buf, "CWILV%2.2d", map);
   } else {
@@ -409,9 +376,8 @@ void WI_levelNameLump(int epis, int map, char* buf)
 // Args:    none
 // Returns: void
 //
-static void WI_slamBackground(void)
-{
-  char  name[9];  // limited to 8 characters
+static void WI_slamBackground(void) {
+  char name[9]; // limited to 8 characters
 
   if (gamemode == commercial || (gamemode == retail && wbs->epsd == 3))
     strcpy(name, "INTERPIC");
@@ -422,7 +388,6 @@ static void WI_slamBackground(void)
   V_DrawNamePatch(0, 0, FB, name, CR_DEFAULT, VPT_STRETCH);
 }
 
-
 // ====================================================================
 // WI_Responder
 // Purpose: Draw animations on intermission background screen
@@ -431,11 +396,7 @@ static void WI_slamBackground(void)
 //
 // The ticker is used to detect keys
 //  because of timing issues in netgames.
-boolean WI_Responder(event_t* ev)
-{
-  return false;
-}
-
+boolean WI_Responder(event_t *ev) { return false; }
 
 // ====================================================================
 // WI_drawLF
@@ -443,8 +404,7 @@ boolean WI_Responder(event_t* ev)
 // Args:    none
 // Returns: void
 //
-void WI_drawLF(void)
-{
+void WI_drawLF(void) {
   int y = WI_TITLEY;
   char lname[9];
 
@@ -452,17 +412,16 @@ void WI_drawLF(void)
   /* cph - get the graphic lump name and use it */
   WI_levelNameLump(wbs->epsd, wbs->last, lname);
   // CPhipps - patch drawing updated
-  V_DrawNamePatch((320 - V_NamePatchWidth(lname))/2, y,
-     FB, lname, CR_DEFAULT, VPT_STRETCH);
+  V_DrawNamePatch((320 - V_NamePatchWidth(lname)) / 2, y, FB, lname, CR_DEFAULT,
+                  VPT_STRETCH);
 
   // draw "Finished!"
-  y += (5*V_NamePatchHeight(lname))/4;
+  y += (5 * V_NamePatchHeight(lname)) / 4;
 
   // CPhipps - patch drawing updated
-  V_DrawNamePatch((320 - V_NamePatchWidth(finished))/2, y,
-     FB, finished, CR_DEFAULT, VPT_STRETCH);
+  V_DrawNamePatch((320 - V_NamePatchWidth(finished)) / 2, y, FB, finished,
+                  CR_DEFAULT, VPT_STRETCH);
 }
-
 
 // ====================================================================
 // WI_drawEL
@@ -470,8 +429,7 @@ void WI_drawLF(void)
 // Args:    none
 // Returns: void
 //
-void WI_drawEL(void)
-{
+void WI_drawEL(void) {
   int y = WI_TITLEY;
   char lname[9];
 
@@ -480,17 +438,16 @@ void WI_drawEL(void)
 
   // draw "Entering"
   // CPhipps - patch drawing updated
-  V_DrawNamePatch((320 - V_NamePatchWidth(entering))/2,
-      y, FB, entering, CR_DEFAULT, VPT_STRETCH);
+  V_DrawNamePatch((320 - V_NamePatchWidth(entering)) / 2, y, FB, entering,
+                  CR_DEFAULT, VPT_STRETCH);
 
   // draw level
-  y += (5*V_NamePatchHeight(lname))/4;
+  y += (5 * V_NamePatchHeight(lname)) / 4;
 
   // CPhipps - patch drawing updated
-  V_DrawNamePatch((320 - V_NamePatchWidth(lname))/2, y, FB,
-     lname, CR_DEFAULT, VPT_STRETCH);
+  V_DrawNamePatch((320 - V_NamePatchWidth(lname)) / 2, y, FB, lname, CR_DEFAULT,
+                  VPT_STRETCH);
 }
-
 
 /* ====================================================================
  * WI_drawOnLnode
@@ -499,22 +456,18 @@ void WI_drawEL(void)
  *          c[] -- array of names of patches to be drawn
  * Returns: void
  */
-void
-WI_drawOnLnode  // draw stuff at a location by episode/map#
-( int   n,
-  const char* const c[] )
-{
-  int   i;
+void WI_drawOnLnode // draw stuff at a location by episode/map#
+    (int n, const char *const c[]) {
+  int i;
   boolean fits = false;
 
   i = 0;
-  do
-  {
-    int            left;
-    int            top;
-    int            right;
-    int            bottom;
-    const rpatch_t* patch = R_CachePatchName(c[i]);
+  do {
+    int left;
+    int top;
+    int right;
+    int bottom;
+    const rpatch_t *patch = R_CachePatchName(c[i]);
 
     left = lnodes[wbs->epsd][n].x - patch->leftoffset;
     top = lnodes[wbs->epsd][n].y - patch->topoffset;
@@ -522,33 +475,23 @@ WI_drawOnLnode  // draw stuff at a location by episode/map#
     bottom = top + patch->height;
     R_UnlockPatchName(c[i]);
 
-    if (left >= 0
-       && right < 320
-       && top >= 0
-       && bottom < 200)
-    {
+    if (left >= 0 && right < 320 && top >= 0 && bottom < 200) {
       fits = true;
-    }
-    else
-    {
+    } else {
       i++;
     }
-  } while (!fits && i!=2);
+  } while (!fits && i != 2);
 
-  if (fits && i<2)
-  {
+  if (fits && i < 2) {
     // CPhipps - patch drawing updated
-    V_DrawNamePatch(lnodes[wbs->epsd][n].x, lnodes[wbs->epsd][n].y,
-       FB, c[i], CR_DEFAULT, VPT_STRETCH);
-  }
-  else
-  {
+    V_DrawNamePatch(lnodes[wbs->epsd][n].x, lnodes[wbs->epsd][n].y, FB, c[i],
+                    CR_DEFAULT, VPT_STRETCH);
+  } else {
     // DEBUG
-    //jff 8/3/98 use logical output routine
-    lprintf(LO_DEBUG,"Could not place patch on level %d", n+1);
+    // jff 8/3/98 use logical output routine
+    lprintf(LO_DEBUG, "Could not place patch on level %d", n + 1);
   }
 }
-
 
 // ====================================================================
 // WI_initAnimatedBack
@@ -556,19 +499,17 @@ WI_drawOnLnode  // draw stuff at a location by episode/map#
 // Args:    none
 // Returns: void
 //
-void WI_initAnimatedBack(void)
-{
-  int   i;
-  anim_t* a;
+void WI_initAnimatedBack(void) {
+  int i;
+  anim_t *a;
 
-  if (gamemode == commercial)  // no animation for DOOM2
+  if (gamemode == commercial) // no animation for DOOM2
     return;
 
   if (wbs->epsd > 2)
     return;
 
-  for (i=0;i<NUMANIMS[wbs->epsd];i++)
-  {
+  for (i = 0; i < NUMANIMS[wbs->epsd]; i++) {
     a = &anims[wbs->epsd][i];
 
     // init variables
@@ -576,16 +517,13 @@ void WI_initAnimatedBack(void)
 
     // specify the next time to draw it
     if (a->type == ANIM_ALWAYS)
-      a->nexttic = bcnt + 1 + (M_Random()%a->period);
-    else
-      if (a->type == ANIM_RANDOM)
-        a->nexttic = bcnt + 1 + a->data2+(M_Random()%a->data1);
-      else
-        if (a->type == ANIM_LEVEL)
-          a->nexttic = bcnt + 1;
+      a->nexttic = bcnt + 1 + (M_Random() % a->period);
+    else if (a->type == ANIM_RANDOM)
+      a->nexttic = bcnt + 1 + a->data2 + (M_Random() % a->data1);
+    else if (a->type == ANIM_LEVEL)
+      a->nexttic = bcnt + 1;
   }
 }
-
 
 // ====================================================================
 // WI_updateAnimatedBack
@@ -593,10 +531,9 @@ void WI_initAnimatedBack(void)
 // Args:    none
 // Returns: void
 //
-void WI_updateAnimatedBack(void)
-{
-  int   i;
-  anim_t* a;
+void WI_updateAnimatedBack(void) {
+  int i;
+  anim_t *a;
 
   if (gamemode == commercial)
     return;
@@ -604,45 +541,39 @@ void WI_updateAnimatedBack(void)
   if (wbs->epsd > 2)
     return;
 
-  for (i=0;i<NUMANIMS[wbs->epsd];i++)
-  {
+  for (i = 0; i < NUMANIMS[wbs->epsd]; i++) {
     a = &anims[wbs->epsd][i];
 
-    if (bcnt == a->nexttic)
-    {
-      switch (a->type)
-      {
-        case ANIM_ALWAYS:
-             if (++a->ctr >= a->nanims) a->ctr = 0;
-             a->nexttic = bcnt + a->period;
-             break;
+    if (bcnt == a->nexttic) {
+      switch (a->type) {
+      case ANIM_ALWAYS:
+        if (++a->ctr >= a->nanims)
+          a->ctr = 0;
+        a->nexttic = bcnt + a->period;
+        break;
 
-        case ANIM_RANDOM:
-             a->ctr++;
-             if (a->ctr == a->nanims)
-             {
-               a->ctr = -1;
-               a->nexttic = bcnt+a->data2+(M_Random()%a->data1);
-             }
-             else
-               a->nexttic = bcnt + a->period;
-             break;
+      case ANIM_RANDOM:
+        a->ctr++;
+        if (a->ctr == a->nanims) {
+          a->ctr = -1;
+          a->nexttic = bcnt + a->data2 + (M_Random() % a->data1);
+        } else
+          a->nexttic = bcnt + a->period;
+        break;
 
-        case ANIM_LEVEL:
-             // gawd-awful hack for level anims
-             if (!(state == StatCount && i == 7)
-                && wbs->next == a->data1)
-             {
-               a->ctr++;
-               if (a->ctr == a->nanims) a->ctr--;
-               a->nexttic = bcnt + a->period;
-             }
-             break;
+      case ANIM_LEVEL:
+        // gawd-awful hack for level anims
+        if (!(state == StatCount && i == 7) && wbs->next == a->data1) {
+          a->ctr++;
+          if (a->ctr == a->nanims)
+            a->ctr--;
+          a->nexttic = bcnt + a->period;
+        }
+        break;
       }
     }
   }
 }
-
 
 // ====================================================================
 // WI_drawAnimatedBack
@@ -650,27 +581,25 @@ void WI_updateAnimatedBack(void)
 // Args:    none
 // Returns: void
 //
-void WI_drawAnimatedBack(void)
-{
-  int     i;
-  anim_t*   a;
+void WI_drawAnimatedBack(void) {
+  int i;
+  anim_t *a;
 
-  if (gamemode==commercial) //jff 4/25/98 Someone forgot commercial an enum
+  if (gamemode == commercial) // jff 4/25/98 Someone forgot commercial an enum
     return;
 
   if (wbs->epsd > 2)
     return;
 
-  for (i=0 ; i<NUMANIMS[wbs->epsd] ; i++)
-  {
+  for (i = 0; i < NUMANIMS[wbs->epsd]; i++) {
     a = &anims[wbs->epsd][i];
 
     if (a->ctr >= 0)
       // CPhipps - patch drawing updated
-      V_DrawNumPatch(a->loc.x, a->loc.y, FB, a->p[a->ctr].lumpnum, CR_DEFAULT, VPT_STRETCH);
+      V_DrawNumPatch(a->loc.x, a->loc.y, FB, a->p[a->ctr].lumpnum, CR_DEFAULT,
+                     VPT_STRETCH);
   }
 }
-
 
 // ====================================================================
 // WI_drawNum
@@ -681,27 +610,21 @@ void WI_drawAnimatedBack(void)
 //          digits -- number of digits minimum or zero
 // Returns: new x position after drawing (note we are going to the left)
 // CPhipps - static
-static int WI_drawNum (int x, int y, int n, int digits)
-{
-  int   fontwidth = num[0].width;
-  int   neg;
-  int   temp;
+static int WI_drawNum(int x, int y, int n, int digits) {
+  int fontwidth = num[0].width;
+  int neg;
+  int temp;
 
-  if (digits < 0)
-  {
-    if (!n)
-    {
+  if (digits < 0) {
+    if (!n) {
       // make variable-length zeros 1 digit long
       digits = 1;
-    }
-    else
-    {
+    } else {
       // figure out # of digits in #
       digits = 0;
       temp = n;
 
-      while (temp)
-      {
+      while (temp) {
         temp /= 10;
         digits++;
       }
@@ -717,22 +640,20 @@ static int WI_drawNum (int x, int y, int n, int digits)
     return 0;
 
   // draw the new number
-  while (digits--)
-  {
+  while (digits--) {
     x -= fontwidth;
     // CPhipps - patch drawing updated
-    V_DrawNumPatch(x, y, FB, num[ n % 10 ].lumpnum, CR_DEFAULT, VPT_STRETCH);
+    V_DrawNumPatch(x, y, FB, num[n % 10].lumpnum, CR_DEFAULT, VPT_STRETCH);
     n /= 10;
   }
 
   // draw a minus sign if necessary
   if (neg)
     // CPhipps - patch drawing updated
-    V_DrawNamePatch(x-=8, y, FB, wiminus, CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(x -= 8, y, FB, wiminus, CR_DEFAULT, VPT_STRETCH);
 
   return x;
 }
-
 
 // ====================================================================
 // WI_drawPercent
@@ -742,8 +663,7 @@ static int WI_drawNum (int x, int y, int n, int digits)
 //          p      -- the percentage value to be drawn, no negatives
 // Returns: void
 // CPhipps - static
-static void WI_drawPercent(int x, int y, int p)
-{
+static void WI_drawPercent(int x, int y, int p) {
   if (p < 0)
     return;
 
@@ -751,7 +671,6 @@ static void WI_drawPercent(int x, int y, int p)
   V_DrawNamePatch(x, y, FB, percent, CR_DEFAULT, VPT_STRETCH);
   WI_drawNum(x, y, p, -1);
 }
-
 
 // ====================================================================
 // WI_drawTime
@@ -762,32 +681,33 @@ static void WI_drawPercent(int x, int y, int p)
 // Returns: void
 //
 // CPhipps - static
-//         - largely rewritten to display hours and use slightly better algorithm
+//         - largely rewritten to display hours and use slightly better
+//         algorithm
 
-static void WI_drawTime(int x, int y, int t)
-{
-  int   n;
+static void WI_drawTime(int x, int y, int t) {
+  int n;
 
-  if (t<0)
+  if (t < 0)
     return;
 
-  if (t < 100*60*60)
-    for(;;) {
+  if (t < 100 * 60 * 60)
+    for (;;) {
       n = t % 60;
       t /= 60;
-      x = WI_drawNum(x, y, n, (t || n>9) ? 2 : 1) - V_NamePatchWidth(colon);
+      x = WI_drawNum(x, y, n, (t || n > 9) ? 2 : 1) - V_NamePatchWidth(colon);
 
       // draw
       if (t)
-  // CPhipps - patch drawing updated
+        // CPhipps - patch drawing updated
         V_DrawNamePatch(x, y, FB, colon, CR_DEFAULT, VPT_STRETCH);
-      else break;
+      else
+        break;
     }
-  else // "sucks" (maybe should be "addicted", even I've never had a 100 hour game ;)
-    V_DrawNamePatch(x - V_NamePatchWidth(sucks),
-        y, FB, sucks, CR_DEFAULT, VPT_STRETCH);
+  else // "sucks" (maybe should be "addicted", even I've never had a 100 hour
+       // game ;)
+    V_DrawNamePatch(x - V_NamePatchWidth(sucks), y, FB, sucks, CR_DEFAULT,
+                    VPT_STRETCH);
 }
-
 
 // ====================================================================
 // WI_End
@@ -795,8 +715,7 @@ static void WI_drawTime(int x, int y, int t)
 // Args:    none
 // Returns: void
 //
-void WI_End(void)
-{
+void WI_End(void) {
   if (deathmatch)
     WI_endDeathmatchStats();
   else if (netgame)
@@ -805,20 +724,17 @@ void WI_End(void)
     WI_endStats();
 }
 
-
 // ====================================================================
 // WI_initNoState
 // Purpose: Clear state, ready for end of level activity
 // Args:    none
 // Returns: void
 //
-void WI_initNoState(void)
-{
+void WI_initNoState(void) {
   state = NoState;
   acceleratestage = 0;
   cnt = 10;
 }
-
 
 // ====================================================================
 // WI_drawTimeStats
@@ -828,24 +744,23 @@ void WI_initNoState(void)
 //
 // cph - pulled from WI_drawStats below
 
-static void WI_drawTimeStats(int cnt_time, int cnt_total_time, int cnt_par)
-{
+static void WI_drawTimeStats(int cnt_time, int cnt_total_time, int cnt_par) {
   V_DrawNamePatch(SP_TIMEX, SP_TIMEY, FB, time1, CR_DEFAULT, VPT_STRETCH);
-  WI_drawTime(320/2 - SP_TIMEX, SP_TIMEY, cnt_time);
+  WI_drawTime(320 / 2 - SP_TIMEX, SP_TIMEY, cnt_time);
 
-  V_DrawNamePatch(SP_TIMEX, (SP_TIMEY+200)/2, FB, total, CR_DEFAULT, VPT_STRETCH);
-  WI_drawTime(320/2 - SP_TIMEX, (SP_TIMEY+200)/2, cnt_total_time);
+  V_DrawNamePatch(SP_TIMEX, (SP_TIMEY + 200) / 2, FB, total, CR_DEFAULT,
+                  VPT_STRETCH);
+  WI_drawTime(320 / 2 - SP_TIMEX, (SP_TIMEY + 200) / 2, cnt_total_time);
 
   // Ty 04/11/98: redid logic: should skip only if with pwad but
   // without deh patch
   // killough 2/22/98: skip drawing par times on pwads
   // Ty 03/17/98: unless pars changed with deh patch
 
-  if (!(modifiedgame && !deh_pars))
-  {
-    if (wbs->epsd < 3)
-    {
-      V_DrawNamePatch(320/2 + SP_TIMEX, SP_TIMEY, FB, par, CR_DEFAULT, VPT_STRETCH);
+  if (!(modifiedgame && !deh_pars)) {
+    if (wbs->epsd < 3) {
+      V_DrawNamePatch(320 / 2 + SP_TIMEX, SP_TIMEY, FB, par, CR_DEFAULT,
+                      VPT_STRETCH);
       WI_drawTime(320 - SP_TIMEX, SP_TIMEY, cnt_par);
     }
   }
@@ -857,8 +772,7 @@ static void WI_drawTimeStats(int cnt_time, int cnt_total_time, int cnt_par)
 // Args:    none
 // Returns: void
 //
-void WI_updateNoState(void)
-{
+void WI_updateNoState(void) {
 
   WI_updateAnimatedBack();
 
@@ -866,8 +780,7 @@ void WI_updateNoState(void)
     G_WorldDone();
 }
 
-static boolean    snl_pointeron = false;
-
+static boolean snl_pointeron = false;
 
 // ====================================================================
 // WI_initShowNextLoc
@@ -875,8 +788,7 @@ static boolean    snl_pointeron = false;
 // Args:    none
 // Returns: void
 //
-void WI_initShowNextLoc(void)
-{
+void WI_initShowNextLoc(void) {
   if ((gamemode != commercial) && (gamemap == 8)) {
     G_WorldDone();
     return;
@@ -901,15 +813,13 @@ void WI_initShowNextLoc(void)
   WI_initAnimatedBack();
 }
 
-
 // ====================================================================
 // WI_updateShowNextLoc
 // Purpose: Prepare to show the next level's location
 // Args:    none
 // Returns: void
 //
-void WI_updateShowNextLoc(void)
-{
+void WI_updateShowNextLoc(void) {
   WI_updateAnimatedBack();
 
   if (!--cnt || acceleratestage)
@@ -918,35 +828,31 @@ void WI_updateShowNextLoc(void)
     snl_pointeron = (cnt & 31) < 20;
 }
 
-
 // ====================================================================
 // WI_drawShowNextLoc
 // Purpose: Show the next level's location on animated backgrounds
 // Args:    none
 // Returns: void
 //
-void WI_drawShowNextLoc(void)
-{
-  int   i;
-  int   last;
+void WI_drawShowNextLoc(void) {
+  int i;
+  int last;
 
   WI_slamBackground();
 
   // draw animated background
   WI_drawAnimatedBack();
 
-  if ( gamemode != commercial)
-  {
-    if (wbs->epsd > 2)
-    {
-      WI_drawEL();  // "Entering..." if not E1 or E2
+  if (gamemode != commercial) {
+    if (wbs->epsd > 2) {
+      WI_drawEL(); // "Entering..." if not E1 or E2
       return;
     }
 
     last = (wbs->last == 8) ? wbs->next - 1 : wbs->last;
 
     // draw a splat on taken cities.
-    for (i=0 ; i<=last ; i++)
+    for (i = 0; i <= last; i++)
       WI_drawOnLnode(i, &splat);
 
     // splat the secret level?
@@ -959,9 +865,8 @@ void WI_drawShowNextLoc(void)
   }
 
   // draws which level you are entering..
-  if ( (gamemode != commercial)
-     || wbs->next != 30)  // check for MAP30 end game
-  WI_drawEL();
+  if ((gamemode != commercial) || wbs->next != 30) // check for MAP30 end game
+    WI_drawEL();
 }
 
 // ====================================================================
@@ -970,8 +875,7 @@ void WI_drawShowNextLoc(void)
 // Args:    none
 // Returns: void
 //
-void WI_drawNoState(void)
-{
+void WI_drawNoState(void) {
   snl_pointeron = true;
   WI_drawShowNextLoc();
 }
@@ -983,20 +887,17 @@ void WI_drawNoState(void)
 // Args:    playernum -- the player to be calculated
 // Returns: the total frags for this player
 //
-int WI_fragSum(int playernum)
-{
-  int   i;
-  int   frags = 0;
+int WI_fragSum(int playernum) {
+  int i;
+  int frags = 0;
 
-  for (i=0 ; i<MAXPLAYERS ; i++)
-  {
-    if (playeringame[i]  // is this player playing?
-       && i!=playernum) // and it's not the player we're calculating
+  for (i = 0; i < MAXPLAYERS; i++) {
+    if (playeringame[i]    // is this player playing?
+        && i != playernum) // and it's not the player we're calculating
     {
       frags += plrs[playernum].frags[i];
     }
   }
-
 
   // JDC hack - negative frags.
   frags -= plrs[playernum].frags[playernum];
@@ -1004,10 +905,10 @@ int WI_fragSum(int playernum)
   return frags;
 }
 
-static int          dm_state;
+static int dm_state;
 // CPhipps - short, dynamically allocated
-static short int  **dm_frags;  // frags matrix
-static short int   *dm_totals;  // totals by player
+static short int **dm_frags; // frags matrix
+static short int *dm_totals; // totals by player
 
 // ====================================================================
 // WI_initDeathmatchStats
@@ -1016,26 +917,24 @@ static short int   *dm_totals;  // totals by player
 // Args:    none
 // Returns: void
 //
-void WI_initDeathmatchStats(void)
-{
-  int   i; // looping variables
+void WI_initDeathmatchStats(void) {
+  int i; // looping variables
 
   // CPhipps - allocate data structures needed
-  dm_frags  = calloc(MAXPLAYERS, sizeof(*dm_frags));
+  dm_frags = calloc(MAXPLAYERS, sizeof(*dm_frags));
   dm_totals = calloc(MAXPLAYERS, sizeof(*dm_totals));
 
-  state = StatCount;  // We're doing stats
+  state = StatCount; // We're doing stats
   acceleratestage = 0;
-  dm_state = 1;  // count how many times we've done a complete stat
+  dm_state = 1; // count how many times we've done a complete stat
 
   cnt_pause = TICRATE;
 
-  for (i=0 ; i<MAXPLAYERS ; i++)
-  {
-    if (playeringame[i])
-    {
+  for (i = 0; i < MAXPLAYERS; i++) {
+    if (playeringame[i]) {
       // CPhipps - allocate frags line
-      dm_frags[i] = calloc(MAXPLAYERS, sizeof(**dm_frags)); // set all counts to zero
+      dm_frags[i] =
+          calloc(MAXPLAYERS, sizeof(**dm_frags)); // set all counts to zero
 
       dm_totals[i] = 0;
     }
@@ -1050,13 +949,13 @@ void WI_initDeathmatchStats(void)
 // Returns: void
 //
 
-void WI_endDeathmatchStats(void)
-{
+void WI_endDeathmatchStats(void) {
   int i;
-  for (i=0; i<MAXPLAYERS; i++)
+  for (i = 0; i < MAXPLAYERS; i++)
     free(dm_frags[i]);
 
-  free(dm_frags); free(dm_totals);
+  free(dm_frags);
+  free(dm_totals);
 }
 
 // ====================================================================
@@ -1067,24 +966,21 @@ void WI_endDeathmatchStats(void)
 // Args:    none
 // Returns: void
 //
-void WI_updateDeathmatchStats(void)
-{
-  int   i;
-  int   j;
+void WI_updateDeathmatchStats(void) {
+  int i;
+  int j;
 
   boolean stillticking;
 
   WI_updateAnimatedBack();
 
-  if (acceleratestage && dm_state != 4)  // still ticking
+  if (acceleratestage && dm_state != 4) // still ticking
   {
     acceleratestage = 0;
 
-    for (i=0 ; i<MAXPLAYERS ; i++)
-    {
-      if (playeringame[i])
-      {
-        for (j=0 ; j<MAXPLAYERS ; j++)
+    for (i = 0; i < MAXPLAYERS; i++) {
+      if (playeringame[i]) {
+        for (j = 0; j < MAXPLAYERS; j++)
           if (playeringame[j])
             dm_frags[i][j] = plrs[i].frags[j];
 
@@ -1092,28 +988,20 @@ void WI_updateDeathmatchStats(void)
       }
     }
 
-
-    S_StartSound(0, sfx_barexp);  // bang
-    dm_state = 4;  // we're done with all 4 (or all we have to do)
+    S_StartSound(0, sfx_barexp); // bang
+    dm_state = 4;                // we're done with all 4 (or all we have to do)
   }
 
-
-  if (dm_state == 2)
-  {
-    if (!(bcnt&3))
-      S_StartSound(0, sfx_pistol);  // noise while counting
+  if (dm_state == 2) {
+    if (!(bcnt & 3))
+      S_StartSound(0, sfx_pistol); // noise while counting
 
     stillticking = false;
 
-    for (i=0 ; i<MAXPLAYERS ; i++)
-    {
-      if (playeringame[i])
-      {
-        for (j=0 ; j<MAXPLAYERS ; j++)
-        {
-          if (playeringame[j]
-             && dm_frags[i][j] != plrs[i].frags[j])
-          {
+    for (i = 0; i < MAXPLAYERS; i++) {
+      if (playeringame[i]) {
+        for (j = 0; j < MAXPLAYERS; j++) {
+          if (playeringame[j] && dm_frags[i][j] != plrs[i].frags[j]) {
             if (plrs[i].frags[j] < 0)
               dm_frags[i][j]--;
             else
@@ -1134,38 +1022,30 @@ void WI_updateDeathmatchStats(void)
           dm_totals[i] = 999;
 
         if (dm_totals[i] < -999)
-          dm_totals[i] = -999;  // Ty 03/17/98 end 3-digit frag count
+          dm_totals[i] = -999; // Ty 03/17/98 end 3-digit frag count
       }
     }
 
-    if (!stillticking)
-    {
+    if (!stillticking) {
       S_StartSound(0, sfx_barexp);
       dm_state++;
     }
-  }
-  else if (dm_state == 4)
-  {
-    if (acceleratestage)
-    {
+  } else if (dm_state == 4) {
+    if (acceleratestage) {
       S_StartSound(0, sfx_slop);
 
-      if ( gamemode == commercial)
+      if (gamemode == commercial)
         WI_initNoState();
       else
         WI_initShowNextLoc();
     }
-  }
-  else if (dm_state & 1)
-  {
-    if (!--cnt_pause)
-    {
+  } else if (dm_state & 1) {
+    if (!--cnt_pause) {
       dm_state++;
       cnt_pause = TICRATE;
     }
   }
 }
-
 
 // ====================================================================
 // WI_drawDeathmatchStats
@@ -1175,16 +1055,15 @@ void WI_updateDeathmatchStats(void)
 //
 // proff/nicolas 09/20/98 -- changed for hi-res
 // CPhipps - patch drawing updated
-void WI_drawDeathmatchStats(void)
-{
-  int   i;
-  int   j;
-  int   x;
-  int   y;
-  int   w;
+void WI_drawDeathmatchStats(void) {
+  int i;
+  int j;
+  int x;
+  int y;
+  int w;
 
-  int   lh; // line height
-  int   halfface = V_NamePatchWidth(facebackp)/2;
+  int lh; // line height
+  int halfface = V_NamePatchWidth(facebackp) / 2;
 
   lh = WI_SPACINGY;
 
@@ -1195,33 +1074,34 @@ void WI_drawDeathmatchStats(void)
   WI_drawLF();
 
   // draw stat titles (top line)
-  V_DrawNamePatch(DM_TOTALSX-V_NamePatchWidth(total)/2,
-     DM_MATRIXY-WI_SPACINGY+10, FB, total, CR_DEFAULT, VPT_STRETCH);
+  V_DrawNamePatch(DM_TOTALSX - V_NamePatchWidth(total) / 2,
+                  DM_MATRIXY - WI_SPACINGY + 10, FB, total, CR_DEFAULT,
+                  VPT_STRETCH);
 
-  V_DrawNamePatch(DM_KILLERSX, DM_KILLERSY, FB, killers, CR_DEFAULT, VPT_STRETCH);
-  V_DrawNamePatch(DM_VICTIMSX, DM_VICTIMSY, FB, victims, CR_DEFAULT, VPT_STRETCH);
+  V_DrawNamePatch(DM_KILLERSX, DM_KILLERSY, FB, killers, CR_DEFAULT,
+                  VPT_STRETCH);
+  V_DrawNamePatch(DM_VICTIMSX, DM_VICTIMSY, FB, victims, CR_DEFAULT,
+                  VPT_STRETCH);
 
   // draw P?
   x = DM_MATRIXX + DM_SPACINGX;
   y = DM_MATRIXY;
 
-  for (i=0 ; i<MAXPLAYERS ; i++)
-  {
+  for (i = 0; i < MAXPLAYERS; i++) {
     if (playeringame[i]) {
-      //int trans = playernumtotrans[i];
-      V_DrawNamePatch(x-halfface, DM_MATRIXY - WI_SPACINGY,
-         FB, facebackp, i ? CR_LIMIT+i : CR_DEFAULT,
-         VPT_STRETCH | (i ? VPT_TRANS : 0));
-      V_DrawNamePatch(DM_MATRIXX-halfface, y,
-         FB, facebackp, i ? CR_LIMIT+i : CR_DEFAULT,
-         VPT_STRETCH | (i ? VPT_TRANS : 0));
+      // int trans = playernumtotrans[i];
+      V_DrawNamePatch(x - halfface, DM_MATRIXY - WI_SPACINGY, FB, facebackp,
+                      i ? CR_LIMIT + i : CR_DEFAULT,
+                      VPT_STRETCH | (i ? VPT_TRANS : 0));
+      V_DrawNamePatch(DM_MATRIXX - halfface, y, FB, facebackp,
+                      i ? CR_LIMIT + i : CR_DEFAULT,
+                      VPT_STRETCH | (i ? VPT_TRANS : 0));
 
-      if (i == me)
-      {
-        V_DrawNamePatch(x-halfface, DM_MATRIXY - WI_SPACINGY,
-           FB, bstar, CR_DEFAULT, VPT_STRETCH);
-        V_DrawNamePatch(DM_MATRIXX-halfface, y,
-           FB, star, CR_DEFAULT, VPT_STRETCH);
+      if (i == me) {
+        V_DrawNamePatch(x - halfface, DM_MATRIXY - WI_SPACINGY, FB, bstar,
+                        CR_DEFAULT, VPT_STRETCH);
+        V_DrawNamePatch(DM_MATRIXX - halfface, y, FB, star, CR_DEFAULT,
+                        VPT_STRETCH);
       }
     }
     x += DM_SPACINGX;
@@ -1229,28 +1109,24 @@ void WI_drawDeathmatchStats(void)
   }
 
   // draw stats
-  y = DM_MATRIXY+10;
+  y = DM_MATRIXY + 10;
   w = num[0].width;
 
-  for (i=0 ; i<MAXPLAYERS ; i++)
-  {
+  for (i = 0; i < MAXPLAYERS; i++) {
     x = DM_MATRIXX + DM_SPACINGX;
 
-    if (playeringame[i])
-    {
-      for (j=0 ; j<MAXPLAYERS ; j++)
-      {
+    if (playeringame[i]) {
+      for (j = 0; j < MAXPLAYERS; j++) {
         if (playeringame[j])
-          WI_drawNum(x+w, y, dm_frags[i][j], 2);
+          WI_drawNum(x + w, y, dm_frags[i][j], 2);
 
         x += DM_SPACINGX;
       }
-      WI_drawNum(DM_TOTALSX+w, y, dm_totals[i], 2);
+      WI_drawNum(DM_TOTALSX + w, y, dm_totals[i], 2);
     }
     y += WI_SPACINGY;
   }
 }
-
 
 //
 // Note: The term "Netgame" means a coop game
@@ -1259,8 +1135,8 @@ static short *cnt_kills;
 static short *cnt_items;
 static short *cnt_secret;
 static short *cnt_frags;
-static int    dofrags;
-static int    ng_state;
+static int dofrags;
+static int ng_state;
 
 // ====================================================================
 // CPhipps - WI_endNetgameStats
@@ -1268,12 +1144,15 @@ static int    ng_state;
 // Args:    none
 // Returns: void
 //
-static void WI_endNetgameStats(void)
-{
-  free(cnt_frags); cnt_frags = NULL;
-  free(cnt_secret); cnt_secret = NULL;
-  free(cnt_items); cnt_items = NULL;
-  free(cnt_kills); cnt_kills = NULL;
+static void WI_endNetgameStats(void) {
+  free(cnt_frags);
+  cnt_frags = NULL;
+  free(cnt_secret);
+  cnt_secret = NULL;
+  free(cnt_items);
+  cnt_items = NULL;
+  free(cnt_kills);
+  cnt_kills = NULL;
 }
 
 // ====================================================================
@@ -1282,8 +1161,7 @@ static void WI_endNetgameStats(void)
 // Args:    none
 // Returns: void
 //
-void WI_initNetgameStats(void)
-{
+void WI_initNetgameStats(void) {
   int i;
 
   state = StatCount;
@@ -1295,10 +1173,10 @@ void WI_initNetgameStats(void)
   // CPhipps - allocate these dynamically, blank with calloc
   cnt_kills = calloc(MAXPLAYERS, sizeof(*cnt_kills));
   cnt_items = calloc(MAXPLAYERS, sizeof(*cnt_items));
-  cnt_secret= calloc(MAXPLAYERS, sizeof(*cnt_secret));
+  cnt_secret = calloc(MAXPLAYERS, sizeof(*cnt_secret));
   cnt_frags = calloc(MAXPLAYERS, sizeof(*cnt_frags));
 
-  for (i=0 ; i<MAXPLAYERS ; i++)
+  for (i = 0; i < MAXPLAYERS; i++)
     if (playeringame[i])
       dofrags += WI_fragSum(i);
 
@@ -1307,7 +1185,6 @@ void WI_initNetgameStats(void)
   WI_initAnimatedBack();
 }
 
-
 // ====================================================================
 // WI_updateNetgameStats
 // Purpose: Calculate coop stats as we display them with noise and fury
@@ -1315,21 +1192,18 @@ void WI_initNetgameStats(void)
 // Returns: void
 // Comment: This stuff sure is complicated for what it does
 //
-void WI_updateNetgameStats(void)
-{
-  int   i;
-  int   fsum;
+void WI_updateNetgameStats(void) {
+  int i;
+  int fsum;
 
   boolean stillticking;
 
   WI_updateAnimatedBack();
 
-  if (acceleratestage && ng_state != 10)
-  {
+  if (acceleratestage && ng_state != 10) {
     acceleratestage = 0;
 
-    for (i=0 ; i<MAXPLAYERS ; i++)
-    {
+    for (i = 0; i < MAXPLAYERS; i++) {
       if (!playeringame[i])
         continue;
 
@@ -1337,24 +1211,22 @@ void WI_updateNetgameStats(void)
       cnt_items[i] = (plrs[i].sitems * 100) / wbs->maxitems;
 
       // killough 2/22/98: Make secrets = 100% if maxsecret = 0:
-      cnt_secret[i] = wbs->maxsecret ?
-                      (plrs[i].ssecret * 100) / wbs->maxsecret : 100;
+      cnt_secret[i] =
+          wbs->maxsecret ? (plrs[i].ssecret * 100) / wbs->maxsecret : 100;
       if (dofrags)
-        cnt_frags[i] = WI_fragSum(i);  // we had frags
+        cnt_frags[i] = WI_fragSum(i); // we had frags
     }
-    S_StartSound(0, sfx_barexp);  // bang
+    S_StartSound(0, sfx_barexp); // bang
     ng_state = 10;
   }
 
-  if (ng_state == 2)
-  {
-    if (!(bcnt&3))
-      S_StartSound(0, sfx_pistol);  // pop
+  if (ng_state == 2) {
+    if (!(bcnt & 3))
+      S_StartSound(0, sfx_pistol); // pop
 
     stillticking = false;
 
-    for (i=0 ; i<MAXPLAYERS ; i++)
-    {
+    for (i = 0; i < MAXPLAYERS; i++) {
       if (!playeringame[i])
         continue;
 
@@ -1366,21 +1238,17 @@ void WI_updateNetgameStats(void)
         stillticking = true; // still got stuff to tally
     }
 
-    if (!stillticking)
-    {
+    if (!stillticking) {
       S_StartSound(0, sfx_barexp);
       ng_state++;
     }
-  }
-  else if (ng_state == 4)
-  {
-    if (!(bcnt&3))
+  } else if (ng_state == 4) {
+    if (!(bcnt & 3))
       S_StartSound(0, sfx_pistol);
 
     stillticking = false;
 
-    for (i=0 ; i<MAXPLAYERS ; i++)
-    {
+    for (i = 0; i < MAXPLAYERS; i++) {
       if (!playeringame[i])
         continue;
 
@@ -1391,21 +1259,17 @@ void WI_updateNetgameStats(void)
         stillticking = true;
     }
 
-    if (!stillticking)
-    {
+    if (!stillticking) {
       S_StartSound(0, sfx_barexp);
       ng_state++;
     }
-  }
-  else if (ng_state == 6)
-  {
-    if (!(bcnt&3))
+  } else if (ng_state == 6) {
+    if (!(bcnt & 3))
       S_StartSound(0, sfx_pistol);
 
     stillticking = false;
 
-    for (i=0 ; i<MAXPLAYERS ; i++)
-    {
+    for (i = 0; i < MAXPLAYERS; i++) {
       if (!playeringame[i])
         continue;
 
@@ -1413,27 +1277,27 @@ void WI_updateNetgameStats(void)
 
       // killough 2/22/98: Make secrets = 100% if maxsecret = 0:
 
-      if (cnt_secret[i] >= (wbs->maxsecret ? (plrs[i].ssecret * 100) / wbs->maxsecret : compatibility_level < lxdoom_1_compatibility ? 0 : 100))
-        cnt_secret[i] = wbs->maxsecret ? (plrs[i].ssecret * 100) / wbs->maxsecret : 100;
+      if (cnt_secret[i] >=
+          (wbs->maxsecret ? (plrs[i].ssecret * 100) / wbs->maxsecret
+           : compatibility_level < lxdoom_1_compatibility ? 0
+                                                          : 100))
+        cnt_secret[i] =
+            wbs->maxsecret ? (plrs[i].ssecret * 100) / wbs->maxsecret : 100;
       else
         stillticking = true;
     }
 
-    if (!stillticking)
-    {
+    if (!stillticking) {
       S_StartSound(0, sfx_barexp);
-      ng_state += 1 + 2*!dofrags;
+      ng_state += 1 + 2 * !dofrags;
     }
-  }
-  else if (ng_state == 8)
-  {
-    if (!(bcnt&3))
+  } else if (ng_state == 8) {
+    if (!(bcnt & 3))
       S_StartSound(0, sfx_pistol);
 
     stillticking = false;
 
-    for (i=0 ; i<MAXPLAYERS ; i++)
-    {
+    for (i = 0; i < MAXPLAYERS; i++) {
       if (!playeringame[i])
         continue;
 
@@ -1445,33 +1309,25 @@ void WI_updateNetgameStats(void)
         stillticking = true;
     }
 
-    if (!stillticking)
-    {
+    if (!stillticking) {
       S_StartSound(0, sfx_pldeth);
       ng_state++;
     }
-  }
-  else if (ng_state == 10)
-  {
-    if (acceleratestage)
-    {
+  } else if (ng_state == 10) {
+    if (acceleratestage) {
       S_StartSound(0, sfx_sgcock);
-      if ( gamemode == commercial )
+      if (gamemode == commercial)
         WI_initNoState();
       else
         WI_initShowNextLoc();
     }
-  }
-  else if (ng_state & 1)
-  {
-    if (!--cnt_pause)
-    {
+  } else if (ng_state & 1) {
+    if (!--cnt_pause) {
       ng_state++;
       cnt_pause = TICRATE;
     }
   }
 }
-
 
 // ====================================================================
 // WI_drawNetgameStats
@@ -1481,13 +1337,12 @@ void WI_updateNetgameStats(void)
 //
 // proff/nicolas 09/20/98 -- changed for hi-res
 // CPhipps - patch drawing updated
-void WI_drawNetgameStats(void)
-{
-  int   i;
-  int   x;
-  int   y;
-  int   pwidth = V_NamePatchWidth(percent);
-  int   fwidth = V_NamePatchWidth(facebackp);
+void WI_drawNetgameStats(void) {
+  int i;
+  int x;
+  int y;
+  int pwidth = V_NamePatchWidth(percent);
+  int fwidth = V_NamePatchWidth(facebackp);
 
   WI_slamBackground();
 
@@ -1497,59 +1352,58 @@ void WI_drawNetgameStats(void)
   WI_drawLF();
 
   // draw stat titles (top line)
-  V_DrawNamePatch(NG_STATSX+NG_SPACINGX-V_NamePatchWidth(kills),
-     NG_STATSY, FB, kills, CR_DEFAULT, VPT_STRETCH);
+  V_DrawNamePatch(NG_STATSX + NG_SPACINGX - V_NamePatchWidth(kills), NG_STATSY,
+                  FB, kills, CR_DEFAULT, VPT_STRETCH);
 
-  V_DrawNamePatch(NG_STATSX+2*NG_SPACINGX-V_NamePatchWidth(items),
-     NG_STATSY, FB, items, CR_DEFAULT, VPT_STRETCH);
+  V_DrawNamePatch(NG_STATSX + 2 * NG_SPACINGX - V_NamePatchWidth(items),
+                  NG_STATSY, FB, items, CR_DEFAULT, VPT_STRETCH);
 
-  V_DrawNamePatch(NG_STATSX+3*NG_SPACINGX-V_NamePatchWidth(secret),
-     NG_STATSY, FB, secret, CR_DEFAULT, VPT_STRETCH);
+  V_DrawNamePatch(NG_STATSX + 3 * NG_SPACINGX - V_NamePatchWidth(secret),
+                  NG_STATSY, FB, secret, CR_DEFAULT, VPT_STRETCH);
 
   if (dofrags)
-    V_DrawNamePatch(NG_STATSX+4*NG_SPACINGX-V_NamePatchWidth(frags),
-       NG_STATSY, FB, frags, CR_DEFAULT, VPT_STRETCH);
+    V_DrawNamePatch(NG_STATSX + 4 * NG_SPACINGX - V_NamePatchWidth(frags),
+                    NG_STATSY, FB, frags, CR_DEFAULT, VPT_STRETCH);
 
   // draw stats
   y = NG_STATSY + V_NamePatchHeight(kills);
 
-  for (i=0 ; i<MAXPLAYERS ; i++)
-  {
-    //int trans = playernumtotrans[i];
+  for (i = 0; i < MAXPLAYERS; i++) {
+    // int trans = playernumtotrans[i];
     if (!playeringame[i])
       continue;
 
     x = NG_STATSX;
-    V_DrawNamePatch(x-fwidth, y, FB, facebackp,
-       i ? CR_LIMIT+i : CR_DEFAULT,
-       VPT_STRETCH | (i ? VPT_TRANS : 0));
+    V_DrawNamePatch(x - fwidth, y, FB, facebackp, i ? CR_LIMIT + i : CR_DEFAULT,
+                    VPT_STRETCH | (i ? VPT_TRANS : 0));
 
     if (i == me)
-      V_DrawNamePatch(x-fwidth, y, FB, star, CR_DEFAULT, VPT_STRETCH);
+      V_DrawNamePatch(x - fwidth, y, FB, star, CR_DEFAULT, VPT_STRETCH);
 
     x += NG_SPACINGX;
     if (cnt_kills)
-      WI_drawPercent(x-pwidth, y+10, cnt_kills[i]);
+      WI_drawPercent(x - pwidth, y + 10, cnt_kills[i]);
     x += NG_SPACINGX;
     if (cnt_items)
-      WI_drawPercent(x-pwidth, y+10, cnt_items[i]);
+      WI_drawPercent(x - pwidth, y + 10, cnt_items[i]);
     x += NG_SPACINGX;
     if (cnt_secret)
-      WI_drawPercent(x-pwidth, y+10, cnt_secret[i]);
+      WI_drawPercent(x - pwidth, y + 10, cnt_secret[i]);
     x += NG_SPACINGX;
 
     if (dofrags && cnt_frags)
-      WI_drawNum(x, y+10, cnt_frags[i], -1);
+      WI_drawNum(x, y + 10, cnt_frags[i], -1);
 
     y += WI_SPACINGY;
   }
 
   if (y <= SP_TIMEY)
     // cph - show times in coop on the entering screen
-    WI_drawTimeStats(plrs[me].stime / TICRATE, wbs->totaltimes / TICRATE, wbs->partime / TICRATE);
+    WI_drawTimeStats(plrs[me].stime / TICRATE, wbs->totaltimes / TICRATE,
+                     wbs->partime / TICRATE);
 }
 
-static int  sp_state;
+static int sp_state;
 
 // ====================================================================
 // WI_initStats
@@ -1559,16 +1413,16 @@ static int  sp_state;
 // Comment: Seems like we could do all these stats in a more generic
 //          set of routines that weren't duplicated for dm, coop, sp
 //
-void WI_initStats(void)
-{
+void WI_initStats(void) {
   state = StatCount;
   acceleratestage = 0;
   sp_state = 1;
 
-  // CPhipps - allocate (awful code, I know, but saves changing it all) and initialise
+  // CPhipps - allocate (awful code, I know, but saves changing it all) and
+  // initialise
   *(cnt_kills = malloc(sizeof(*cnt_kills))) =
-  *(cnt_items = malloc(sizeof(*cnt_items))) =
-  *(cnt_secret= malloc(sizeof(*cnt_secret))) = -1;
+      *(cnt_items = malloc(sizeof(*cnt_items))) =
+          *(cnt_secret = malloc(sizeof(*cnt_secret))) = -1;
   cnt_time = cnt_par = cnt_total_time = -1;
   cnt_pause = TICRATE;
 
@@ -1581,19 +1435,17 @@ void WI_initStats(void)
 // Args:    none
 // Returns: void
 //
-void WI_updateStats(void)
-{
+void WI_updateStats(void) {
   WI_updateAnimatedBack();
 
-  if (acceleratestage && sp_state != 10)
-  {
+  if (acceleratestage && sp_state != 10) {
     acceleratestage = 0;
     cnt_kills[0] = (plrs[me].skills * 100) / wbs->maxkills;
     cnt_items[0] = (plrs[me].sitems * 100) / wbs->maxitems;
 
     // killough 2/22/98: Make secrets = 100% if maxsecret = 0:
-    cnt_secret[0] = (wbs->maxsecret ?
-      (plrs[me].ssecret * 100) / wbs->maxsecret : 100);
+    cnt_secret[0] =
+        (wbs->maxsecret ? (plrs[me].ssecret * 100) / wbs->maxsecret : 100);
 
     cnt_total_time = wbs->totaltimes / TICRATE;
     cnt_time = plrs[me].stime / TICRATE;
@@ -1602,55 +1454,46 @@ void WI_updateStats(void)
     sp_state = 10;
   }
 
-  if (sp_state == 2)
-  {
+  if (sp_state == 2) {
     cnt_kills[0] += 2;
 
-    if (!(bcnt&3))
+    if (!(bcnt & 3))
       S_StartSound(0, sfx_pistol);
 
-    if (cnt_kills[0] >= (plrs[me].skills * 100) / wbs->maxkills)
-    {
+    if (cnt_kills[0] >= (plrs[me].skills * 100) / wbs->maxkills) {
       cnt_kills[0] = (plrs[me].skills * 100) / wbs->maxkills;
       S_StartSound(0, sfx_barexp);
       sp_state++;
     }
-  }
-  else if (sp_state == 4)
-  {
+  } else if (sp_state == 4) {
     cnt_items[0] += 2;
 
-    if (!(bcnt&3))
+    if (!(bcnt & 3))
       S_StartSound(0, sfx_pistol);
 
-    if (cnt_items[0] >= (plrs[me].sitems * 100) / wbs->maxitems)
-    {
+    if (cnt_items[0] >= (plrs[me].sitems * 100) / wbs->maxitems) {
       cnt_items[0] = (plrs[me].sitems * 100) / wbs->maxitems;
       S_StartSound(0, sfx_barexp);
       sp_state++;
     }
-  }
-  else if (sp_state == 6)
-  {
+  } else if (sp_state == 6) {
     cnt_secret[0] += 2;
 
-    if (!(bcnt&3))
+    if (!(bcnt & 3))
       S_StartSound(0, sfx_pistol);
 
     // killough 2/22/98: Make secrets = 100% if maxsecret = 0:
     if ((!wbs->maxsecret && compatibility_level < lxdoom_1_compatibility) ||
-	cnt_secret[0] >= (wbs->maxsecret ?
-      (plrs[me].ssecret * 100) / wbs->maxsecret : 100))
-    {
-      cnt_secret[0] = (wbs->maxsecret ?
-        (plrs[me].ssecret * 100) / wbs->maxsecret : 100);
+        cnt_secret[0] >= (wbs->maxsecret
+                              ? (plrs[me].ssecret * 100) / wbs->maxsecret
+                              : 100)) {
+      cnt_secret[0] =
+          (wbs->maxsecret ? (plrs[me].ssecret * 100) / wbs->maxsecret : 100);
       S_StartSound(0, sfx_barexp);
       sp_state++;
     }
-  }
-  else if (sp_state == 8)
-  {
-    if (!(bcnt&3))
+  } else if (sp_state == 8) {
+    if (!(bcnt & 3))
       S_StartSound(0, sfx_pistol);
 
     cnt_time += 3;
@@ -1665,21 +1508,18 @@ void WI_updateStats(void)
 
     cnt_par += 3;
 
-    if (cnt_par >= wbs->partime / TICRATE)
-    {
+    if (cnt_par >= wbs->partime / TICRATE) {
       cnt_par = wbs->partime / TICRATE;
 
-      if ((cnt_time >= plrs[me].stime / TICRATE) && (compatibility_level < lxdoom_1_compatibility || cnt_total_time >= wbs->totaltimes / TICRATE))
-      {
+      if ((cnt_time >= plrs[me].stime / TICRATE) &&
+          (compatibility_level < lxdoom_1_compatibility ||
+           cnt_total_time >= wbs->totaltimes / TICRATE)) {
         S_StartSound(0, sfx_barexp);
         sp_state++;
       }
     }
-  }
-  else if (sp_state == 10)
-  {
-    if (acceleratestage)
-    {
+  } else if (sp_state == 10) {
+    if (acceleratestage) {
       S_StartSound(0, sfx_sgcock);
 
       if (gamemode == commercial)
@@ -1687,11 +1527,8 @@ void WI_updateStats(void)
       else
         WI_initShowNextLoc();
     }
-  }
-  else if (sp_state & 1)
-  {
-    if (!--cnt_pause)
-    {
+  } else if (sp_state & 1) {
+    if (!--cnt_pause) {
       sp_state++;
       cnt_pause = TICRATE;
     }
@@ -1706,12 +1543,11 @@ void WI_updateStats(void)
 //
 // proff/nicolas 09/20/98 -- changed for hi-res
 // CPhipps - patch drawing updated
-void WI_drawStats(void)
-{
+void WI_drawStats(void) {
   // line height
   int lh;
 
-  lh = (3*num[0].height)/2;
+  lh = (3 * num[0].height) / 2;
 
   WI_slamBackground();
 
@@ -1724,13 +1560,15 @@ void WI_drawStats(void)
   if (cnt_kills)
     WI_drawPercent(320 - SP_STATSX, SP_STATSY, cnt_kills[0]);
 
-  V_DrawNamePatch(SP_STATSX, SP_STATSY+lh, FB, items, CR_DEFAULT, VPT_STRETCH);
+  V_DrawNamePatch(SP_STATSX, SP_STATSY + lh, FB, items, CR_DEFAULT,
+                  VPT_STRETCH);
   if (cnt_items)
-    WI_drawPercent(320 - SP_STATSX, SP_STATSY+lh, cnt_items[0]);
+    WI_drawPercent(320 - SP_STATSX, SP_STATSY + lh, cnt_items[0]);
 
-  V_DrawNamePatch(SP_STATSX, SP_STATSY+2*lh, FB, sp_secret, CR_DEFAULT, VPT_STRETCH);
+  V_DrawNamePatch(SP_STATSX, SP_STATSY + 2 * lh, FB, sp_secret, CR_DEFAULT,
+                  VPT_STRETCH);
   if (cnt_secret)
-    WI_drawPercent(320 - SP_STATSX, SP_STATSY+2*lh, cnt_secret[0]);
+    WI_drawPercent(320 - SP_STATSX, SP_STATSY + 2 * lh, cnt_secret[0]);
 
   WI_drawTimeStats(cnt_time, cnt_total_time, cnt_par);
 }
@@ -1743,32 +1581,25 @@ void WI_drawStats(void)
 // Args:    none
 // Returns: void
 //
-void WI_checkForAccelerate(void)
-{
-  int   i;
-  player_t  *player;
+void WI_checkForAccelerate(void) {
+  int i;
+  player_t *player;
 
   // check for button presses to skip delays
-  for (i=0, player = players ; i<MAXPLAYERS ; i++, player++)
-  {
-    if (playeringame[i])
-    {
-      if (player->cmd.buttons & BT_ATTACK)
-      {
+  for (i = 0, player = players; i < MAXPLAYERS; i++, player++) {
+    if (playeringame[i]) {
+      if (player->cmd.buttons & BT_ATTACK) {
         if (!player->attackdown)
           acceleratestage = 1;
         player->attackdown = true;
-      }
-      else
+      } else
         player->attackdown = false;
 
-      if (player->cmd.buttons & BT_USE)
-      {
+      if (player->cmd.buttons & BT_USE) {
         if (!player->usedown)
           acceleratestage = 1;
         player->usedown = true;
-      }
-      else
+      } else
         player->usedown = false;
     }
   }
@@ -1781,15 +1612,13 @@ void WI_checkForAccelerate(void)
 // Args:    none
 // Returns: void
 //
-void WI_Ticker(void)
-{
+void WI_Ticker(void) {
   // counter for general background animation
   bcnt++;
 
-  if (bcnt == 1)
-  {
+  if (bcnt == 1) {
     // intermission music
-    if ( gamemode == commercial )
+    if (gamemode == commercial)
       S_ChangeMusic(mus_dm2int, true);
     else
       S_ChangeMusic(mus_inter, true);
@@ -1797,21 +1626,23 @@ void WI_Ticker(void)
 
   WI_checkForAccelerate();
 
-  switch (state)
-  {
-    case StatCount:
-         if (deathmatch) WI_updateDeathmatchStats();
-         else if (netgame) WI_updateNetgameStats();
-         else WI_updateStats();
-         break;
+  switch (state) {
+  case StatCount:
+    if (deathmatch)
+      WI_updateDeathmatchStats();
+    else if (netgame)
+      WI_updateNetgameStats();
+    else
+      WI_updateStats();
+    break;
 
-    case ShowNextLoc:
-         WI_updateShowNextLoc();
-         break;
+  case ShowNextLoc:
+    WI_updateShowNextLoc();
+    break;
 
-    case NoState:
-         WI_updateNoState();
-         break;
+  case NoState:
+    WI_updateNoState();
+    break;
   }
 }
 
@@ -1827,31 +1658,23 @@ void WI_Ticker(void)
  *           them by name
  */
 
-void WI_loadData(void)
-{
-  int   i;
-  int   j;
-  char  name[9];  // limited to 8 characters
-  anim_t* a;
+void WI_loadData(void) {
+  int i;
+  int j;
+  char name[9]; // limited to 8 characters
+  anim_t *a;
 
-  if (gamemode != commercial)
-  {
-    if (wbs->epsd < 3)
-    {
-      for (j=0;j<NUMANIMS[wbs->epsd];j++)
-      {
+  if (gamemode != commercial) {
+    if (wbs->epsd < 3) {
+      for (j = 0; j < NUMANIMS[wbs->epsd]; j++) {
         a = &anims[wbs->epsd][j];
-        for (i=0;i<a->nanims;i++)
-        {
+        for (i = 0; i < a->nanims; i++) {
           // MONDO HACK!
-          if (wbs->epsd != 1 || j != 8)
-          {
+          if (wbs->epsd != 1 || j != 8) {
             // animations
             sprintf(name, "WIA%d%.2d%.2d", wbs->epsd, j, i);
             R_SetPatchNum(&a->p[i], name);
-          }
-          else
-          {
+          } else {
             // HACK ALERT!
             a->p[i] = anims[1][4].p[i];
           }
@@ -1860,14 +1683,12 @@ void WI_loadData(void)
     }
   }
 
-  for (i=0;i<10;i++)
-  {
+  for (i = 0; i < 10; i++) {
     // numbers 0-9
     sprintf(name, "WINUM%d", i);
     R_SetPatchNum(&num[i], name);
   }
 }
-
 
 // ====================================================================
 // WI_Drawer
@@ -1876,29 +1697,26 @@ void WI_loadData(void)
 // Args:    none
 // Returns: void
 //
-void WI_Drawer (void)
-{
-  switch (state)
-  {
-    case StatCount:
-         if (deathmatch)
-           WI_drawDeathmatchStats();
-         else if (netgame)
-           WI_drawNetgameStats();
-         else
-           WI_drawStats();
-         break;
+void WI_Drawer(void) {
+  switch (state) {
+  case StatCount:
+    if (deathmatch)
+      WI_drawDeathmatchStats();
+    else if (netgame)
+      WI_drawNetgameStats();
+    else
+      WI_drawStats();
+    break;
 
-    case ShowNextLoc:
-         WI_drawShowNextLoc();
-         break;
+  case ShowNextLoc:
+    WI_drawShowNextLoc();
+    break;
 
-    case NoState:
-         WI_drawNoState();
-         break;
+  case NoState:
+    WI_drawNoState();
+    break;
   }
 }
-
 
 // ====================================================================
 // WI_initVariables
@@ -1907,21 +1725,17 @@ void WI_Drawer (void)
 // Args:    wbstartstruct -- pointer to the structure with the data
 // Returns: void
 //
-void WI_initVariables(wbstartstruct_t* wbstartstruct)
-{
+void WI_initVariables(wbstartstruct_t *wbstartstruct) {
 
   wbs = wbstartstruct;
 
 #ifdef RANGECHECKING
-  if (gamemode != commercial)
-  {
-    if ( gamemode == retail )
+  if (gamemode != commercial) {
+    if (gamemode == retail)
       RNGCHECK(wbs->epsd, 0, 3);
     else
       RNGCHECK(wbs->epsd, 0, 2);
-  }
-  else
-  {
+  } else {
     RNGCHECK(wbs->last, 0, 8);
     RNGCHECK(wbs->next, 0, 8);
   }
@@ -1936,12 +1750,12 @@ void WI_initVariables(wbstartstruct_t* wbstartstruct)
   plrs = wbs->plyr;
 
   if (!wbs->maxkills)
-    wbs->maxkills = 1;  // probably only useful in MAP30
+    wbs->maxkills = 1; // probably only useful in MAP30
 
   if (!wbs->maxitems)
     wbs->maxitems = 1;
 
-  if ( gamemode != retail )
+  if (gamemode != retail)
     if (wbs->epsd > 2)
       wbs->epsd -= 3;
 }
@@ -1954,8 +1768,7 @@ void WI_initVariables(wbstartstruct_t* wbstartstruct)
 //          intermission data
 // Returns: void
 //
-void WI_Start(wbstartstruct_t* wbstartstruct)
-{
+void WI_Start(wbstartstruct_t *wbstartstruct) {
   WI_initVariables(wbstartstruct);
   WI_loadData();
 

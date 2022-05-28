@@ -58,10 +58,11 @@ void I_ShutdownSound(void);
 void I_SetChannels(void);
 
 // Get raw data lump index for sound descriptor.
-int I_GetSfxLumpNum (sfxinfo_t *sfxinfo);
+int I_GetSfxLumpNum(sfxinfo_t *sfxinfo);
 
 // Starts a sound in a particular sound channel.
-int I_StartSound(int id, int channel, int vol, int sep, int pitch, int priority);
+int I_StartSound(int id, int channel, int vol, int sep, int pitch,
+                 int priority);
 
 // Stops a sound channel.
 void I_StopSound(int handle);
@@ -97,7 +98,7 @@ void I_ResumeSong(int handle);
 int I_RegisterSong(const void *data, size_t len);
 
 // cournia - tries to load a music file
-int I_RegisterMusic( const char* filename, musicinfo_t *music );
+int I_RegisterMusic(const char *filename, musicinfo_t *music);
 
 // Called by anything that wishes to start music.
 //  plays a song, and when the song is done,

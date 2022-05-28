@@ -23,8 +23,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ResolutionDataSource : NSObject
-{
+@interface ResolutionDataSource : NSObject {
 }
 
 + (NSArray *)resolutions;

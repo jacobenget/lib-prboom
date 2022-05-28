@@ -119,20 +119,20 @@
 //
 
 // Call P_SpecialThing when touched.
-#define MF_SPECIAL      (uint_64_t)(0x0000000000000001)
+#define MF_SPECIAL (uint_64_t)(0x0000000000000001)
 // Blocks.
-#define MF_SOLID        (uint_64_t)(0x0000000000000002)
+#define MF_SOLID (uint_64_t)(0x0000000000000002)
 // Can be hit.
-#define MF_SHOOTABLE    (uint_64_t)(0x0000000000000004)
+#define MF_SHOOTABLE (uint_64_t)(0x0000000000000004)
 // Don't use the sector links (invisible but touchable).
-#define MF_NOSECTOR     (uint_64_t)(0x0000000000000008)
+#define MF_NOSECTOR (uint_64_t)(0x0000000000000008)
 // Don't use the blocklinks (inert but displayable)
-#define MF_NOBLOCKMAP   (uint_64_t)(0x0000000000000010)
+#define MF_NOBLOCKMAP (uint_64_t)(0x0000000000000010)
 
 // Not to be activated by sound, deaf monster.
-#define MF_AMBUSH       (uint_64_t)(0x0000000000000020)
+#define MF_AMBUSH (uint_64_t)(0x0000000000000020)
 // Will try to attack right back.
-#define MF_JUSTHIT      (uint_64_t)(0x0000000000000040)
+#define MF_JUSTHIT (uint_64_t)(0x0000000000000040)
 // Will take at least one step before attacking.
 #define MF_JUSTATTACKED (uint_64_t)(0x0000000000000080)
 // On level spawning (initial position),
@@ -141,89 +141,89 @@
 // Don't apply gravity (every tic),
 //  that is, object will float, keeping current height
 //  or changing it actively.
-#define MF_NOGRAVITY    (uint_64_t)(0x0000000000000200)
+#define MF_NOGRAVITY (uint_64_t)(0x0000000000000200)
 
 // Movement flags.
 // This allows jumps from high places.
-#define MF_DROPOFF      (uint_64_t)(0x0000000000000400)
+#define MF_DROPOFF (uint_64_t)(0x0000000000000400)
 // For players, will pick up items.
-#define MF_PICKUP       (uint_64_t)(0x0000000000000800)
+#define MF_PICKUP (uint_64_t)(0x0000000000000800)
 // Player cheat. ???
-#define MF_NOCLIP       (uint_64_t)(0x0000000000001000)
+#define MF_NOCLIP (uint_64_t)(0x0000000000001000)
 // Player: keep info about sliding along walls.
-#define MF_SLIDE        (uint_64_t)(0x0000000000002000)
+#define MF_SLIDE (uint_64_t)(0x0000000000002000)
 // Allow moves to any height, no gravity.
 // For active floaters, e.g. cacodemons, pain elementals.
-#define MF_FLOAT        (uint_64_t)(0x0000000000004000)
+#define MF_FLOAT (uint_64_t)(0x0000000000004000)
 // Don't cross lines
 //   ??? or look at heights on teleport.
-#define MF_TELEPORT     (uint_64_t)(0x0000000000008000)
+#define MF_TELEPORT (uint_64_t)(0x0000000000008000)
 // Don't hit same species, explode on block.
 // Player missiles as well as fireballs of various kinds.
-#define MF_MISSILE      (uint_64_t)(0x0000000000010000)
+#define MF_MISSILE (uint_64_t)(0x0000000000010000)
 // Dropped by a demon, not level spawned.
 // E.g. ammo clips dropped by dying former humans.
-#define MF_DROPPED      (uint_64_t)(0x0000000000020000)
+#define MF_DROPPED (uint_64_t)(0x0000000000020000)
 // Use fuzzy draw (shadow demons or spectres),
 //  temporary player invisibility powerup.
-#define MF_SHADOW       (uint_64_t)(0x0000000000040000)
+#define MF_SHADOW (uint_64_t)(0x0000000000040000)
 // Flag: don't bleed when shot (use puff),
 //  barrels and shootable furniture shall not bleed.
-#define MF_NOBLOOD      (uint_64_t)(0x0000000000080000)
+#define MF_NOBLOOD (uint_64_t)(0x0000000000080000)
 // Don't stop moving halfway off a step,
 //  that is, have dead bodies slide down all the way.
-#define MF_CORPSE       (uint_64_t)(0x0000000000100000)
+#define MF_CORPSE (uint_64_t)(0x0000000000100000)
 // Floating to a height for a move, ???
 //  don't auto float to target's height.
-#define MF_INFLOAT      (uint_64_t)(0x0000000000200000)
+#define MF_INFLOAT (uint_64_t)(0x0000000000200000)
 
 // On kill, count this enemy object
 //  towards intermission kill total.
 // Happy gathering.
-#define MF_COUNTKILL    (uint_64_t)(0x0000000000400000)
+#define MF_COUNTKILL (uint_64_t)(0x0000000000400000)
 
 // On picking up, count this item object
 //  towards intermission item total.
-#define MF_COUNTITEM    (uint_64_t)(0x0000000000800000)
+#define MF_COUNTITEM (uint_64_t)(0x0000000000800000)
 
 // Special handling: skull in flight.
 // Neither a cacodemon nor a missile.
-#define MF_SKULLFLY     (uint_64_t)(0x0000000001000000)
+#define MF_SKULLFLY (uint_64_t)(0x0000000001000000)
 
 // Don't spawn this object
 //  in death match mode (e.g. key cards).
-#define MF_NOTDMATCH    (uint_64_t)(0x0000000002000000)
+#define MF_NOTDMATCH (uint_64_t)(0x0000000002000000)
 
 // Player sprites in multiplayer modes are modified
 //  using an internal color lookup table for re-indexing.
 // If 0x4 0x8 or 0xc,
 //  use a translation table for player colormaps
-#define MF_TRANSLATION  (uint_64_t)(0x000000000c000000)
+#define MF_TRANSLATION (uint_64_t)(0x000000000c000000)
 #define MF_TRANSLATION1 (uint_64_t)(0x0000000004000000)
 #define MF_TRANSLATION2 (uint_64_t)(0x0000000008000000)
 // Hmm ???.
 #define MF_TRANSSHIFT 26
 
-#define MF_UNUSED2      (uint_64_t)(0x0000000010000000)
-#define MF_UNUSED3      (uint_64_t)(0x0000000020000000)
+#define MF_UNUSED2 (uint_64_t)(0x0000000010000000)
+#define MF_UNUSED3 (uint_64_t)(0x0000000020000000)
 
-    // Translucent sprite?                                          // phares
-#define MF_TRANSLUCENT  (uint_64_t)(0x0000000040000000)
+// Translucent sprite?                                          // phares
+#define MF_TRANSLUCENT (uint_64_t)(0x0000000040000000)
 
 // this is free            LONGLONG(0x0000000100000000)
 
 // these are greater than an int. That's why the flags below are now uint_64_t
 
-#define MF_TOUCHY          LONGLONG(0x0000000100000000)
-#define MF_BOUNCES         LONGLONG(0x0000000200000000)
-#define MF_FRIEND          LONGLONG(0x0000000400000000)
+#define MF_TOUCHY LONGLONG(0x0000000100000000)
+#define MF_BOUNCES LONGLONG(0x0000000200000000)
+#define MF_FRIEND LONGLONG(0x0000000400000000)
 
 // killough 9/15/98: Same, but internal flags, not intended for .deh
 // (some degree of opaqueness is good, to avoid compatibility woes)
 
 enum {
-  MIF_FALLING = 1,      // Object is falling
-  MIF_ARMED = 2,        // Object is armed (for MF_TOUCHY objects)
+  MIF_FALLING = 1, // Object is falling
+  MIF_ARMED = 2,   // Object is armed (for MF_TOUCHY objects)
 };
 
 // Map Object definition.
@@ -245,138 +245,137 @@ enum {
 /* cph 2006/08/28 - move Prev[XYZ] fields to the end of the struct. Add any
  * other new fields to the end, and make sure you don't break savegames! */
 
-typedef struct mobj_s
-{
-    // List: thinker links.
-    thinker_t           thinker;
+typedef struct mobj_s {
+  // List: thinker links.
+  thinker_t thinker;
 
-    // Info for drawing: position.
-    fixed_t             x;
-    fixed_t             y;
-    fixed_t             z;
+  // Info for drawing: position.
+  fixed_t x;
+  fixed_t y;
+  fixed_t z;
 
-    // More list: links in sector (if needed)
-    struct mobj_s*      snext;
-    struct mobj_s**     sprev; // killough 8/10/98: change to ptr-to-ptr
+  // More list: links in sector (if needed)
+  struct mobj_s *snext;
+  struct mobj_s **sprev; // killough 8/10/98: change to ptr-to-ptr
 
-    //More drawing info: to determine current sprite.
-    angle_t             angle;  // orientation
-    spritenum_t         sprite; // used to find patch_t and flip value
-    int                 frame;  // might be ORed with FF_FULLBRIGHT
+  // More drawing info: to determine current sprite.
+  angle_t angle;      // orientation
+  spritenum_t sprite; // used to find patch_t and flip value
+  int frame;          // might be ORed with FF_FULLBRIGHT
 
-    // Interaction info, by BLOCKMAP.
-    // Links in blocks (if needed).
-    struct mobj_s*      bnext;
-    struct mobj_s**     bprev; // killough 8/11/98: change to ptr-to-ptr
+  // Interaction info, by BLOCKMAP.
+  // Links in blocks (if needed).
+  struct mobj_s *bnext;
+  struct mobj_s **bprev; // killough 8/11/98: change to ptr-to-ptr
 
-    struct subsector_s* subsector;
+  struct subsector_s *subsector;
 
-    // The closest interval over all contacted Sectors.
-    fixed_t             floorz;
-    fixed_t             ceilingz;
+  // The closest interval over all contacted Sectors.
+  fixed_t floorz;
+  fixed_t ceilingz;
 
-    // killough 11/98: the lowest floor over all contacted Sectors.
-    fixed_t             dropoffz;
+  // killough 11/98: the lowest floor over all contacted Sectors.
+  fixed_t dropoffz;
 
-    // For movement checking.
-    fixed_t             radius;
-    fixed_t             height;
+  // For movement checking.
+  fixed_t radius;
+  fixed_t height;
 
-    // Momentums, used to update position.
-    fixed_t             momx;
-    fixed_t             momy;
-    fixed_t             momz;
+  // Momentums, used to update position.
+  fixed_t momx;
+  fixed_t momy;
+  fixed_t momz;
 
-    // If == validcount, already checked.
-    int                 validcount;
+  // If == validcount, already checked.
+  int validcount;
 
-    mobjtype_t          type;
-    mobjinfo_t*         info;   // &mobjinfo[mobj->type]
+  mobjtype_t type;
+  mobjinfo_t *info; // &mobjinfo[mobj->type]
 
-    int                 tics;   // state tic counter
-    state_t*            state;
-    uint_64_t           flags;
-    int                 intflags;  // killough 9/15/98: internal flags
-    int                 health;
+  int tics; // state tic counter
+  state_t *state;
+  uint_64_t flags;
+  int intflags; // killough 9/15/98: internal flags
+  int health;
 
-    // Movement direction, movement generation (zig-zagging).
-    short               movedir;        // 0-7
-    short               movecount;      // when 0, select a new dir
-    short               strafecount;    // killough 9/8/98: monster strafing
+  // Movement direction, movement generation (zig-zagging).
+  short movedir;     // 0-7
+  short movecount;   // when 0, select a new dir
+  short strafecount; // killough 9/8/98: monster strafing
 
-    // Thing being chased/attacked (or NULL),
-    // also the originator for missiles.
-    struct mobj_s*      target;
+  // Thing being chased/attacked (or NULL),
+  // also the originator for missiles.
+  struct mobj_s *target;
 
-    // Reaction time: if non 0, don't attack yet.
-    // Used by player to freeze a bit after teleporting.
-    short               reactiontime;
+  // Reaction time: if non 0, don't attack yet.
+  // Used by player to freeze a bit after teleporting.
+  short reactiontime;
 
-    // If >0, the current target will be chased no
-    // matter what (even if shot by another object)
-    short               threshold;
+  // If >0, the current target will be chased no
+  // matter what (even if shot by another object)
+  short threshold;
 
-    // killough 9/9/98: How long a monster pursues a target.
-    short               pursuecount;
+  // killough 9/9/98: How long a monster pursues a target.
+  short pursuecount;
 
-    short               gear; // killough 11/98: used in torque simulation
+  short gear; // killough 11/98: used in torque simulation
 
-    // Additional info record for player avatars only.
-    // Only valid if type == MT_PLAYER
-    struct player_s*    player;
+  // Additional info record for player avatars only.
+  // Only valid if type == MT_PLAYER
+  struct player_s *player;
 
-    // Player number last looked for.
-    short               lastlook;
+  // Player number last looked for.
+  short lastlook;
 
-    // For nightmare respawn.
-    mapthing_t          spawnpoint;
+  // For nightmare respawn.
+  mapthing_t spawnpoint;
 
-    // Thing being chased/attacked for tracers.
-    struct mobj_s*      tracer;
+  // Thing being chased/attacked for tracers.
+  struct mobj_s *tracer;
 
-    // new field: last known enemy -- killough 2/15/98
-    struct mobj_s*      lastenemy;
+  // new field: last known enemy -- killough 2/15/98
+  struct mobj_s *lastenemy;
 
-    // killough 8/2/98: friction properties part of sectors,
-    // not objects -- removed friction properties from here
-    // e6y: restored friction properties here
-    // Friction values for the sector the object is in
-    int friction;                                           // phares 3/17/98
-    int movefactor;
+  // killough 8/2/98: friction properties part of sectors,
+  // not objects -- removed friction properties from here
+  // e6y: restored friction properties here
+  // Friction values for the sector the object is in
+  int friction; // phares 3/17/98
+  int movefactor;
 
-    // a linked list of sectors where this object appears
-    struct msecnode_s* touching_sectorlist;                 // phares 3/14/98
+  // a linked list of sectors where this object appears
+  struct msecnode_s *touching_sectorlist; // phares 3/14/98
 
-    fixed_t             PrevX;
-    fixed_t             PrevY;
-    fixed_t             PrevZ;
+  fixed_t PrevX;
+  fixed_t PrevY;
+  fixed_t PrevZ;
 
-    fixed_t             pad; // cph - needed so I can get the size unambiguously on amd64
+  fixed_t pad; // cph - needed so I can get the size unambiguously on amd64
 
-    // SEE WARNING ABOVE ABOUT POINTER FIELDS!!!
+  // SEE WARNING ABOVE ABOUT POINTER FIELDS!!!
 } mobj_t;
 
 // External declarations (fomerly in p_local.h) -- killough 5/2/98
 
-#define VIEWHEIGHT      (41*FRACUNIT)
+#define VIEWHEIGHT (41 * FRACUNIT)
 
-#define GRAVITY         FRACUNIT
-#define MAXMOVE         (30*FRACUNIT)
+#define GRAVITY FRACUNIT
+#define MAXMOVE (30 * FRACUNIT)
 
-#define ONFLOORZ        INT_MIN
-#define ONCEILINGZ      INT_MAX
+#define ONFLOORZ INT_MIN
+#define ONCEILINGZ INT_MAX
 
 // Time interval for item respawning.
-#define ITEMQUESIZE     128
+#define ITEMQUESIZE 128
 
-#define FLOATSPEED      (FRACUNIT*4)
-#define STOPSPEED       (FRACUNIT/16)
+#define FLOATSPEED (FRACUNIT * 4)
+#define STOPSPEED (FRACUNIT / 16)
 
 // killough 11/98:
 // For torque simulation:
 
 #define OVERDRIVE 6
-#define MAXGEAR (OVERDRIVE+16)
+#define MAXGEAR (OVERDRIVE + 16)
 
 // killough 11/98:
 // Whether an object is "sentient" or not. Used for environmental influences.
@@ -385,18 +384,18 @@ typedef struct mobj_s
 extern int iquehead;
 extern int iquetail;
 
-void    P_RespawnSpecials(void);
-mobj_t  *P_SpawnMobj(fixed_t x, fixed_t y, fixed_t z, mobjtype_t type);
-void    P_RemoveMobj(mobj_t *th);
+void P_RespawnSpecials(void);
+mobj_t *P_SpawnMobj(fixed_t x, fixed_t y, fixed_t z, mobjtype_t type);
+void P_RemoveMobj(mobj_t *th);
 boolean P_SetMobjState(mobj_t *mobj, statenum_t state);
-void    P_MobjThinker(mobj_t *mobj);
-void    P_SpawnPuff(fixed_t x, fixed_t y, fixed_t z);
-void    P_SpawnBlood(fixed_t x, fixed_t y, fixed_t z, int damage);
-mobj_t  *P_SpawnMissile(mobj_t *source, mobj_t *dest, mobjtype_t type);
-void    P_SpawnPlayerMissile(mobj_t *source, mobjtype_t type);
+void P_MobjThinker(mobj_t *mobj);
+void P_SpawnPuff(fixed_t x, fixed_t y, fixed_t z);
+void P_SpawnBlood(fixed_t x, fixed_t y, fixed_t z, int damage);
+mobj_t *P_SpawnMissile(mobj_t *source, mobj_t *dest, mobjtype_t type);
+void P_SpawnPlayerMissile(mobj_t *source, mobjtype_t type);
 boolean P_IsDoomnumAllowed(int doomnum);
-void    P_SpawnMapThing (const mapthing_t*  mthing);
-void    P_SpawnPlayer(int n, const mapthing_t *mthing);
-void    P_CheckMissileSpawn(mobj_t*);  // killough 8/2/98
-void    P_ExplodeMissile(mobj_t*);    // killough
+void P_SpawnMapThing(const mapthing_t *mthing);
+void P_SpawnPlayer(int n, const mapthing_t *mthing);
+void P_CheckMissileSpawn(mobj_t *); // killough 8/2/98
+void P_ExplodeMissile(mobj_t *);    // killough
 #endif

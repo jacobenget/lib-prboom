@@ -49,14 +49,19 @@ enum packet_type_e {
 };
 
 typedef struct {
-  byte checksum;       // Simple checksum of the entire packet
-  byte type;           /* Type of packet */
-  byte reserved[2];	/* Was random in prboom <=2.2.4, now 0 */
-  unsigned tic;        // Timestamp
+  byte checksum;    // Simple checksum of the entire packet
+  byte type;        /* Type of packet */
+  byte reserved[2]; /* Was random in prboom <=2.2.4, now 0 */
+  unsigned tic;     // Timestamp
 } PACKEDATTR packet_header_t;
 
-static inline void packet_set(packet_header_t* p, enum packet_type_e t, unsigned long tic)
-{ p->tic = doom_htonl(tic); p->type = t; p->reserved[0] = 0; p->reserved[1] = 0; }
+static inline void packet_set(packet_header_t *p, enum packet_type_e t,
+                              unsigned long tic) {
+  p->tic = doom_htonl(tic);
+  p->type = t;
+  p->reserved[0] = 0;
+  p->reserved[1] = 0;
+}
 
 #ifndef GAME_OPTIONS_SIZE
 // From g_game.h
@@ -64,7 +69,8 @@ static inline void packet_set(packet_header_t* p, enum packet_type_e t, unsigned
 #endif
 
 struct setup_packet_s {
-  byte players, yourplayer, skill, episode, level, deathmatch, complevel, ticdup, extratic;
+  byte players, yourplayer, skill, episode, level, deathmatch, complevel,
+      ticdup, extratic;
   byte game_options[GAME_OPTIONS_SIZE];
   byte numwads;
   byte wadnames[1]; // Actually longer
@@ -76,15 +82,13 @@ struct setup_packet_s {
  *       it means gcc won't assume alignment so won't make false assumptions
  *       when optimising. So I'm told.
  */
-inline static void RawToTic(ticcmd_t* dst, const void* src)
-{
-  memcpy(dst,src,sizeof *dst);
+inline static void RawToTic(ticcmd_t *dst, const void *src) {
+  memcpy(dst, src, sizeof *dst);
   dst->angleturn = doom_ntohs(dst->angleturn);
   dst->consistancy = doom_ntohs(dst->consistancy);
 }
 
-inline static void TicToRaw(void* dst, const ticcmd_t* src)
-{
+inline static void TicToRaw(void *dst, const ticcmd_t *src) {
   /* We have to make a copy of the source struct, then do byte swaps,
    * and fnially copy to the destination (can't do the swaps in the
    * destination, because it might not be aligned).
@@ -92,5 +96,5 @@ inline static void TicToRaw(void* dst, const ticcmd_t* src)
   ticcmd_t tmp = *src;
   tmp.angleturn = doom_ntohs(tmp.angleturn);
   tmp.consistancy = doom_ntohs(tmp.consistancy);
-  memcpy(dst,&tmp,sizeof tmp);
+  memcpy(dst, &tmp, sizeof tmp);
 }

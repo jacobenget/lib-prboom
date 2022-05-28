@@ -8,15 +8,16 @@
 #import <Cocoa/Cocoa.h>
 
 /* Portions of CPS.h */
-typedef struct CPSProcessSerNum
-{
-    UInt32 lo;
-    UInt32 hi;
+typedef struct CPSProcessSerNum {
+  UInt32 lo;
+  UInt32 hi;
 } CPSProcessSerNum;
 
-extern OSErr CPSGetCurrentProcess( CPSProcessSerNum *psn);
-extern OSErr CPSEnableForegroundOperation( CPSProcessSerNum *psn, UInt32 _arg2, UInt32 _arg3, UInt32 _arg4, UInt32 _arg5);
-extern OSErr CPSSetFrontProcess( CPSProcessSerNum *psn);
+extern OSErr CPSGetCurrentProcess(CPSProcessSerNum *psn);
+extern OSErr CPSEnableForegroundOperation(CPSProcessSerNum *psn, UInt32 _arg2,
+                                          UInt32 _arg3, UInt32 _arg4,
+                                          UInt32 _arg5);
+extern OSErr CPSSetFrontProcess(CPSProcessSerNum *psn);
 
 static int gArgc;
 static char **gArgv;
@@ -30,6 +31,6 @@ static BOOL gCalledAppMainline = FALSE;
 @end
 
 /* This is needed in Tiger */
-@interface NSApplication(PrBoom)
+@interface NSApplication (PrBoom)
 - (void)setAppleMenu:(NSMenu *)menu;
 @end

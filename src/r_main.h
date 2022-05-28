@@ -45,21 +45,21 @@
 // POV related.
 //
 
-extern fixed_t  viewcos;
-extern fixed_t  viewsin;
-extern int      viewwidth;
-extern int      viewheight;
-extern int      viewwindowx;
-extern int      viewwindowy;
-extern int      centerx;
-extern int      centery;
-extern fixed_t  centerxfrac;
-extern fixed_t  centeryfrac;
-extern fixed_t  viewheightfrac; //e6y: for correct clipping of things
-extern fixed_t  projection;
+extern fixed_t viewcos;
+extern fixed_t viewsin;
+extern int viewwidth;
+extern int viewheight;
+extern int viewwindowx;
+extern int viewwindowy;
+extern int centerx;
+extern int centery;
+extern fixed_t centerxfrac;
+extern fixed_t centeryfrac;
+extern fixed_t viewheightfrac; // e6y: for correct clipping of things
+extern fixed_t projection;
 // proff 11/06/98: Added for high-res
-extern fixed_t  projectiony;
-extern int      validcount;
+extern fixed_t projectiony;
+extern int validcount;
 
 //
 // Rendering stats
@@ -76,21 +76,21 @@ extern boolean rendering_stats;
 
 // Lighting constants.
 
-#define LIGHTLEVELS       16
-#define LIGHTSEGSHIFT      4
-#define MAXLIGHTSCALE     48
-#define LIGHTSCALESHIFT   12
-#define MAXLIGHTZ        128
-#define LIGHTZSHIFT       20
+#define LIGHTLEVELS 16
+#define LIGHTSEGSHIFT 4
+#define MAXLIGHTSCALE 48
+#define LIGHTSCALESHIFT 12
+#define MAXLIGHTZ 128
+#define LIGHTZSHIFT 20
 
 // killough 3/20/98: Allow colormaps to be dynamic (e.g. underwater)
 extern const lighttable_t *(*zlight)[MAXLIGHTZ];
 extern const lighttable_t *fullcolormap;
-extern int numcolormaps;    // killough 4/4/98: dynamic number of maps
+extern int numcolormaps; // killough 4/4/98: dynamic number of maps
 extern const lighttable_t **colormaps;
 // killough 3/20/98, 4/4/98: end dynamic colormaps
 
-extern int          extralight;
+extern int extralight;
 extern const lighttable_t *fixedcolormap;
 
 // Number of diminishing brightness levels.
@@ -112,9 +112,10 @@ subsector_t *R_PointInSubsector(fixed_t x, fixed_t y);
 // REFRESH - the actual rendering functions.
 //
 
-void R_RenderPlayerView(player_t *player);   // Called by G_Drawer.
-void R_Init(void);                           // Called by startup code.
-void R_SetViewSize(int blocks);              // Called by M_Responder.
-void R_ExecuteSetViewSize(void);             // cph - called by D_Display to complete a view resize
+void R_RenderPlayerView(player_t *player); // Called by G_Drawer.
+void R_Init(void);                         // Called by startup code.
+void R_SetViewSize(int blocks);            // Called by M_Responder.
+void R_ExecuteSetViewSize(
+    void); // cph - called by D_Display to complete a view resize
 
 #endif

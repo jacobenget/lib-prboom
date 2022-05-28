@@ -72,46 +72,33 @@
  */
 
 int realtic_clock_rate = 100;
-static int_64_t I_GetTime_Scale = 1<<24;
+static int_64_t I_GetTime_Scale = 1 << 24;
 
-static int I_GetTime_Scaled(void)
-{
-  return (int)( (int_64_t) I_GetTime_RealTime() * I_GetTime_Scale >> 24);
+static int I_GetTime_Scaled(void) {
+  return (int)((int_64_t)I_GetTime_RealTime() * I_GetTime_Scale >> 24);
 }
 
-
-
-static int  I_GetTime_FastDemo(void)
-{
+static int I_GetTime_FastDemo(void) {
   static int fasttic;
   return fasttic++;
 }
 
-
-
-static int I_GetTime_Error(void)
-{
+static int I_GetTime_Error(void) {
   I_Error("I_GetTime_Error: GetTime() used before initialization");
   return 0;
 }
 
-
-
 int (*I_GetTime)(void) = I_GetTime_Error;
 
-void I_Init(void)
-{
+void I_Init(void) {
   /* killough 4/14/98: Adjustable speedup based on realtic_clock_rate */
   if (fastdemo)
     I_GetTime = I_GetTime_FastDemo;
-  else
-    if (realtic_clock_rate != 100)
-      {
-        I_GetTime_Scale = ((int_64_t) realtic_clock_rate << 24) / 100;
-        I_GetTime = I_GetTime_Scaled;
-      }
-    else
-      I_GetTime = I_GetTime_RealTime;
+  else if (realtic_clock_rate != 100) {
+    I_GetTime_Scale = ((int_64_t)realtic_clock_rate << 24) / 100;
+    I_GetTime = I_GetTime_Scaled;
+  } else
+    I_GetTime = I_GetTime_RealTime;
 
   {
     /* killough 2/21/98: avoid sound initialization if no sound & no music */
@@ -124,25 +111,22 @@ void I_Init(void)
 
 /* cleanup handling -- killough:
  */
-static void I_SignalHandler(int s)
-{
+static void I_SignalHandler(int s) {
   char buf[2048];
 
-  signal(s,SIG_IGN);  /* Ignore future instances of this signal.*/
+  signal(s, SIG_IGN); /* Ignore future instances of this signal.*/
 
-  strcpy(buf,"Exiting on signal: ");
-  I_SigString(buf+strlen(buf),2000-strlen(buf),s);
+  strcpy(buf, "Exiting on signal: ");
+  I_SigString(buf + strlen(buf), 2000 - strlen(buf), s);
 
   /* If corrupted memory could cause crash, dump memory
    * allocation history, which points out probable causes
    */
-  if (s==SIGSEGV || s==SIGILL || s==SIGFPE)
+  if (s == SIGSEGV || s == SIGILL || s == SIGFPE)
     Z_DumpHistory(buf);
 
   I_Error("I_SignalHandler: %s", buf);
 }
-
-
 
 /* killough 2/22/98: Add support for ENDBOOM, which is PC-specific
  *
@@ -151,8 +135,7 @@ static void I_SignalHandler(int s)
  * CPhipps - made static
  */
 
-inline static int convert(int color, int *bold)
-{
+inline static int convert(int color, int *bold) {
   if (color > 7) {
     color -= 8;
     *bold = 1;
@@ -179,41 +162,35 @@ inline static int convert(int color, int *bold)
 }
 
 /* CPhipps - flags controlling ENDOOM behaviour */
-enum {
-  endoom_colours = 1,
-  endoom_nonasciichars = 2,
-  endoom_droplastline = 4
-};
+enum { endoom_colours = 1, endoom_nonasciichars = 2, endoom_droplastline = 4 };
 
 unsigned int endoom_mode;
 
-static void PrintVer(void)
-{
+static void PrintVer(void) {
   char vbuf[200];
-  lprintf(LO_INFO,"%s\n",I_GetVersionString(vbuf,200));
+  lprintf(LO_INFO, "%s\n", I_GetVersionString(vbuf, 200));
 }
 
 /* I_EndDoom
  * Prints out ENDOOM or ENDBOOM, using some common sense to decide which.
  * cphipps - moved to l_main.c, made static
  */
-static void I_EndDoom(void)
-{
+static void I_EndDoom(void) {
   int lump_eb, lump_ed, lump = -1;
 
   /* CPhipps - ENDOOM/ENDBOOM selection */
-  lump_eb = W_CheckNumForName("ENDBOOM");/* jff 4/1/98 sign our work    */
-  lump_ed = W_CheckNumForName("ENDOOM"); /* CPhipps - also maybe ENDOOM */
+  lump_eb = W_CheckNumForName("ENDBOOM"); /* jff 4/1/98 sign our work    */
+  lump_ed = W_CheckNumForName("ENDOOM");  /* CPhipps - also maybe ENDOOM */
 
   if (lump_eb == -1)
     lump = lump_ed;
   else if (lump_ed == -1)
     lump = lump_eb;
-  else
-  { /* Both ENDOOM and ENDBOOM are present */
-#define LUMP_IS_NEW(num) (!((lumpinfo[num].source == source_iwad) || (lumpinfo[num].source == source_auto_load)))
-    switch ((LUMP_IS_NEW(lump_ed) ? 1 : 0 ) |
-      (LUMP_IS_NEW(lump_eb) ? 2 : 0)) {
+  else { /* Both ENDOOM and ENDBOOM are present */
+#define LUMP_IS_NEW(num)                                                       \
+  (!((lumpinfo[num].source == source_iwad) ||                                  \
+     (lumpinfo[num].source == source_auto_load)))
+    switch ((LUMP_IS_NEW(lump_ed) ? 1 : 0) | (LUMP_IS_NEW(lump_eb) ? 2 : 0)) {
     case 1:
       lump = lump_ed;
       break;
@@ -227,9 +204,8 @@ static void I_EndDoom(void)
     }
   }
 
-  if (lump != -1)
-  {
-    const char (*endoom)[2] = (const void*)W_CacheLumpNum(lump);
+  if (lump != -1) {
+    const char(*endoom)[2] = (const void *)W_CacheLumpNum(lump);
     int i, l = W_LumpLength(lump) / 2;
 
     /* cph - colour ENDOOM by rain */
@@ -243,18 +219,15 @@ static void I_EndDoom(void)
     /* cph - optionally drop the last line, so everything fits on one screen */
     if (endoom_mode & endoom_droplastline)
       l -= 80;
-    lprintf(LO_INFO,"\n");
-    for (i=0; i<l; i++)
-    {
+    lprintf(LO_INFO, "\n");
+    for (i = 0; i < l; i++) {
 #ifdef _WIN32
       I_ConTextAttr(endoom[i][1]);
-#elif defined (DJGPP)
+#elif defined(DJGPP)
       textattr(endoom[i][1]);
 #else
-      if (endoom_mode & endoom_colours)
-      {
-        if (!(i % 80))
-        {
+      if (endoom_mode & endoom_colours) {
+        if (!(i % 80)) {
           /* reset color but not bold when we start a new line */
           oldbg = -1;
           oldcolor = -1;
@@ -263,15 +236,14 @@ static void I_EndDoom(void)
         /* foreground color */
         bold = 0;
         color = endoom[i][1] % 16;
-        if (color != oldcolor)
-        {
+        if (color != oldcolor) {
           oldcolor = color;
           color = convert(color, &bold);
-          if (oldbold != bold)
-          {
+          if (oldbold != bold) {
             oldbold = bold;
-      printf("\e[%cm", bold + '0');
-      if (!bold) oldbg = -1;
+            printf("\e[%cm", bold + '0');
+            if (!bold)
+              oldbg = -1;
           }
           /* we buffer everything or output is horrendously slow */
           printf("\e[%dm", color + 30);
@@ -279,8 +251,7 @@ static void I_EndDoom(void)
         }
         /* background color */
         color = endoom[i][1] / 16;
-        if (color != oldbg)
-        {
+        if (color != oldbg) {
           oldbg = color;
           color = convert(color, &bold);
           printf("\e[%dm", color + 40);
@@ -289,16 +260,17 @@ static void I_EndDoom(void)
 #endif
       /* cph - portable ascii printout if requested */
       if (isascii(endoom[i][0]) || (endoom_mode & endoom_nonasciichars))
-        lprintf(LO_INFO,"%c",endoom[i][0]);
+        lprintf(LO_INFO, "%c", endoom[i][0]);
       else /* Probably a box character, so do #'s */
-        lprintf(LO_INFO,"#");
+        lprintf(LO_INFO, "#");
     }
 #ifndef _WIN32
-    lprintf(LO_INFO,"\b"); /* hack workaround for extra newline at bottom of screen */
-    lprintf(LO_INFO,"\r");
+    lprintf(LO_INFO,
+            "\b"); /* hack workaround for extra newline at bottom of screen */
+    lprintf(LO_INFO, "\r");
     if (endoom_mode & endoom_nonasciichars)
-      printf("%c",'\017'); /* restore primary charset */
-#endif /* _WIN32 */
+      printf("%c", '\017'); /* restore primary charset */
+#endif                      /* _WIN32 */
     W_UnlockLumpNum(lump);
   }
 #ifndef _WIN32
@@ -316,25 +288,23 @@ static int has_exited;
  * Prevent infinitely recursive exits -- killough
  */
 
-void I_SafeExit(int rc)
-{
-  if (!has_exited)    /* If it hasn't exited yet, exit now -- killough */
-    {
-      has_exited=rc ? 2 : 1;
-      exit(rc);
-    }
+void I_SafeExit(int rc) {
+  if (!has_exited) /* If it hasn't exited yet, exit now -- killough */
+  {
+    has_exited = rc ? 2 : 1;
+    exit(rc);
+  }
 }
 
-static void I_Quit (void)
-{
+static void I_Quit(void) {
   if (!has_exited)
-    has_exited=1;   /* Prevent infinitely recursive exits -- killough */
+    has_exited = 1; /* Prevent infinitely recursive exits -- killough */
 
   if (has_exited == 1) {
     I_EndDoom();
     if (demorecording)
       G_CheckDemoStatus();
-    M_SaveDefaults ();
+    M_SaveDefaults();
   }
 }
 
@@ -342,9 +312,8 @@ static void I_Quit (void)
 uid_t stored_euid = -1;
 #endif
 
-//int main(int argc, const char * const * argv)
-int main(int argc, char **argv)
-{
+// int main(int argc, const char * const * argv)
+int main(int argc, char **argv) {
 #ifdef SECURE_UID
   /* First thing, revoke setuid status (if any) */
   stored_euid = geteuid();
@@ -352,7 +321,7 @@ int main(int argc, char **argv)
     if (seteuid(getuid()) < 0)
       fprintf(stderr, "Failed to revoke setuid\n");
     else
-      fprintf(stderr, "Revoked uid %d\n",stored_euid);
+      fprintf(stderr, "Revoked uid %d\n", stored_euid);
 #endif
 
   myargc = argc;
@@ -366,7 +335,7 @@ int main(int argc, char **argv)
   }
 #endif
   /* Version info */
-  lprintf(LO_INFO,"\n");
+  lprintf(LO_INFO, "\n");
   PrintVer();
 
   /* cph - Z_Close must be done after I_Quit, so we register it first. */
@@ -387,15 +356,16 @@ int main(int argc, char **argv)
      left in an unstable state.
   */
 
-  Z_Init();                  /* 1/18/98 killough: start up memory stuff first */
+  Z_Init(); /* 1/18/98 killough: start up memory stuff first */
 
   atexit(I_Quit);
 #ifndef _DEBUG
   signal(SIGSEGV, I_SignalHandler);
   signal(SIGTERM, I_SignalHandler);
-  signal(SIGFPE,  I_SignalHandler);
-  signal(SIGILL,  I_SignalHandler);
-  signal(SIGINT,  I_SignalHandler);  /* killough 3/6/98: allow CTRL-BRK during init */
+  signal(SIGFPE, I_SignalHandler);
+  signal(SIGILL, I_SignalHandler);
+  signal(SIGINT,
+         I_SignalHandler); /* killough 3/6/98: allow CTRL-BRK during init */
   signal(SIGABRT, I_SignalHandler);
 #endif
 
@@ -404,6 +374,6 @@ int main(int argc, char **argv)
   /* cphipps - call to video specific startup code */
   I_PreInitGraphics();
 
-  D_DoomMain ();
+  D_DoomMain();
   return 0;
 }

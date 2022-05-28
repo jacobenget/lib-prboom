@@ -33,8 +33,8 @@
  *  posible error is detected. */
 #define SIMPLECHECKS 1
 
-/* Defining this causes time stamps to be created each time a lump is locked, and
- *  lumps locked for long periods of time are reported */
+/* Defining this causes time stamps to be created each time a lump is locked,
+ * and lumps locked for long periods of time are reported */
 #define TIMEDIAG 1
 
 #endif // DEBUG

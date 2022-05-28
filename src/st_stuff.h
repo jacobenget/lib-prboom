@@ -44,18 +44,18 @@
 
 // proff 08/18/98: Changed for high-res
 #define ST_HEIGHT 32
-#define ST_WIDTH  320
-#define ST_Y      (200 - ST_HEIGHT)
-#define ST_SCALED_HEIGHT (ST_HEIGHT*SCREENHEIGHT/200)
-#define ST_SCALED_WIDTH  SCREENWIDTH
-#define ST_SCALED_Y      (SCREENHEIGHT - ST_SCALED_HEIGHT)
+#define ST_WIDTH 320
+#define ST_Y (200 - ST_HEIGHT)
+#define ST_SCALED_HEIGHT (ST_HEIGHT * SCREENHEIGHT / 200)
+#define ST_SCALED_WIDTH SCREENWIDTH
+#define ST_SCALED_Y (SCREENHEIGHT - ST_SCALED_HEIGHT)
 
 //
 // STATUS BAR
 //
 
 // Called by main loop.
-boolean ST_Responder(event_t* ev);
+boolean ST_Responder(event_t *ev);
 
 // Called by main loop.
 void ST_Ticker(void);
@@ -70,33 +70,24 @@ void ST_Start(void);
 void ST_Init(void);
 
 // States for status bar code.
-typedef enum
-{
-  AutomapState,
-  FirstPersonState
-} st_stateenum_t;
+typedef enum { AutomapState, FirstPersonState } st_stateenum_t;
 
 // States for the chat code.
-typedef enum
-{
-  StartChatState,
-  WaitDestState,
-  GetChatState
-} st_chatstateenum_t;
+typedef enum { StartChatState, WaitDestState, GetChatState } st_chatstateenum_t;
 
 // killough 5/2/98: moved from m_misc.c:
 
-extern int health_red;    // health amount less than which status is red
-extern int health_yellow; // health amount less than which status is yellow
-extern int health_green;  // health amount above is blue, below is green
-extern int armor_red;     // armor amount less than which status is red
-extern int armor_yellow;  // armor amount less than which status is yellow
-extern int armor_green;   // armor amount above is blue, below is green
-extern int ammo_red;      // ammo percent less than which status is red
-extern int ammo_yellow;   // ammo percent less is yellow more green
-extern int sts_always_red;// status numbers do not change colors
-extern int sts_pct_always_gray;// status percents do not change colors
-extern int sts_traditional_keys;  // display keys the traditional way
+extern int health_red;     // health amount less than which status is red
+extern int health_yellow;  // health amount less than which status is yellow
+extern int health_green;   // health amount above is blue, below is green
+extern int armor_red;      // armor amount less than which status is red
+extern int armor_yellow;   // armor amount less than which status is yellow
+extern int armor_green;    // armor amount above is blue, below is green
+extern int ammo_red;       // ammo percent less than which status is red
+extern int ammo_yellow;    // ammo percent less is yellow more green
+extern int sts_always_red; // status numbers do not change colors
+extern int sts_pct_always_gray;  // status percents do not change colors
+extern int sts_traditional_keys; // display keys the traditional way
 
-extern int st_palette;    // cph 2006/04/06 - make palette visible
+extern int st_palette; // cph 2006/04/06 - make palette visible
 #endif
