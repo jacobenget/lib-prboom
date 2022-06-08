@@ -229,5 +229,11 @@ AC_SUBST(GL_LIBS)
 AC_SUBST(CFLAGS)
 AC_SUBST(DOOMWADDIR)
 
+dnl --- Require Python 3.8 for some related script usage during development.
+dnl --- Version 3.8 was only choosen because it was the version that I (Jake) locally had installed by default,
+dnl --- and there may be an earlier version of Python that also satisfies the need but I'm not doing the work of figuring that out,
+dnl --- since I do not expect the autotools portion of this project to live on long enough for this detail to matter.
+AM_PATH_PYTHON([3.8])
+
 dnl --- output
 AC_OUTPUT(Makefile src/Makefile src/POSIX/Makefile src/SDL/Makefile src/MAC/Makefile doc/Makefile data/Makefile ICONS/Makefile VisualC6/Makefile VisualC8/Makefile tests/Makefile prboom.spec)
