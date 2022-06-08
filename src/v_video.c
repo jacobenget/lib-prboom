@@ -35,15 +35,15 @@
  *-----------------------------------------------------------------------------
  */
 
-#include "doomdef.h"
-#include "r_main.h"
-#include "r_draw.h"
-#include "m_bbox.h"
-#include "w_wad.h" /* needed for color translation lump lookup */
 #include "v_video.h"
+#include "doomdef.h"
 #include "i_video.h"
-#include "r_filter.h"
 #include "lprintf.h"
+#include "m_bbox.h"
+#include "r_draw.h"
+#include "r_filter.h"
+#include "r_main.h"
+#include "w_wad.h" /* needed for color translation lump lookup */
 
 // Each screen is [SCREENWIDTH*SCREENHEIGHT];
 screeninfo_t screens[NUM_SCREENS];

@@ -35,16 +35,16 @@
 
 #include <stdio.h>
 
-#include <stdarg.h>
-#include <stdlib.h>
 #include <ctype.h>
 #include <signal.h>
+#include <stdarg.h>
+#include <stdlib.h>
 #ifdef _MSC_VER
 #define F_OK 0 /* Check for file existence */
 #define W_OK 2 /* Check for write permission */
 #define R_OK 4 /* Check for read permission */
-#include <io.h>
 #include <direct.h>
+#include <io.h>
 #else
 #include <unistd.h>
 #endif
@@ -69,16 +69,15 @@
 #ifdef _MSC_VER
 #include <io.h>
 #endif
+#include <errno.h>
 #include <fcntl.h>
 #include <sys/stat.h>
-#include <errno.h>
 
 #ifndef PRBOOM_SERVER
 #include "m_argv.h"
 #endif
-#include "lprintf.h"
-#include "doomtype.h"
 #include "doomdef.h"
+#include "doomtype.h"
 #include "lprintf.h"
 #ifndef PRBOOM_SERVER
 #include "m_fixed.h"

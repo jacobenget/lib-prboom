@@ -34,8 +34,8 @@
 #ifndef __I_SOUND__
 #define __I_SOUND__
 
-#include "sounds.h"
 #include "doomtype.h"
+#include "sounds.h"
 #include <stddef.h>
 
 #define SNDSERV

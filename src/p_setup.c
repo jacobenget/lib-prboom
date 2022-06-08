@@ -35,23 +35,23 @@
 #include <math.h>
 
 #include "doomstat.h"
-#include "m_bbox.h"
-#include "m_argv.h"
 #include "g_game.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "r_things.h"
-#include "p_maputl.h"
+#include "lprintf.h" //jff 10/6/98 for debug outputs
+#include "m_argv.h"
+#include "m_bbox.h"
+#include "p_enemy.h"
 #include "p_map.h"
+#include "p_maputl.h"
 #include "p_setup.h"
 #include "p_spec.h"
 #include "p_tick.h"
-#include "p_enemy.h"
-#include "s_sound.h"
-#include "lprintf.h" //jff 10/6/98 for debug outputs
-#include "v_video.h"
 #include "r_demo.h"
 #include "r_fps.h"
+#include "r_main.h"
+#include "r_things.h"
+#include "s_sound.h"
+#include "v_video.h"
+#include "w_wad.h"
 
 //
 // MAP related Lookup tables.

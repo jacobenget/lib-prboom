@@ -40,21 +40,21 @@
 #include <unistd.h>
 #endif
 #ifdef _MSC_VER
-#include <stddef.h>
 #include <io.h>
+#include <stddef.h>
 #endif
 #include <fcntl.h>
 
-#include "doomstat.h"
 #include "d_net.h"
+#include "doomstat.h"
 #include "doomtype.h"
 #include "i_system.h"
 
 #ifdef __GNUG__
 #pragma implementation "w_wad.h"
 #endif
-#include "w_wad.h"
 #include "lprintf.h"
+#include "w_wad.h"
 
 //
 // GLOBALS

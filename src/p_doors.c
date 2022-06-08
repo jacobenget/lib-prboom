@@ -31,15 +31,15 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "d_deh.h" // Ty 03/27/98 - externalized
 #include "doomstat.h"
+#include "dstrings.h"
+#include "lprintf.h"
 #include "p_spec.h"
 #include "p_tick.h"
+#include "r_main.h"
 #include "s_sound.h"
 #include "sounds.h"
-#include "r_main.h"
-#include "dstrings.h"
-#include "d_deh.h" // Ty 03/27/98 - externalized
-#include "lprintf.h"
 
 ///////////////////////////////////////////////////////////////
 //

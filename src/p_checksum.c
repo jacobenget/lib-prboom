@@ -1,12 +1,12 @@
-#include <stdio.h>
-#include <string.h>
 #include <errno.h>
+#include <stdio.h>
 #include <stdlib.h> /* exit(), atexit() */
+#include <string.h>
 
-#include "p_checksum.h"
-#include "md5.h"
 #include "doomstat.h" /* players{,ingame} */
 #include "lprintf.h"
+#include "md5.h"
+#include "p_checksum.h"
 
 /* forward decls */
 static void p_checksum_cleanup(void);

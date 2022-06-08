@@ -35,17 +35,17 @@
  *--------------------------------------------------------------------*/
 
 // killough 5/2/98: fixed headers, removed rendunant external declarations:
-#include "doomdef.h"
-#include "doomtype.h"
-#include "doomstat.h"
 #include "d_deh.h"
-#include "sounds.h"
+#include "d_think.h"
+#include "doomdef.h"
+#include "doomstat.h"
+#include "doomtype.h"
+#include "g_game.h"
 #include "info.h"
 #include "m_cheat.h"
-#include "p_inter.h"
 #include "p_enemy.h"
-#include "g_game.h"
-#include "d_think.h"
+#include "p_inter.h"
+#include "sounds.h"
 #include "w_wad.h"
 
 // CPhipps - modify to use logical output routine

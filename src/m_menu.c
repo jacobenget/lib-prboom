@@ -35,31 +35,31 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include <stdio.h>
 #include <fcntl.h>
+#include <stdio.h>
 
+#include "am_map.h"
+#include "d_deh.h"
+#include "d_main.h"
 #include "doomdef.h"
 #include "doomstat.h"
 #include "dstrings.h"
-#include "d_main.h"
-#include "v_video.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "hu_stuff.h"
 #include "g_game.h"
-#include "s_sound.h"
-#include "sounds.h"
-#include "m_menu.h"
-#include "d_deh.h"
-#include "m_misc.h"
-#include "lprintf.h"
-#include "am_map.h"
+#include "hu_stuff.h"
 #include "i_main.h"
+#include "i_sound.h"
 #include "i_system.h"
 #include "i_video.h"
-#include "i_sound.h"
+#include "lprintf.h"
+#include "m_menu.h"
+#include "m_misc.h"
 #include "r_demo.h"
 #include "r_fps.h"
+#include "r_main.h"
+#include "s_sound.h"
+#include "sounds.h"
+#include "v_video.h"
+#include "w_wad.h"
 
 extern patchnum_t hu_font[HU_FONTSIZE];
 extern boolean message_dontfuckwithme;

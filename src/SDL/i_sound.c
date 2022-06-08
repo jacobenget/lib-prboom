@@ -45,8 +45,8 @@
 
 #include "SDL.h"
 #include "SDL_audio.h"
-#include "SDL_mutex.h"
 #include "SDL_byteorder.h"
+#include "SDL_mutex.h"
 #include "SDL_version.h"
 #ifdef HAVE_MIXER
 #include "SDL_mixer.h"
@@ -54,13 +54,13 @@
 
 #include "z_zone.h"
 
-#include "m_swap.h"
 #include "i_sound.h"
+#include "lprintf.h"
 #include "m_argv.h"
 #include "m_misc.h"
-#include "w_wad.h"
-#include "lprintf.h"
+#include "m_swap.h"
 #include "s_sound.h"
+#include "w_wad.h"
 
 #include "doomdef.h"
 #include "doomstat.h"

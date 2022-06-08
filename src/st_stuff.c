@@ -33,20 +33,20 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "st_stuff.h"
+#include "am_map.h"
 #include "doomdef.h"
 #include "doomstat.h"
-#include "m_random.h"
+#include "dstrings.h"
 #include "i_video.h"
-#include "w_wad.h"
-#include "st_stuff.h"
-#include "st_lib.h"
-#include "r_main.h"
-#include "am_map.h"
 #include "m_cheat.h"
+#include "m_random.h"
+#include "r_draw.h"
+#include "r_main.h"
 #include "s_sound.h"
 #include "sounds.h"
-#include "dstrings.h"
-#include "r_draw.h"
+#include "st_lib.h"
+#include "w_wad.h"
 
 //
 // STATUS BAR DATA

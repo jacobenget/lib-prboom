@@ -36,8 +36,8 @@
 #define __R_DATA__
 
 #include "r_defs.h"
-#include "r_state.h"
 #include "r_patch.h"
+#include "r_state.h"
 
 #ifdef __GNUG__
 #pragma interface

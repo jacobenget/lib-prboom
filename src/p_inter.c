@@ -31,19 +31,19 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "am_map.h"
+#include "d_deh.h" // Ty 03/22/98 - externalized strings
 #include "doomstat.h"
 #include "dstrings.h"
+#include "lprintf.h"
 #include "m_random.h"
-#include "am_map.h"
+#include "p_tick.h"
 #include "r_main.h"
 #include "s_sound.h"
 #include "sounds.h"
-#include "d_deh.h" // Ty 03/22/98 - externalized strings
-#include "p_tick.h"
-#include "lprintf.h"
 
-#include "p_inter.h"
 #include "p_enemy.h"
+#include "p_inter.h"
 
 #ifdef __GNUG__
 #pragma implementation "p_inter.h"

@@ -37,15 +37,15 @@
 #include "config.h"
 #endif
 
+#include "d_main.h"
 #include "doomstat.h"
-#include "s_sound.h"
 #include "i_sound.h"
 #include "i_system.h"
-#include "d_main.h"
-#include "r_main.h"
-#include "m_random.h"
-#include "w_wad.h"
 #include "lprintf.h"
+#include "m_random.h"
+#include "r_main.h"
+#include "s_sound.h"
+#include "w_wad.h"
 
 // when to clip out sounds
 // Does not fit the large outdoor areas.

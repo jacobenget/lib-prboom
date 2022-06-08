@@ -36,19 +36,19 @@
 #include "config.h"
 #endif
 
-#include "doomstat.h"
-#include "st_stuff.h"
-#include "r_main.h"
-#include "p_setup.h"
-#include "p_maputl.h"
-#include "w_wad.h"
-#include "v_video.h"
-#include "p_spec.h"
 #include "am_map.h"
+#include "d_deh.h" // Ty 03/27/98 - externalizations
+#include "doomstat.h"
 #include "dstrings.h"
-#include "d_deh.h"   // Ty 03/27/98 - externalizations
-#include "lprintf.h" // jff 08/03/98 - declaration of lprintf
 #include "g_game.h"
+#include "lprintf.h" // jff 08/03/98 - declaration of lprintf
+#include "p_maputl.h"
+#include "p_setup.h"
+#include "p_spec.h"
+#include "r_main.h"
+#include "st_stuff.h"
+#include "v_video.h"
+#include "w_wad.h"
 
 // jff 1/7/98 default automap colors added
 int mapcolor_back;  // map background

@@ -46,14 +46,14 @@
 
 #include "z_zone.h"
 
-#include "m_swap.h"
-#include "i_system.h"
 #include "i_sound.h"
+#include "i_system.h"
+#include "lprintf.h"
 #include "m_argv.h"
 #include "m_misc.h"
-#include "w_wad.h"
-#include "lprintf.h"
+#include "m_swap.h"
 #include "s_sound.h"
+#include "w_wad.h"
 
 #include "d_main.h"
 
@@ -65,9 +65,9 @@
 // It's ugly but this header does fail for some reason -- NS
 #define __OS_OSMESSAGENOTIFICATION_H
 
+#include "mmus2mid.h"
 #include <Carbon/Carbon.h>
 #include <QuickTime/Movies.h>
-#include "mmus2mid.h"
 
 static int playFile(const char *filename);
 

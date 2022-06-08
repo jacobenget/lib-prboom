@@ -34,12 +34,12 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "p_maputl.h"
 #include "doomstat.h"
 #include "m_bbox.h"
-#include "r_main.h"
-#include "p_maputl.h"
 #include "p_map.h"
 #include "p_setup.h"
+#include "r_main.h"
 
 //
 // P_AproxDistance

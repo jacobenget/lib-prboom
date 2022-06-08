@@ -52,14 +52,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
 #include <sys/stat.h>
-#include <stdlib.h>
+#include <sys/types.h>
 #ifdef MSDOS /* proff: I don't use allegro in windows */
 #include <allegro.h>
-#endif /* !MSDOS */
-#include "mmus2mid.h"
+#endif               /* !MSDOS */
 #include "lprintf.h" // jff 08/03/98 - declaration of lprintf
+#include "mmus2mid.h"
 
 //#define STANDALONE  /* uncomment this to make MMUS2MID.EXE */
 #ifndef STANDALONE

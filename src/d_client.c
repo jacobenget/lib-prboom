@@ -51,9 +51,9 @@
 #include "SDL.h"
 #endif
 
-#include "doomtype.h"
-#include "doomstat.h"
 #include "d_net.h"
+#include "doomstat.h"
+#include "doomtype.h"
 #include "z_zone.h"
 
 #include "d_main.h"
@@ -61,14 +61,14 @@
 #include "m_menu.h"
 #include "p_checksum.h"
 
-#include "protocol.h"
+#include "i_main.h"
 #include "i_network.h"
 #include "i_system.h"
-#include "i_main.h"
 #include "i_video.h"
-#include "m_argv.h"
-#include "r_fps.h"
 #include "lprintf.h"
+#include "m_argv.h"
+#include "protocol.h"
+#include "r_fps.h"
 
 static boolean server;
 static int remotetic;  // Tic expected from the remote

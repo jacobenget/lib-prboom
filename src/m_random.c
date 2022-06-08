@@ -37,8 +37,8 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
 #include "m_random.h"
+#include "doomstat.h"
 #include "lprintf.h"
 
 //

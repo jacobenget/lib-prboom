@@ -39,30 +39,30 @@
 #ifndef CALLBACK
 #define CALLBACK
 #endif
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <SDL.h>
-#include <SDL_opengl.h>
-#include "doomtype.h"
-#include "w_wad.h"
-#include "m_argv.h"
 #include "d_event.h"
-#include "v_video.h"
 #include "doomstat.h"
-#include "r_bsp.h"
-#include "r_main.h"
-#include "r_draw.h"
-#include "r_sky.h"
-#include "r_plane.h"
-#include "r_data.h"
-#include "r_things.h"
-#include "r_fps.h"
-#include "p_maputl.h"
-#include "m_bbox.h"
-#include "lprintf.h"
+#include "doomtype.h"
 #include "gl_intern.h"
 #include "gl_struct.h"
+#include "lprintf.h"
+#include "m_argv.h"
+#include "m_bbox.h"
+#include "p_maputl.h"
+#include "r_bsp.h"
+#include "r_data.h"
+#include "r_draw.h"
+#include "r_fps.h"
+#include "r_main.h"
+#include "r_plane.h"
+#include "r_sky.h"
+#include "r_things.h"
+#include "v_video.h"
+#include "w_wad.h"
+#include <SDL.h>
+#include <SDL_opengl.h>
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
 
 extern int tran_filter_pct;
 

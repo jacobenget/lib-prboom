@@ -31,15 +31,15 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "r_bsp.h" // cph - sanity checking
 #include "doomstat.h"
+#include "lprintf.h"
 #include "m_bbox.h"
 #include "r_main.h"
-#include "r_segs.h"
 #include "r_plane.h"
+#include "r_segs.h"
 #include "r_things.h"
-#include "r_bsp.h" // cph - sanity checking
 #include "v_video.h"
-#include "lprintf.h"
 
 seg_t *curline;
 side_t *sidedef;

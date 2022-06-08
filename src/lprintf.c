@@ -43,15 +43,15 @@
 #ifdef _MSC_VER
 #include <io.h>
 #endif
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 #include "doomtype.h"
-#include "lprintf.h"
 #include "i_main.h"
+#include "lprintf.h"
 #include "m_argv.h"
 
 int cons_error_mask = -1 - LO_INFO; /* all but LO_INFO when redir'd */

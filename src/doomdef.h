@@ -48,11 +48,11 @@
 // This must come first, since it redefines malloc(), free(), etc. -- killough:
 #include "z_zone.h"
 
+#include <ctype.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
-#include <limits.h>
 
 // this should go here, not in makefile/configure.ac -- josh
 #ifndef O_BINARY

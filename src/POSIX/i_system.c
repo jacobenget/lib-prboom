@@ -35,17 +35,17 @@
 
 #include <stdio.h>
 
-#include <stdarg.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/time.h>
 #include <ctype.h>
 #include <signal.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <sys/time.h>
+#include <unistd.h>
 
-#include "doomtype.h"
-#include "m_fixed.h"
-#include "i_system.h"
 #include "doomdef.h"
+#include "doomtype.h"
+#include "i_system.h"
+#include "m_fixed.h"
 
 #ifdef __GNUG__
 #pragma implementation "i_system.h"

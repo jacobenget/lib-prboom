@@ -33,21 +33,21 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "p_enemy.h"
 #include "doomstat.h"
+#include "g_game.h"
+#include "lprintf.h"
+#include "m_bbox.h"
 #include "m_random.h"
-#include "r_main.h"
-#include "p_maputl.h"
+#include "p_inter.h"
 #include "p_map.h"
+#include "p_maputl.h"
 #include "p_setup.h"
 #include "p_spec.h"
+#include "p_tick.h"
+#include "r_main.h"
 #include "s_sound.h"
 #include "sounds.h"
-#include "p_inter.h"
-#include "g_game.h"
-#include "p_enemy.h"
-#include "p_tick.h"
-#include "m_bbox.h"
-#include "lprintf.h"
 
 static mobj_t *current_actor;
 

@@ -60,13 +60,13 @@
 #define png_error_ptr_NULL (png_error_ptr) NULL
 #endif
 
-#include "doomstat.h"
 #include "doomdef.h"
+#include "doomstat.h"
 #include "doomtype.h"
-#include "v_video.h"
 #include "i_video.h"
-#include "z_zone.h"
 #include "lprintf.h"
+#include "v_video.h"
+#include "z_zone.h"
 
 #ifdef HAVE_LIBPNG
 

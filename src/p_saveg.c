@@ -31,16 +31,16 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include "p_saveg.h"
+#include "am_map.h"
 #include "doomstat.h"
-#include "r_main.h"
+#include "lprintf.h"
+#include "m_random.h"
+#include "p_enemy.h"
 #include "p_maputl.h"
 #include "p_spec.h"
 #include "p_tick.h"
-#include "p_saveg.h"
-#include "m_random.h"
-#include "am_map.h"
-#include "p_enemy.h"
-#include "lprintf.h"
+#include "r_main.h"
 
 byte *save_p;
 

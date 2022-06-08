@@ -35,8 +35,8 @@
  *-----------------------------------------------------------------------------
  */
 
-#include <stdio.h>
 #include <stdarg.h>
+#include <stdio.h>
 #include <stdlib.h>
 #ifdef _MSC_VER
 #define F_OK 0 /* Check for file existence */
@@ -52,40 +52,39 @@
 #include "config.h"
 #endif
 
-#include "doomstat.h"
-#include "d_net.h"
-#include "f_finale.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "m_menu.h"
-#include "m_random.h"
-#include "p_setup.h"
-#include "p_saveg.h"
-#include "p_tick.h"
-#include "p_map.h"
-#include "p_checksum.h"
-#include "d_main.h"
-#include "wi_stuff.h"
-#include "hu_stuff.h"
-#include "st_stuff.h"
 #include "am_map.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "r_draw.h"
-#include "p_map.h"
-#include "s_sound.h"
-#include "dstrings.h"
-#include "sounds.h"
-#include "r_data.h"
-#include "r_sky.h"
 #include "d_deh.h" // Ty 3/27/98 deh declarations
-#include "p_inter.h"
+#include "d_main.h"
+#include "d_net.h"
+#include "doomstat.h"
+#include "dstrings.h"
+#include "f_finale.h"
 #include "g_game.h"
-#include "lprintf.h"
+#include "hu_stuff.h"
 #include "i_main.h"
 #include "i_system.h"
+#include "lprintf.h"
+#include "m_argv.h"
+#include "m_menu.h"
+#include "m_misc.h"
+#include "m_random.h"
+#include "p_checksum.h"
+#include "p_inter.h"
+#include "p_map.h"
+#include "p_saveg.h"
+#include "p_setup.h"
+#include "p_tick.h"
+#include "r_data.h"
 #include "r_demo.h"
+#include "r_draw.h"
 #include "r_fps.h"
+#include "r_main.h"
+#include "r_sky.h"
+#include "s_sound.h"
+#include "sounds.h"
+#include "st_stuff.h"
+#include "w_wad.h"
+#include "wi_stuff.h"
 
 #define SAVEGAMESIZE 0x20000
 #define SAVESTRINGSIZE 24

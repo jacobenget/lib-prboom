@@ -37,8 +37,8 @@
 #include "config.h"
 #endif
 
-#include <stdio.h>
 #include <errno.h>
+#include <stdio.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -48,28 +48,28 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-#include "doomstat.h"
-#include "m_argv.h"
-#include "g_game.h"
-#include "m_menu.h"
 #include "am_map.h"
-#include "w_wad.h"
-#include "i_system.h"
-#include "i_sound.h"
-#include "i_video.h"
-#include "v_video.h"
-#include "hu_stuff.h"
-#include "st_stuff.h"
+#include "d_main.h"
+#include "doomstat.h"
 #include "dstrings.h"
+#include "g_game.h"
+#include "hu_stuff.h"
+#include "i_joy.h"
+#include "i_sound.h"
+#include "i_system.h"
+#include "i_video.h"
+#include "lprintf.h"
+#include "m_argv.h"
+#include "m_menu.h"
 #include "m_misc.h"
+#include "r_demo.h"
+#include "r_draw.h"
+#include "r_fps.h"
 #include "s_sound.h"
 #include "sounds.h"
-#include "i_joy.h"
-#include "lprintf.h"
-#include "d_main.h"
-#include "r_draw.h"
-#include "r_demo.h"
-#include "r_fps.h"
+#include "st_stuff.h"
+#include "v_video.h"
+#include "w_wad.h"
 
 /* cph - disk icon not implemented */
 static inline void I_BeginRead(void) {}

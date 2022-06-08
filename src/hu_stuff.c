@@ -33,17 +33,17 @@
 
 // killough 5/3/98: remove unnecessary headers
 
-#include "doomstat.h"
 #include "hu_stuff.h"
+#include "d_deh.h" /* Ty 03/27/98 - externalization of mapnamesx arrays */
+#include "doomstat.h"
+#include "dstrings.h"
+#include "g_game.h"
 #include "hu_lib.h"
+#include "r_main.h"
+#include "s_sound.h"
+#include "sounds.h"
 #include "st_stuff.h" /* jff 2/16/98 need loc of status bar */
 #include "w_wad.h"
-#include "s_sound.h"
-#include "dstrings.h"
-#include "sounds.h"
-#include "d_deh.h" /* Ty 03/27/98 - externalization of mapnamesx arrays */
-#include "g_game.h"
-#include "r_main.h"
 
 // global heads up display controls
 

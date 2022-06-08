@@ -34,8 +34,8 @@
 #include "config.h"
 #endif
 
-#include <stddef.h>
 #include "protocol.h"
+#include <stddef.h>
 
 #ifdef USE_SDL_NET
 #include "SDL_net.h"

@@ -33,16 +33,16 @@
 //
 // 4/25/98, 5/2/98 killough: reformatted, beautified
 
-#include "doomstat.h"
-#include "r_main.h"
-#include "r_bsp.h"
 #include "r_segs.h"
+#include "doomstat.h"
+#include "lprintf.h"
+#include "r_bsp.h"
+#include "r_draw.h"
+#include "r_main.h"
 #include "r_plane.h"
 #include "r_things.h"
-#include "r_draw.h"
-#include "w_wad.h"
 #include "v_video.h"
-#include "lprintf.h"
+#include "w_wad.h"
 
 // OPTIMIZE: closed two sided lines as single sided
 

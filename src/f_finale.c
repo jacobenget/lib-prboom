@@ -32,14 +32,14 @@
  *-----------------------------------------------------------------------------
  */
 
-#include "doomstat.h"
+#include "f_finale.h" // CPhipps - hmm...
+#include "d_deh.h"    // Ty 03/22/98 - externalizations
 #include "d_event.h"
-#include "v_video.h"
-#include "w_wad.h"
+#include "doomstat.h"
 #include "s_sound.h"
 #include "sounds.h"
-#include "d_deh.h"    // Ty 03/22/98 - externalizations
-#include "f_finale.h" // CPhipps - hmm...
+#include "v_video.h"
+#include "w_wad.h"
 
 // Stage of animation:
 //  0 = text, 1 = art screen, 2 = character cast

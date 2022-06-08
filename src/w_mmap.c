@@ -50,10 +50,10 @@
 #ifdef __GNUG__
 #pragma implementation "w_wad.h"
 #endif
+#include "i_system.h"
+#include "lprintf.h"
 #include "w_wad.h"
 #include "z_zone.h"
-#include "lprintf.h"
-#include "i_system.h"
 
 static struct {
   void *cache;

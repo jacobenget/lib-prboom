@@ -33,10 +33,10 @@
 #ifndef __PROTOCOL__
 #define __PROTOCOL__
 
-#include "doomtype.h"
-#include "d_ticcmd.h"
-#include "m_swap.h"
 #include "config.h"
+#include "d_ticcmd.h"
+#include "doomtype.h"
+#include "m_swap.h"
 #include <string.h>
 
 enum packet_type_e {

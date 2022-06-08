@@ -36,9 +36,9 @@
 #endif
 
 #include "doomtype.h"
-#include "z_zone.h"
-#include "z_bmalloc.h"
 #include "lprintf.h"
+#include "z_bmalloc.h"
+#include "z_zone.h"
 
 typedef struct bmalpool_s {
   struct bmalpool_s *nextpool;

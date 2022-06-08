@@ -36,8 +36,8 @@
 #ifndef __STSTUFF_H__
 #define __STSTUFF_H__
 
-#include "doomtype.h"
 #include "d_event.h"
+#include "doomtype.h"
 
 // Size of statusbar.
 // Now sensitive for scaling.

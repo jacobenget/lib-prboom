@@ -35,8 +35,8 @@
 #define __P_MOBJ__
 
 // Basics.
-#include "tables.h"
 #include "m_fixed.h"
+#include "tables.h"
 
 // We need the thinker_t stuff.
 #include "d_think.h"

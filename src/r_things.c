@@ -31,16 +31,16 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "r_bsp.h"
-#include "r_segs.h"
-#include "r_draw.h"
 #include "r_things.h"
-#include "r_fps.h"
-#include "v_video.h"
+#include "doomstat.h"
 #include "lprintf.h"
+#include "r_bsp.h"
+#include "r_draw.h"
+#include "r_fps.h"
+#include "r_main.h"
+#include "r_segs.h"
+#include "v_video.h"
+#include "w_wad.h"
 
 #define MINZ (FRACUNIT * 4)
 #define BASEYCENTER 100

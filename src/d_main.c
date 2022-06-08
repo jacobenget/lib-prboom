@@ -39,48 +39,47 @@
 #define F_OK 0 /* Check for file existence */
 #define W_OK 2 /* Check for write permission */
 #define R_OK 4 /* Check for read permission */
-#include <io.h>
 #include <direct.h>
+#include <io.h>
 #else
 #include <unistd.h>
 #endif
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
-#include "doomdef.h"
-#include "doomtype.h"
-#include "doomstat.h"
+#include "am_map.h"
+#include "d_deh.h" // Ty 04/08/98 - Externalizations
+#include "d_main.h"
 #include "d_net.h"
+#include "doomdef.h"
+#include "doomstat.h"
+#include "doomtype.h"
 #include "dstrings.h"
-#include "sounds.h"
-#include "z_zone.h"
-#include "w_wad.h"
-#include "s_sound.h"
-#include "v_video.h"
 #include "f_finale.h"
 #include "f_wipe.h"
-#include "m_argv.h"
-#include "m_misc.h"
-#include "m_menu.h"
-#include "p_checksum.h"
-#include "i_main.h"
-#include "i_system.h"
-#include "i_sound.h"
-#include "i_video.h"
 #include "g_game.h"
 #include "hu_stuff.h"
-#include "wi_stuff.h"
-#include "st_stuff.h"
-#include "am_map.h"
+#include "i_main.h"
+#include "i_sound.h"
+#include "i_system.h"
+#include "i_video.h"
+#include "lprintf.h" // jff 08/03/98 - declaration of lprintf
+#include "m_argv.h"
+#include "m_menu.h"
+#include "m_misc.h"
+#include "p_checksum.h"
 #include "p_setup.h"
 #include "r_draw.h"
-#include "r_main.h"
 #include "r_fps.h"
-#include "d_main.h"
-#include "d_deh.h"   // Ty 04/08/98 - Externalizations
-#include "lprintf.h" // jff 08/03/98 - declaration of lprintf
-#include "am_map.h"
+#include "r_main.h"
+#include "s_sound.h"
+#include "sounds.h"
+#include "st_stuff.h"
+#include "v_video.h"
+#include "w_wad.h"
+#include "wi_stuff.h"
+#include "z_zone.h"
 
 void GetFirstMap(int *ep,
                  int *map); // Ty 08/29/98 - add "-warp x" functionality

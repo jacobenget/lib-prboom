@@ -45,15 +45,15 @@
 #include "config.h"
 #endif
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "z_zone.h"
 #include "doomstat.h"
-#include "m_argv.h"
-#include "v_video.h"
 #include "g_game.h"
 #include "lprintf.h"
+#include "m_argv.h"
+#include "v_video.h"
+#include "z_zone.h"
 
 #ifdef DJGPP
 #include <dpmi.h>

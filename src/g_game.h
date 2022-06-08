@@ -32,9 +32,9 @@
 #ifndef __G_GAME__
 #define __G_GAME__
 
-#include "doomdef.h"
 #include "d_event.h"
 #include "d_ticcmd.h"
+#include "doomdef.h"
 
 //
 // GAME

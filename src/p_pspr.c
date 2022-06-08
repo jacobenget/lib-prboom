@@ -32,17 +32,17 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
-#include "r_main.h"
-#include "p_map.h"
-#include "p_inter.h"
 #include "p_pspr.h"
-#include "p_enemy.h"
+#include "d_event.h"
+#include "doomstat.h"
 #include "m_random.h"
+#include "p_enemy.h"
+#include "p_inter.h"
+#include "p_map.h"
+#include "r_demo.h"
+#include "r_main.h"
 #include "s_sound.h"
 #include "sounds.h"
-#include "d_event.h"
-#include "r_demo.h"
 
 #define LOWERSPEED (FRACUNIT * 6)
 #define RAISESPEED (FRACUNIT * 6)

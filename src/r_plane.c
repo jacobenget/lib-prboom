@@ -51,14 +51,14 @@
 #include "z_zone.h" /* memory allocation wrappers -- killough */
 
 #include "doomstat.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "r_draw.h"
-#include "r_things.h"
-#include "r_sky.h"
-#include "r_plane.h"
-#include "v_video.h"
 #include "lprintf.h"
+#include "r_draw.h"
+#include "r_main.h"
+#include "r_plane.h"
+#include "r_sky.h"
+#include "r_things.h"
+#include "v_video.h"
+#include "w_wad.h"
 
 #define MAXVISPLANES 128 /* must be a power of 2 */
 

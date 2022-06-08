@@ -32,12 +32,12 @@
  *---------------------------------------------------------------------
  */
 
-#include "doomstat.h"
-#include "r_defs.h"
-#include "r_state.h"
-#include "p_spec.h"
-#include "r_demo.h"
 #include "r_fps.h"
+#include "doomstat.h"
+#include "p_spec.h"
+#include "r_defs.h"
+#include "r_demo.h"
+#include "r_state.h"
 
 int movement_smooth = false;
 

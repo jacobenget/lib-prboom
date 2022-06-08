@@ -32,13 +32,13 @@
  *-----------------------------------------------------------------------------*/
 
 #include "doomstat.h"
-#include "w_wad.h"
-#include "r_main.h"
-#include "p_spec.h"
 #include "g_game.h"
+#include "lprintf.h"
+#include "p_spec.h"
+#include "r_main.h"
 #include "s_sound.h"
 #include "sounds.h"
-#include "lprintf.h"
+#include "w_wad.h"
 
 // killough 2/8/98: Remove switch limit
 

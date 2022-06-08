@@ -38,11 +38,11 @@
  */
 
 #include "doomdef.h"
-#include "sounds.h"
 #include "m_fixed.h"
-#include "p_mobj.h"
 #include "p_enemy.h"
+#include "p_mobj.h"
 #include "p_pspr.h"
+#include "sounds.h"
 #include "w_wad.h"
 
 #ifdef __GNUG__

@@ -33,10 +33,10 @@
  *-----------------------------------------------------------------------------*/
 
 #include "doomstat.h" //jff 6/19/98 for demo_compatibility
-#include "r_main.h"
+#include "m_random.h"
 #include "p_spec.h"
 #include "p_tick.h"
-#include "m_random.h"
+#include "r_main.h"
 #include "s_sound.h"
 #include "sounds.h"
 

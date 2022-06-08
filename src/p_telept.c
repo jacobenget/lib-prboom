@@ -33,15 +33,15 @@
 
 #include "doomdef.h"
 #include "doomstat.h"
-#include "p_spec.h"
-#include "p_maputl.h"
 #include "p_map.h"
-#include "r_main.h"
+#include "p_maputl.h"
+#include "p_spec.h"
 #include "p_tick.h"
-#include "s_sound.h"
-#include "sounds.h"
 #include "p_user.h"
 #include "r_demo.h"
+#include "r_main.h"
+#include "s_sound.h"
+#include "sounds.h"
 
 static mobj_t *P_TeleportDestination(line_t *line) {
   int i;

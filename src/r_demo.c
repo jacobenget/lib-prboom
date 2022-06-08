@@ -32,8 +32,8 @@
  *---------------------------------------------------------------------
  */
 
-#include "doomstat.h"
 #include "r_demo.h"
+#include "doomstat.h"
 #include "r_fps.h"
 
 int demo_smoothturns = false;

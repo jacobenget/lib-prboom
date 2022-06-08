@@ -33,14 +33,14 @@
  *
  *-----------------------------------------------------------------------------*/
 
-#include "doomstat.h"
+#include "p_user.h"
 #include "d_event.h"
-#include "r_main.h"
+#include "doomstat.h"
 #include "p_map.h"
 #include "p_spec.h"
-#include "p_user.h"
 #include "r_demo.h"
 #include "r_fps.h"
+#include "r_main.h"
 
 // Index of the special effects (INVUL inverse) map.
 
