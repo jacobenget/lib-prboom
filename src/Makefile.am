@@ -54,6 +54,7 @@ COMMON_HEADER = \
  m_random.h  \
  m_swap.h  \
  md5.h  \
+ mmus2mid.h  \
  p_checksum.h  \
  p_enemy.h  \
  p_inter.h  \
@@ -115,6 +116,7 @@ COMMON_SRC = \
  m_misc.c  \
  m_random.c  \
  md5.c  \
+ mmus2mid.c  \
  p_ceilng.c  \
  p_checksum.c  \
  p_doors.c  \
@@ -175,7 +177,7 @@ else
 WAD_SRC = w_memcache.c
 endif
 
-prboom_SOURCES = mmus2mid.c mmus2mid.h $(COMMON_SRC) $(NET_CLIENT_SRC) $(USE_GL_SRC) $(WAD_SRC)
+prboom_SOURCES = $(COMMON_SRC) $(NET_CLIENT_SRC) $(USE_GL_SRC) $(WAD_SRC)
 prboom_LDADD = SDL/libsdldoom.a @MIXER_LIBS@ @NET_LIBS@ @SDL_LIBS@ @GL_LIBS@ @MATH_LIB@
 
 EXTRA_DIST = \
