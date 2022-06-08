@@ -35,6 +35,7 @@
 #define __AMMAP_H__
 
 #include "d_event.h"
+#include "m_fixed.h"
 
 #define MAPBITS 12
 #define FRACTOMAPBITS (FRACBITS - MAPBITS)

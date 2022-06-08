@@ -39,6 +39,7 @@
 
 #include "m_fixed.h"
 #include "tables.h"
+#include "doomdef.h"
 
 /* Needs to include the precompiled sprite animation tables.
  *

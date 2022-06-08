@@ -34,6 +34,9 @@
 #ifndef __P_SAVEG__
 #define __P_SAVEG__
 
+#include "doomtype.h"
+#include <stddef.h>
+
 #ifdef __GNUG__
 #pragma interface
 #endif

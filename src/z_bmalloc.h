@@ -32,6 +32,12 @@
  *sizes
  *-----------------------------------------------------------------------------*/
 
+#ifndef __Z_BMALLOC__
+#define __Z_BMALLOC__
+
+#include <stddef.h>
+#include <string.h>
+
 struct block_memory_alloc_s {
   void *firstpool;
   size_t size;
@@ -55,3 +61,5 @@ inline static void *Z_BCalloc(struct block_memory_alloc_s *pzone) {
 }
 
 void Z_BFree(struct block_memory_alloc_s *pzone, void *p);
+
+#endif

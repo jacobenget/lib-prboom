@@ -38,6 +38,7 @@
 
 /* Needed for action function pointer handling. */
 #include "d_think.h"
+#include "doomtype.h"
 
 /********************************************************************
  * Sprite name enumeration - must match info.c                      *

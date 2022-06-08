@@ -34,6 +34,8 @@
 #ifndef __W_WAD__
 #define __W_WAD__
 
+#include <stddef.h>
+
 #ifdef __GNUG__
 #pragma interface
 #endif

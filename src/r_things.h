@@ -39,6 +39,7 @@
 #endif
 
 #include "r_draw.h"
+#include "r_patch.h"
 
 /* Constant arrays used for psprite clipping and initializing clipping. */
 

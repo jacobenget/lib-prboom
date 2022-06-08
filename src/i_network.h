@@ -34,6 +34,9 @@
 #include "config.h"
 #endif
 
+#include <stddef.h>
+#include "protocol.h"
+
 #ifdef USE_SDL_NET
 #include "SDL_net.h"
 #define UDP_SOCKET UDPsocket

@@ -34,6 +34,8 @@
 #ifndef __R_BSP__
 #define __R_BSP__
 
+#include "r_defs.h"
+
 #ifdef __GNUG__
 #pragma interface
 #endif

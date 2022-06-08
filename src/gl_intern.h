@@ -34,6 +34,10 @@
 #ifndef _GL_INTERN_H
 #define _GL_INTERN_H
 
+#include "doomtype.h"
+#include "v_video.h"
+#include <GL/gl.h>
+
 typedef enum {
   GLDT_UNREGISTERED,
   GLDT_BROKEN,

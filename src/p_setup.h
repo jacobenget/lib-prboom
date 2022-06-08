@@ -35,6 +35,7 @@
 #define __P_SETUP__
 
 #include "p_mobj.h"
+#include "doomdef.h"
 
 #ifdef __GNUG__
 #pragma interface

@@ -34,6 +34,9 @@
 #ifndef _GL_STRUCT_H
 #define _GL_STRUCT_H
 
+#include "r_defs.h"
+#include "d_player.h"
+
 extern int nodesVersion;
 
 void gld_Init(int width, int height);

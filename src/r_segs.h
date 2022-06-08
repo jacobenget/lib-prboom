@@ -34,6 +34,8 @@
 #ifndef __R_SEGS__
 #define __R_SEGS__
 
+#include "r_defs.h"
+
 #ifdef __GNUG__
 #pragma interface
 #endif

@@ -34,6 +34,10 @@
 #ifndef __I_SYSTEM__
 #define __I_SYSTEM__
 
+#include <stddef.h>
+#include "doomtype.h"
+#include "m_fixed.h"
+
 #ifdef __GNUG__
 #pragma interface
 #endif

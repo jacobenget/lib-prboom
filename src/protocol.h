@@ -30,9 +30,14 @@
  *  Doom Network protocol packet definitions.
  *-----------------------------------------------------------------------------*/
 
+#ifndef __PROTOCOL__
+#define __PROTOCOL__
+
 #include "doomtype.h"
 #include "d_ticcmd.h"
 #include "m_swap.h"
+#include "config.h"
+#include <string.h>
 
 enum packet_type_e {
   PKT_INIT,    // initial packet to server
@@ -98,3 +103,5 @@ inline static void TicToRaw(void *dst, const ticcmd_t *src) {
   tmp.consistancy = doom_ntohs(tmp.consistancy);
   memcpy(dst, &tmp, sizeof tmp);
 }
+
+#endif
