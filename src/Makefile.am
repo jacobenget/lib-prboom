@@ -16,40 +16,150 @@ CFLAGS = @CFLAGS@ @SDL_CFLAGS@
 prboom_game_server_SOURCES = d_server.c protocol.h
 prboom_game_server_LDADD = POSIX/libposixdoom.a SDL/i_network.o @NET_LIBS@ @SDL_LIBS@
 
+COMMON_HEADER = \
+ am_map.h  \
+ d_deh.h  \
+ d_englsh.h  \
+ d_event.h  \
+ d_items.h  \
+ d_main.h  \
+ d_net.h  \
+ d_player.h  \
+ d_think.h  \
+ d_ticcmd.h  \
+ doomdata.h  \
+ doomdef.h  \
+ doomstat.h  \
+ doomtype.h  \
+ dstrings.h  \
+ f_finale.h  \
+ f_wipe.h  \
+ g_game.h  \
+ hu_lib.h  \
+ hu_stuff.h  \
+ i_joy.h  \
+ i_main.h  \
+ i_network.h  \
+ i_sound.h  \
+ i_system.h  \
+ i_video.h  \
+ info.h  \
+ lprintf.h  \
+ m_argv.h  \
+ m_bbox.h  \
+ m_cheat.h  \
+ m_fixed.h  \
+ m_menu.h  \
+ m_misc.h  \
+ m_random.h  \
+ m_swap.h  \
+ md5.h  \
+ p_checksum.h  \
+ p_enemy.h  \
+ p_inter.h  \
+ p_map.h  \
+ p_maputl.h  \
+ p_mobj.h  \
+ p_pspr.h  \
+ p_saveg.h  \
+ p_setup.h  \
+ p_spec.h  \
+ p_tick.h  \
+ p_user.h  \
+ protocol.h  \
+ r_bsp.h  \
+ r_data.h  \
+ r_defs.h  \
+ r_demo.h  \
+ r_draw.h  \
+ r_filter.h  \
+ r_fps.h  \
+ r_main.h  \
+ r_patch.h  \
+ r_plane.h  \
+ r_segs.h  \
+ r_sky.h  \
+ r_state.h  \
+ r_things.h  \
+ s_sound.h  \
+ sounds.h  \
+ st_lib.h  \
+ st_stuff.h  \
+ tables.h  \
+ v_video.h  \
+ version.h  \
+ w_wad.h	\
+ wi_stuff.h  \
+ z_bmalloc.h  \
+ z_zone.h
+
 COMMON_SRC = \
- am_map.c       g_game.c           p_maputl.h       r_plane.h   \
- am_map.h       g_game.h           p_mobj.c         r_demo.c    r_segs.c    \
- hu_lib.c       lprintf.c          p_mobj.h         r_demo.h    r_segs.h    \
- hu_lib.h       lprintf.h          p_plats.c        r_sky.c	\
- d_deh.c        hu_stuff.c         m_argv.c         p_pspr.c    r_sky.h	    \
- d_deh.h        hu_stuff.h         m_argv.h         p_pspr.h    r_state.h   \
- d_englsh.h     i_joy.h            m_bbox.c         p_saveg.c   r_things.c  \
- d_event.h                         m_bbox.h         p_saveg.h   r_things.h  \
- d_items.c      i_network.h        m_cheat.c        p_setup.c   s_sound.c   \
- d_items.h      i_sound.h          m_cheat.h        p_setup.h   s_sound.h   \
- d_main.c       i_system.h         m_fixed.h        p_sight.c   sounds.c    \
- d_main.h       i_video.h          m_menu.c         p_spec.c    sounds.h    \
-                info.c             m_menu.h         p_spec.h    st_lib.c    \
- d_net.h        info.h             m_misc.c         p_switch.c  st_lib.h    \
- d_player.h                        m_misc.h         p_telept.c  st_stuff.c  \
- m_random.c     p_tick.c           st_stuff.h       i_main.h    \
- d_think.h      m_random.h         p_tick.h         tables.c    \
- d_ticcmd.h     m_swap.h           p_user.c         tables.h     \
- doomdata.h     p_ceilng.c         p_user.h         v_video.c   \
- doomdef.c      p_doors.c          protocol.h       v_video.h   \
- doomdef.h      p_enemy.c          r_bsp.c          version.c   \
- doomstat.c     p_enemy.h          r_bsp.h          version.h   \
- doomstat.h     p_floor.c          r_data.c         w_wad.c	\
- doomtype.h     p_genlin.c         r_data.h         w_wad.h	\
- dstrings.c     p_inter.c          r_defs.h         wi_stuff.c  \
- dstrings.h     p_inter.h          r_draw.c         wi_stuff.h  \
- f_finale.c     p_lights.c         r_draw.h         z_bmalloc.c \
- f_finale.h     p_map.c            r_main.c         z_bmalloc.h \
- f_wipe.c       p_map.h            r_main.h         z_zone.c    \
- f_wipe.h       p_maputl.c         r_plane.c        z_zone.h	\
- md5.c          md5.h              p_checksum.h     p_checksum.c \
- r_patch.c      r_patch.h          r_fps.c          r_fps.h \
- r_filter.c     r_filter.h
+ am_map.c  \
+ d_deh.c  \
+ d_items.c  \
+ d_main.c  \
+ doomdef.c  \
+ doomstat.c  \
+ dstrings.c  \
+ f_finale.c  \
+ f_wipe.c  \
+ g_game.c  \
+ hu_lib.c  \
+ hu_stuff.c  \
+ info.c  \
+ lprintf.c  \
+ m_argv.c  \
+ m_bbox.c  \
+ m_cheat.c  \
+ m_menu.c  \
+ m_misc.c  \
+ m_random.c  \
+ md5.c  \
+ p_ceilng.c  \
+ p_checksum.c  \
+ p_doors.c  \
+ p_enemy.c  \
+ p_floor.c  \
+ p_genlin.c  \
+ p_inter.c  \
+ p_lights.c  \
+ p_map.c  \
+ p_maputl.c  \
+ p_mobj.c  \
+ p_plats.c  \
+ p_pspr.c  \
+ p_saveg.c  \
+ p_setup.c  \
+ p_sight.c  \
+ p_spec.c  \
+ p_switch.c  \
+ p_telept.c  \
+ p_tick.c  \
+ p_user.c  \
+ r_bsp.c  \
+ r_data.c  \
+ r_demo.c  \
+ r_draw.c  \
+ r_filter.c  \
+ r_fps.c  \
+ r_main.c  \
+ r_patch.c  \
+ r_plane.c  \
+ r_segs.c  \
+ r_sky.c	\
+ r_things.c  \
+ s_sound.c  \
+ sounds.c  \
+ st_lib.c  \
+ st_stuff.c  \
+ tables.c  \
+ v_video.c  \
+ version.c  \
+ w_wad.c	\
+ wi_stuff.c  \
+ z_bmalloc.c  \
+ z_zone.c  \
+ $(COMMON_HEADER)
 
 NET_CLIENT_SRC = d_client.c
 
