@@ -166,8 +166,10 @@ COMMON_SRC = \
 NET_CLIENT_SRC = d_client.c
 
 if BUILD_GL
-USE_GL_SRC = gl_intern.h  gl_main.c  gl_struct.h  gl_texture.c
+USE_GL_HEADER = gl_intern.h  gl_struct.h
+USE_GL_SRC = gl_main.c  gl_texture.c  $(USE_GL_HEADER)
 else
+USE_GL_HEADER =
 USE_GL_SRC =
 endif
 
@@ -198,10 +200,12 @@ check_SCRIPTS = check_self_sufficiency_of_all_headers.test
 #			- This must be done because the compiler no longer has a file name with an extention from which to infer the source language
 COMPILER_SHELL_EXPRESSION_FOR_HEADER_FILE_CHECK = $(COMPILE) -o /dev/null -x c -
 
+ALL_HEADER = $(COMMON_HEADER) $(USE_GL_HEADER)
+
 check_self_sufficiency_of_all_headers.test: Makefile
 	( \
 		echo "#!/bin/sh"; \
-		echo '$(PYTHON) $(top_srcdir)/scripts/check_self_sufficiency_of_c_headers.py --paths_to_headers $(COMMON_HEADER) --compiler_shell_expression "$(COMPILER_SHELL_EXPRESSION_FOR_HEADER_FILE_CHECK)"'; \
+		echo '$(PYTHON) $(top_srcdir)/scripts/check_self_sufficiency_of_c_headers.py --paths_to_headers $(ALL_HEADER) --compiler_shell_expression "$(COMPILER_SHELL_EXPRESSION_FOR_HEADER_FILE_CHECK)"'; \
 	) > check_self_sufficiency_of_all_headers.test
 	chmod +x check_self_sufficiency_of_all_headers.test
 
