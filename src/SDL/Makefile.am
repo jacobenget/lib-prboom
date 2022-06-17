@@ -4,9 +4,9 @@
 
 CFLAGS = @CFLAGS@ @SDL_CFLAGS@
 
-noinst_LIBRARIES = libsdldoom.a
+noinst_LTLIBRARIES = libsdldoom.la
 
-libsdldoom_a_SOURCES = \
+libsdldoom_la_SOURCES = \
  i_main.c       i_network.c     i_video.c       i_sound.c \
  i_system.c     i_joy.c         i_sshot.c
 
