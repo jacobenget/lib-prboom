@@ -18,6 +18,6 @@ libgtest_la_LDFLAGS = -pthread
 check_PROGRAMS = unittests
 unittests_SOURCES = test_example.cpp $(srcdir)/googletest/googletest/src/gtest_main.cc
 unittests_LDADD = libgtest.la $(top_builddir)/src/libprboom.la
-unittests_CPPFLAGS = -isystem $(srcdir)/googletest/googletest/include -I$(srcdir)/googletest/googletest -I$(top_srcdir)/src
+unittests_CPPFLAGS = -isystem $(srcdir)/googletest/googletest/include -I$(top_srcdir)/src
 
 TESTS = unittests
