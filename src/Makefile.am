@@ -179,8 +179,12 @@ else
 WAD_SRC = w_memcache.c
 endif
 
-prboom_SOURCES = $(COMMON_SRC) $(NET_CLIENT_SRC) $(USE_GL_SRC) $(WAD_SRC)
-prboom_LDADD = SDL/libsdldoom.la @MIXER_LIBS@ @NET_LIBS@ @SDL_LIBS@ @GL_LIBS@ @MATH_LIB@
+noinst_LTLIBRARIES = libprboom.la
+libprboom_la_SOURCES = $(COMMON_SRC) $(NET_CLIENT_SRC) $(USE_GL_SRC) $(WAD_SRC)
+libprboom_la_LIBADD = $(builddir)/SDL/libsdldoom.la
+
+prboom_SOURCES =
+prboom_LDADD = libprboom.la @MIXER_LIBS@ @NET_LIBS@ @SDL_LIBS@ @GL_LIBS@ @MATH_LIB@
 
 EXTRA_DIST = \
  r_drawcolumn.inl r_drawflush.inl r_drawspan.inl r_drawcolpipeline.inl
