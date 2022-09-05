@@ -49,9 +49,11 @@ const char *const *myargv; // CPhipps - not sure if ANSI C allows you to
 //
 
 int M_CheckParm(const char *check) {
-  signed int i = myargc;
-  while (--i > 0)
+  int i = myargc - 1; // start from the last arg
+  while (i > 0) {
     if (!strcasecmp(check, myargv[i]))
       return i;
+    i--; // and walk backwards
+  }
   return 0;
 }
