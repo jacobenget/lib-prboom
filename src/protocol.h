@@ -78,7 +78,7 @@ struct setup_packet_s {
       ticdup, extratic;
   byte game_options[GAME_OPTIONS_SIZE];
   byte numwads;
-  byte wadnames[1]; // Actually longer
+  char wadnames[1]; // Actually longer
 };
 
 /* cph - convert network byte stream to usable ticcmd_t and visa-versa
