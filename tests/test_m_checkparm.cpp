@@ -8,16 +8,16 @@ extern "C" {
   Unit tests for the M_CheckParm utility.
 */
 
-template <int size> void setMyArg(const char *(&argv)[size]) {
+template <int size> void setMyArg(char *(&argv)[size]) {
   myargc = size;
   myargv = argv;
 }
 
 TEST(CheckParmTest, CorrectlyFindsAllExistingArgs) {
 
-  const char *args[7] = {"executableName",           "-anOption", "aValue",
-                         "anotherOptionWithoutDash", "a",         "b",
-                         "has \n whitespace \t\n\t"};
+  char *args[7] = {"executableName",           "-anOption", "aValue",
+                   "anotherOptionWithoutDash", "a",         "b",
+                   "has \n whitespace \t\n\t"};
   setMyArg(args);
 
   ASSERT_EQ(M_CheckParm("-anOption"), 1);
@@ -33,7 +33,7 @@ TEST(CheckParmTest, CorrectlyFindsAllExistingArgs) {
 }
 
 TEST(CheckParmTest, OnlyFindsLastInstance) {
-  const char *args[6] = {"executableName", "a", "a", "b", "a", "b"};
+  char *args[6] = {"executableName", "a", "a", "b", "a", "b"};
   setMyArg(args);
 
   ASSERT_EQ(M_CheckParm("a"), 4)
@@ -43,7 +43,7 @@ TEST(CheckParmTest, OnlyFindsLastInstance) {
 }
 
 TEST(CheckParmTest, ParameterNamesAreCaseInsensitive) {
-  const char *args[2] = {"executableName", "-anOption"};
+  char *args[2] = {"executableName", "-anOption"};
   setMyArg(args);
 
   ASSERT_EQ(M_CheckParm("-AnOPTION"), 1);
@@ -52,7 +52,7 @@ TEST(CheckParmTest, ParameterNamesAreCaseInsensitive) {
 }
 
 TEST(CheckParmTest, ZeroReturnedWhenParameterNotFound) {
-  const char *args[2] = {"executableName", "-anOption"};
+  char *args[2] = {"executableName", "-anOption"};
   setMyArg(args);
 
   ASSERT_EQ(M_CheckParm("anOption"), 0);
@@ -60,7 +60,7 @@ TEST(CheckParmTest, ZeroReturnedWhenParameterNotFound) {
 }
 
 TEST(CheckParmTest, ZeroReturnedWhenExecutableNameSearched) {
-  const char *args[2] = {"executableName", "-anOption"};
+  char *args[2] = {"executableName", "-anOption"};
   setMyArg(args);
 
   ASSERT_EQ(M_CheckParm("executableName"), 0);
