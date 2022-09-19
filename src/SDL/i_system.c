@@ -334,7 +334,7 @@ char *I_FindFile(const char *wfname, const char *ext) {
       {"/usr/share/doom"},
   };
 
-  int i;
+  size_t i;
   /* Precalculate a length we will need in the loop */
   size_t pl = strlen(wfname) + strlen(ext) + 4;
 
