@@ -365,11 +365,10 @@ inline static boolean I_SkipFrame(void) {
   static int frameno;
 
   frameno++;
-  switch (gamestate) {
-  case GS_LEVEL:
-    if (!paused)
-      return false;
-  default:
+
+  if ((gamestate == GS_LEVEL) && !paused) {
+    return false;
+  } else {
     // Skip odd frames
     return (frameno & 1) ? true : false;
   }
