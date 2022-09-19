@@ -574,7 +574,7 @@ static void I_ClosestResolution(int *width, int *height, int flags) {
 // CPhipps -
 // I_CalculateRes
 // Calculates the screen resolution, possibly using the supplied guide
-void I_CalculateRes(unsigned int width, unsigned int height) {
+void I_CalculateRes(int width, int height) {
   // e6y: how about 1680x1050?
   /*
   SCREENWIDTH = (width+3) & ~3;

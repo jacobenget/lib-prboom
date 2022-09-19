@@ -42,9 +42,8 @@
 #endif
 
 void I_PreInitGraphics(void); /* CPhipps - do stuff immediately on start */
-void I_CalculateRes(unsigned int width,
-                    unsigned int height); /* calculate resolution */
-void I_SetRes(void);                      /* set resolution */
+void I_CalculateRes(int width, int height); /* calculate resolution */
+void I_SetRes(void);                        /* set resolution */
 void I_InitGraphics(void);
 void I_UpdateVideoMode(void);
 void I_ShutdownGraphics(void);
