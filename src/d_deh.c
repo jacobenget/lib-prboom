@@ -1857,7 +1857,7 @@ static void deh_procPointer(DEHFILE *fpin, FILE *fpout, char *line) // done
   char inbuffer[DEH_BUFFERMAX];
   uint_64_t value; // All deh values are ints or longs
   int indexnum;
-  int i; // looper
+  size_t i; // looper
 
   strncpy(inbuffer, line, DEH_BUFFERMAX);
   // NOTE: different format from normal
