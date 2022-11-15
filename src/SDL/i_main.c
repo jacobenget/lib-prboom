@@ -312,7 +312,7 @@ uid_t stored_euid = -1;
 #endif
 
 // int main(int argc, const char * const * argv)
-int main(int argc, char **argv) {
+int main(int argc, const char **argv) {
 #ifdef SECURE_UID
   /* First thing, revoke setuid status (if any) */
   stored_euid = geteuid();

@@ -37,7 +37,7 @@
 #include "m_argv.h"
 
 int myargc;
-char **myargv;
+const char **myargv;
 
 //
 // M_CheckParm
