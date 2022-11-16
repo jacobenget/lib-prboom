@@ -234,10 +234,10 @@ static boolean *mousebuttons = &mousearray[1]; // allow [-1]
 static int mousex;
 static int mousey;
 static int dclicktime;
-static int dclickstate;
+static boolean dclickstate;
 static int dclicks;
 static int dclicktime2;
-static int dclickstate2;
+static boolean dclickstate2;
 static int dclicks2;
 
 // joystick values are repeated
@@ -470,7 +470,7 @@ void G_BuildTiccmd(ticcmd_t *cmd) {
       dclicktime = 0;
   } else if ((dclicktime += ticdup) > 20) {
     dclicks = 0;
-    dclickstate = 0;
+    dclickstate = false;
   }
 
   // strafe double click
@@ -487,7 +487,7 @@ void G_BuildTiccmd(ticcmd_t *cmd) {
       dclicktime2 = 0;
   } else if ((dclicktime2 += ticdup) > 20) {
     dclicks2 = 0;
-    dclickstate2 = 0;
+    dclickstate2 = false;
   }
   forward += mousey;
   if (strafe)
