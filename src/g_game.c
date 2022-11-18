@@ -2032,7 +2032,7 @@ void G_ReloadDefaults(void) {
         compatibility_level = l;
     }
   }
-  if (compatibility_level == -1)
+  if (compatibility_level == (unsigned int)-1)
     compatibility_level = best_compatibility;
 
   if (mbf_features)
