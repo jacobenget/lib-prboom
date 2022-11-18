@@ -1603,7 +1603,7 @@ void G_DoLoadGame(void) {
   /* killough 3/1/98: Read game options
    * killough 11/98: move down to here
    */
-  save_p = (char *)G_ReadOptions(save_p);
+  save_p += G_ReadOptions(save_p);
 
   // load a base level
   G_InitNew(gameskill, gameepisode, gamemap);
@@ -1785,7 +1785,7 @@ static void G_DoSaveGame(boolean menu) {
 
   *save_p++ = idmusnum; // jff 3/17/98 save idmus state
 
-  save_p = G_WriteOptions(save_p); // killough 3/1/98: save game options
+  save_p += G_WriteOptions(save_p); // killough 3/1/98: save game options
 
   /* cph - FIXME - endianness? */
   /* killough 11/98: save entire word */
@@ -2264,10 +2264,12 @@ void G_RecordDemo(const char *name) {
 // positions as before for the variables, so if one becomes obsolete, the
 // byte(s) should still be skipped over or padded with 0's.
 // Lee Killough 3/1/98
+//
+// Returns the number of bytes written
 
 extern int forceOldBsp;
 
-byte *G_WriteOptions(byte *demo_p) {
+size_t G_WriteOptions(byte *demo_p) {
   byte *target = demo_p + GAME_OPTION_SIZE;
 
   *demo_p++ = monsters_remember; // part of monster AI
@@ -2342,19 +2344,21 @@ byte *G_WriteOptions(byte *demo_p) {
   while (demo_p < target)
     *demo_p++ = 0;
 
+  // Check to make sure GAME_OPTION_SIZE is large enough to accomodate all the
+  // logic above that incremented demo_p
   if (demo_p != target)
     I_Error("G_WriteOptions: GAME_OPTION_SIZE is too small");
 
-  return target;
+  return GAME_OPTION_SIZE;
 }
 
 /* Same, but read instead of write
  * cph - const byte*'s
+ *
+ * Returns the number of bytes read
  */
 
-const byte *G_ReadOptions(const byte *demo_p) {
-  const byte *target = demo_p + GAME_OPTION_SIZE;
-
+size_t G_ReadOptions(const byte *demo_p) {
   monsters_remember = *demo_p++;
 
   variable_friction = *demo_p; // ice & mud
@@ -2432,7 +2436,7 @@ const byte *G_ReadOptions(const byte *demo_p) {
   }
 
   G_Compatibility();
-  return target;
+  return GAME_OPTION_SIZE;
 }
 
 void G_BeginRecording(void) {
@@ -2487,7 +2491,7 @@ void G_BeginRecording(void) {
     *demo_p++ = deathmatch;
     *demo_p++ = consoleplayer;
 
-    demo_p = G_WriteOptions(demo_p); // killough 3/1/98: Save game options
+    demo_p += G_WriteOptions(demo_p); // killough 3/1/98: Save game options
 
     for (i = 0; i < MAXPLAYERS; i++)
       *demo_p++ = playeringame[i];
@@ -2534,7 +2538,7 @@ void G_BeginRecording(void) {
     *demo_p++ = deathmatch;
     *demo_p++ = consoleplayer;
 
-    demo_p = G_WriteOptions(demo_p); // killough 3/1/98: Save game options
+    demo_p += G_WriteOptions(demo_p); // killough 3/1/98: Save game options
 
     for (i = 0; i < MAXPLAYERS; i++)
       *demo_p++ = playeringame[i];
@@ -2784,7 +2788,7 @@ static const byte *G_ReadDemoHeader(const byte *demo_p, size_t size,
     if (CheckForOverrun(header_p, demo_p, size, GAME_OPTION_SIZE, failonerror))
       return NULL;
 
-    demo_p = G_ReadOptions(demo_p); // killough 3/1/98: Read game options
+    demo_p += G_ReadOptions(demo_p); // killough 3/1/98: Read game options
 
     if (demover == 200) // killough 6/3/98: partially fix v2.00 demos
       demo_p += 256 - GAME_OPTION_SIZE;
