@@ -1928,7 +1928,7 @@ void G_Compatibility(void) {
       // comp_maskedanim - 2s mid textures don't animate
       {doom_1666_compatibility, prboom_4_compatibility},
   };
-  int i;
+  size_t i;
 
   if (sizeof(levels) / sizeof(*levels) != COMP_NUM)
     I_Error("G_Compatibility: consistency error");
