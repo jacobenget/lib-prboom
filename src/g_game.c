@@ -1340,12 +1340,22 @@ void G_WorldDone(void) {
   if (gamemode == commercial) {
     switch (gamemap) {
     case 15:
+      if (secretexit)
+        F_StartFinale();
+      break;
     case 31:
-      if (!secretexit)
-        break;
+      if (secretexit)
+        F_StartFinale();
+      break;
     case 6:
+      F_StartFinale();
+      break;
     case 11:
+      F_StartFinale();
+      break;
     case 20:
+      F_StartFinale();
+      break;
     case 30:
       F_StartFinale();
       break;
