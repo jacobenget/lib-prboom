@@ -1536,7 +1536,7 @@ void G_DoLoadGame(void) {
     // killough 2/22/98: "proprietary" version string :-)
     sprintf(vcheck, version_headers[i].ver_printf, version_headers[i].version);
 
-    if (!strncmp(save_p, vcheck, VERSIONSIZE)) {
+    if (!strncmp((char *)save_p, vcheck, VERSIONSIZE)) {
       savegame_compatibility = version_headers[i].comp_level;
       i = num_version_headers;
     }
@@ -1561,10 +1561,14 @@ void G_DoLoadGame(void) {
 
     if (memcmp(&checksum, save_p, sizeof checksum)) {
       if (!forced_loadgame) {
-        char *msg = malloc(strlen(save_p + sizeof checksum) + 128);
+        char *save_data_just_after_checksum =
+            (char *)(save_p + sizeof checksum);
+        char *msg = malloc(strlen(save_data_just_after_checksum) + 128);
         strcpy(msg, "Incompatible Savegame!!!\n");
-        if (save_p[sizeof checksum])
-          strcat(strcat(msg, "Wads expected:\n\n"), save_p + sizeof checksum);
+        if (*save_data_just_after_checksum) // i.e. we're not pointing to an
+                                            // empty string
+          strcat(strcat(msg, "Wads expected:\n\n"),
+                 save_data_just_after_checksum);
         strcat(msg, "\nAre you sure?");
         G_LoadGameErr(msg);
         free(msg);
@@ -1575,7 +1579,7 @@ void G_DoLoadGame(void) {
     save_p += sizeof checksum;
   }
 
-  save_p += strlen(save_p) + 1;
+  save_p += strlen((char *)save_p) + 1;
 
   compatibility_level = (savegame_compatibility >= prboom_4_compatibility)
                             ? *save_p
@@ -1758,8 +1762,8 @@ static void G_DoSaveGame(boolean menu) {
     for (i = 0; i < numwadfiles; i++) {
       const char *const w = wadfiles[i].name;
       CheckSaveGame(strlen(w) + 2);
-      strcpy(save_p, w);
-      save_p += strlen(save_p);
+      strcpy((char *)save_p, w);
+      save_p += strlen((char *)save_p);
       *save_p++ = '\n';
     }
     *save_p++ = 0;
