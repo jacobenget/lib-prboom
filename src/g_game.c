@@ -2196,7 +2196,7 @@ void G_WriteDemoTiccmd(ticcmd_t *cmd) {
     I_Error("G_WriteDemoTiccmd: error writing demo");
 
   /* cph - alias demo_p to it so we can read it back */
-  demo_p = buf;
+  demo_p = (byte *)buf;
   G_ReadDemoTiccmd(cmd); // make SURE it is exactly the same
 }
 
