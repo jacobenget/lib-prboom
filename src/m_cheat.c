@@ -548,7 +548,8 @@ static void cheat_tntweapx(buf) char buf[3];
       plyr->message = "Weapon Added"; // Ty 03/27/98 - *not* externalized
     else {
       plyr->message = "Weapon Removed"; // Ty 03/27/98 - *not* externalized
-      if (w == plyr->readyweapon)       // maybe switch if weapon removed
+      if ((unsigned int)w ==
+          plyr->readyweapon) // maybe switch if weapon removed
         plyr->pendingweapon = P_SwitchWeapon(plyr);
     }
   }
