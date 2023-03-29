@@ -669,14 +669,14 @@ default_t defaults[] = {
 #endif
     /* 640x480 default resolution */
     {"screen_width",
-     {&desired_screenwidth},
+     {(int *)&desired_screenwidth},
      {640},
      320,
      MAX_SCREENWIDTH,
      def_int,
      ss_none},
     {"screen_height",
-     {&desired_screenheight},
+     {(int *)&desired_screenheight},
      {480},
      200,
      MAX_SCREENHEIGHT,
