@@ -663,15 +663,20 @@ void M_LoadSelect(int choice) {
 // killough 5/15/98: add forced loadgames
 //
 
+// A place to store the string that's only used, temporarily, for forced game
+// loading
+static char *forced_load_message_string;
+
 static void M_VerifyForcedLoadGame(int ch) {
   if (ch == 'y')
     G_ForcedLoadGame();
-  free((char *)messageString); // free the message strdup()'ed below
+  free(forced_load_message_string); // free the message strdup()'ed below
   M_ClearMenus();
 }
 
 void M_ForcedLoadGame(const char *msg) {
-  M_StartMessage(strdup(msg), M_VerifyForcedLoadGame, true); // free()'d above
+  forced_load_message_string = strdup(msg); // free()'d above
+  M_StartMessage(forced_load_message_string, M_VerifyForcedLoadGame, true);
 }
 
 //
@@ -727,12 +732,15 @@ void M_ReadSaveStrings(void) {
      * cph - add not-demoplayback parameter */
     G_SaveGameName(name, sizeof(name), i, false);
     fp = fopen(name, "rb");
-    if (!fp) { // Ty 03/27/98 - externalized:
+    if (!fp || (fread(&savegamestrings[i], SAVESTRINGSIZE, 1, fp) !=
+                1)) { // Ty 03/27/98 - externalized:
       strcpy(&savegamestrings[i][0], s_EMPTYSTRING);
       LoadMenue[i].status = 0;
+      if (fp) {
+        fclose(fp);
+      }
       continue;
     }
-    fread(&savegamestrings[i], SAVESTRINGSIZE, 1, fp);
     fclose(fp);
     LoadMenue[i].status = 1;
   }
@@ -1253,6 +1261,8 @@ setup_menu_t *current_setup_menu; // points to current setup menu table
 // The menu_buffer is used to construct strings for display on the screen.
 
 static char menu_buffer[64];
+static size_t length_of_menu_buffer =
+    sizeof menu_buffer / sizeof menu_buffer[0];
 
 /////////////////////////////
 //
@@ -1636,8 +1646,12 @@ static void M_DrawSetting(const setup_menu_t *s) {
   // killough 10/98: or a filename?
 
   if (flags & S_STRING) {
-    /* cph - cast to char* as it's really a Z_Strdup'd string (see m_misc.h) */
-    char *text = (char *)*s->var.def->location.ppsz;
+    // Use menu_buffer as a workspace where string editing can happen
+    char *text = menu_buffer;
+
+    // Copy as much of the string into menu_buffer as possible
+    strncpy(menu_buffer, *s->var.def->location.ppsz, length_of_menu_buffer - 1);
+    menu_buffer[length_of_menu_buffer - 1] = 0;
 
     // Are we editing this string? If so, display a cursor under
     // the correct character.
@@ -1679,7 +1693,6 @@ static void M_DrawSetting(const setup_menu_t *s) {
 
     // Draw the setting for the item
 
-    strcpy(menu_buffer, text);
     M_DrawMenuString(x, y, color);
     return;
   }
@@ -3827,10 +3840,9 @@ static void M_ResetDefaults(void) {
                                        : p->var.m_key == dp->location.pi ||
                                              p->m_mouse == dp->location.pi ||
                                              p->m_joy == dp->location.pi) {
-            if (IS_STRING(*dp))
-              free((char *)*dp->location.ppsz),
-                  *dp->location.ppsz = strdup(dp->defaultvalue.psz);
-            else
+            if (IS_STRING(*dp)) {
+              M_AssignStringValue(dp, dp->defaultvalue.psz);
+            } else
               *dp->location.pi = dp->defaultvalue.i;
 
 #if 0
@@ -4920,7 +4932,7 @@ boolean M_Responder(event_t *ev) {
               value = 0;
             if (old_value != value)
               S_StartSound(NULL, sfx_pstop);
-            *ptr1->var.def->location.ppsz = ptr1->selectstrings[value];
+            M_AssignStringValue(ptr1->var.def, ptr1->selectstrings[value]);
           }
         }
         if (ch == key_menu_right) {
@@ -4948,7 +4960,7 @@ boolean M_Responder(event_t *ev) {
               value = old_value;
             if (old_value != value)
               S_StartSound(NULL, sfx_pstop);
-            *ptr1->var.def->location.ppsz = ptr1->selectstrings[value];
+            M_AssignStringValue(ptr1->var.def, ptr1->selectstrings[value]);
           }
         }
         if (ch == key_menu_enter) {
@@ -4979,7 +4991,8 @@ boolean M_Responder(event_t *ev) {
       if (setup_select)    // incoming key or button gets bound
       {
         if (ev->type == ev_joystick) {
-          int oldbutton, group;
+          int oldbutton;
+          setup_group group;
           boolean search = true;
 
           if (!ptr1->m_joy)
@@ -5015,7 +5028,8 @@ boolean M_Responder(event_t *ev) {
                   }
           *ptr1->m_joy = ch;
         } else if (ev->type == ev_mouse) {
-          int i, oldbutton, group;
+          int i, oldbutton;
+          setup_group group;
           boolean search = true;
 
           if (!ptr1->m_mouse)
@@ -5050,7 +5064,8 @@ boolean M_Responder(event_t *ev) {
           *ptr1->m_mouse = ch;
         } else // keyboard key
         {
-          int i, oldkey, group;
+          int i, oldkey;
+          setup_group group;
           boolean search = true;
 
           // see if 'ch' is already bound elsewhere. if so, you have
@@ -5185,6 +5200,9 @@ boolean M_Responder(event_t *ev) {
           if (chat_string_buffer[chat_index] != 0)
             chat_index++;
         } else if ((ch == key_menu_enter) || (ch == key_menu_escape)) {
+          // ????  What is this code doing?  When is this code triggered?
+          // How can it know that chat_string_buffer can be freely and safely
+          // assigned here?
           *ptr1->var.def->location.ppsz = chat_string_buffer;
           M_SelectDone(ptr1); // phares 4/17/98
         }
@@ -5280,9 +5298,7 @@ boolean M_Responder(event_t *ev) {
 
         // set chat table pointer to working buffer
         // and free old string's memory.
-
-        free((char *)*ptr1->var.def->location.ppsz);
-        *ptr1->var.def->location.ppsz = chat_string_buffer;
+        M_AssignStringValueAndTakeOwnership(ptr1->var.def, chat_string_buffer);
         chat_index = 0; // current cursor position in chat_string_buffer
       } else if (flags & S_RESET)
         default_verify = true;
@@ -5822,7 +5838,9 @@ void M_Init(void) {
     // killough 2/21/98: Fix registered Doom help screen
     // killough 10/98: moved to second screen, moved up to the top
     ReadDef2.y = 15;
-
+    // We need to remove the fourth episode.
+    EpiDef.numitems--;
+    break;
   case shareware:
     // We need to remove the fourth episode.
     EpiDef.numitems--;

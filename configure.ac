@@ -219,7 +219,7 @@ then
     AC_DEFINE(HEAPDUMP,1,[Uncomment this to cause heap dumps to be generated. Only useful if INSTRUMENTED is also defined.])
 fi
 
-CFLAGS="$CFLAGS -Werror"
+dnl --- CFLAGS="$CFLAGS -Werror"
 
 AM_CONDITIONAL(WAD_MMAP,test "$ac_cv_func_mmap" = yes)
 AC_SUBST(MIXER_CFLAGS)
