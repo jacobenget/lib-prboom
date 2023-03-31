@@ -35,6 +35,7 @@
  *
  *-----------------------------------------------------------------------------*/
 
+#include <assert.h>
 #include <fcntl.h>
 #include <stdio.h>
 
@@ -663,15 +664,26 @@ void M_LoadSelect(int choice) {
 // killough 5/15/98: add forced loadgames
 //
 
+// A place to store a string that's only used, temporarily, for forced game
+// loading
+static char *forced_load_message_string = NULL;
+
 static void M_VerifyForcedLoadGame(int ch) {
   if (ch == 'y')
     G_ForcedLoadGame();
-  free((char *)messageString); // free the message strdup()'ed below
+  free(forced_load_message_string); // free the message strdup()'ed below
+  forced_load_message_string = NULL;
   M_ClearMenus();
 }
 
+// Note: this function does not assume that the lifetime of the string pointed
+// to by 'msg' lives past a call to this function
 void M_ForcedLoadGame(const char *msg) {
-  M_StartMessage(strdup(msg), M_VerifyForcedLoadGame, true); // free()'d above
+  // Assert we're not about to leak memory due to a previously assigned, but not
+  // yet free'd, forced load message string
+  assert(forced_load_message_string == NULL);
+  forced_load_message_string = strdup(msg); // free()'d above
+  M_StartMessage(forced_load_message_string, M_VerifyForcedLoadGame, true);
 }
 
 //
@@ -5611,6 +5623,8 @@ void M_Ticker(void) {
 // Message Routines
 //
 
+// Note: this function assumes that the string pointed to by 'string' will
+// continue to exist at least until 'routine' is called
 void M_StartMessage(const char *string, void *routine, boolean input) {
   messageLastMenuActive = menuactive;
   messageToPrint = 1;
