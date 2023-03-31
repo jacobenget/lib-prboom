@@ -1265,6 +1265,8 @@ setup_menu_t *current_setup_menu; // points to current setup menu table
 // The menu_buffer is used to construct strings for display on the screen.
 
 static char menu_buffer[64];
+static size_t length_of_menu_buffer =
+    sizeof menu_buffer / sizeof menu_buffer[0];
 
 /////////////////////////////
 //
@@ -1648,8 +1650,11 @@ static void M_DrawSetting(const setup_menu_t *s) {
   // killough 10/98: or a filename?
 
   if (flags & S_STRING) {
-    /* cph - cast to char* as it's really a Z_Strdup'd string (see m_misc.h) */
-    char *text = (char *)*s->var.def->location.ppsz;
+    char *text = menu_buffer;
+
+    // Copy as much of the string into menu_buffer as possible
+    strncpy(menu_buffer, *s->var.def->location.ppsz, length_of_menu_buffer - 1);
+    menu_buffer[length_of_menu_buffer - 1] = 0;
 
     // Are we editing this string? If so, display a cursor under
     // the correct character.
@@ -1690,8 +1695,6 @@ static void M_DrawSetting(const setup_menu_t *s) {
     }
 
     // Draw the setting for the item
-
-    strcpy(menu_buffer, text);
     M_DrawMenuString(x, y, color);
     return;
   }
