@@ -2407,11 +2407,13 @@ void M_LoadDefaults(void) {
   boolean isstring;
 
   // set everything to base values
+  // Jake: Load defaults that exist inside executable?
 
   numdefaults = sizeof(defaults) / sizeof(defaults[0]);
   for (i = 0; i < numdefaults; i++) {
     if (defaults[i].location.ppsz)
-      *defaults[i].location.ppsz = strdup(defaults[i].defaultvalue.psz);
+      M_AssignStringValueAndTakeOwnership(&defaults[i],
+                                          strdup(defaults[i].defaultvalue.psz));
     if (defaults[i].location.pi)
       *defaults[i].location.pi = defaults[i].defaultvalue.i;
   }
@@ -2487,8 +2489,8 @@ void M_LoadDefaults(void) {
                   (defaults[i].maxvalue == UL || defaults[i].maxvalue >= parm))
                 *(defaults[i].location.pi) = parm;
             } else {
-              free((char *)*(defaults[i].location.ppsz)); /* phares 4/13/98 */
-              *(defaults[i].location.ppsz) = newstring;
+              M_AssignStringValueAndTakeOwnership(&defaults[i], newstring);
+              // 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
             }
             break;
           }
@@ -2559,4 +2561,25 @@ void M_ScreenShot(void) {
 
   doom_printf("M_ScreenShot: Couldn't create screenshot");
   return;
+}
+
+void M_AssignStringValue(default_t *setting, const char *string) {
+  assert(setting->type == def_str);
+
+  // First, free any previously assigned and owned value
+  if (setting->location.owned_value) {
+    assert(setting->location.owned_value == *setting->location.ppsz);
+    free(setting->location.owned_value);
+    setting->location.owned_value = NULL;
+  }
+
+  *setting->location.ppsz = string;
+}
+
+void M_AssignStringValueAndTakeOwnership(default_t *setting, char *string) {
+  assert(setting->type == def_str);
+
+  M_AssignStringValue(setting, string);
+
+  setting->location.owned_value = string;
 }

@@ -3843,8 +3843,8 @@ static void M_ResetDefaults(void) {
                                              p->m_mouse == dp->location.pi ||
                                              p->m_joy == dp->location.pi) {
             if (IS_STRING(*dp))
-              free((char *)*dp->location.ppsz),
-                  *dp->location.ppsz = strdup(dp->defaultvalue.psz);
+              M_AssignStringValueAndTakeOwnership(dp,
+                                                  strdup(dp->defaultvalue.psz));
             else
               *dp->location.pi = dp->defaultvalue.i;
 
@@ -4935,7 +4935,7 @@ boolean M_Responder(event_t *ev) {
               value = 0;
             if (old_value != value)
               S_StartSound(NULL, sfx_pstop);
-            *ptr1->var.def->location.ppsz = ptr1->selectstrings[value];
+            M_AssignStringValue(ptr1->var.def, ptr1->selectstrings[value]);
           }
         }
         if (ch == key_menu_right) {
@@ -4963,7 +4963,7 @@ boolean M_Responder(event_t *ev) {
               value = old_value;
             if (old_value != value)
               S_StartSound(NULL, sfx_pstop);
-            *ptr1->var.def->location.ppsz = ptr1->selectstrings[value];
+            M_AssignStringValue(ptr1->var.def, ptr1->selectstrings[value]);
           }
         }
         if (ch == key_menu_enter) {
@@ -5200,7 +5200,8 @@ boolean M_Responder(event_t *ev) {
           if (chat_string_buffer[chat_index] != 0)
             chat_index++;
         } else if ((ch == key_menu_enter) || (ch == key_menu_escape)) {
-          *ptr1->var.def->location.ppsz = chat_string_buffer;
+          M_AssignStringValueAndTakeOwnership(ptr1->var.def,
+                                              chat_string_buffer);
           M_SelectDone(ptr1); // phares 4/17/98
         }
 
@@ -5296,8 +5297,7 @@ boolean M_Responder(event_t *ev) {
         // set chat table pointer to working buffer
         // and free old string's memory.
 
-        free((char *)*ptr1->var.def->location.ppsz);
-        *ptr1->var.def->location.ppsz = chat_string_buffer;
+        M_AssignStringValueAndTakeOwnership(ptr1->var.def, chat_string_buffer);
         chat_index = 0; // current cursor position in chat_string_buffer
       } else if (flags & S_RESET)
         default_verify = true;

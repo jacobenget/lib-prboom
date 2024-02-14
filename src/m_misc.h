@@ -63,15 +63,20 @@ typedef struct default_s {
   /* cph -
    * The location struct holds the pointer to the variable holding the
    *  setting. For int's we do nothing special.
-   * For strings, the string is actually stored on our heap with Z_Strdup()
-   *  BUT we don't want the rest of the program to be able to modify them,
-   *  so we declare it const. It's not really const though, and m_misc.c and
-   *  m_menu.c cast it back when they need to change it. Possibly this is
-   *  more trouble than it's worth.
+   * For strings, the string may actually be stored on our heap with Z_Strdup()
+   *  or may be statically allocated. BUT we don't want the rest of the program
+   *  to be able to modify them, so all such pointers to strings are const.
+   *  But, any such string stored on our heap may need to be free'd, and in that
+   *  case we keep a non-const pointer around ("owned_value") for such
+   *  instances.
    */
   struct {
     int *pi;
     const char **ppsz;
+    // If non-NULL then the pointed-to string is "owned" by this default_t,
+    // (this "owned" string will be the same string pointed to by *ppsz, and
+    // should likely be free'd if *ppsz changes to point to a different string)
+    char *owned_value;
   } location;
   struct {
     int i;
@@ -97,6 +102,13 @@ typedef struct default_s {
   // CPhipps - remove unused "lousy hack" code
   struct setup_menu_s *setup_menu; /* Xref to setup menu item, if any */
 } default_t;
+
+// Document this
+// The caller of this function must guarantee that the value pointed to by
+// 'string' will outlive the value pointed to by 'default'
+void M_AssignStringValue(default_t *setting, const char *string);
+// Document this
+void M_AssignStringValueAndTakeOwnership(default_t *setting, char *string);
 
 #define IS_STRING(dv) ((dv).type == def_str)
 // CPhipps - What is the max. key code that X will send us?
