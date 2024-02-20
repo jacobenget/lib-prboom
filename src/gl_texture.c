@@ -495,7 +495,7 @@ void gld_BindTexture(GLTexture *gltexture) {
                             gl_paletted_texture);
   R_UnlockTextureCompositePatchNum(gltexture->index);
   if (gltexture->glTexID[CR_DEFAULT] == 0)
-    glGenTextures(1, &gltexture->glTexID[CR_DEFAULT]);
+    glGenTextures(1, (GLuint *)&gltexture->glTexID[CR_DEFAULT]);
   glBindTexture(GL_TEXTURE_2D, gltexture->glTexID[CR_DEFAULT]);
 #ifdef USE_GLU_MIPMAP
   if (gltexture->mipmap & use_mipmapping) {
@@ -631,7 +631,7 @@ void gld_BindPatch(GLTexture *gltexture, int cm) {
   gld_AddPatchToTexture(gltexture, buffer, patch, 0, 0, cm,
                         gl_paletted_texture);
   if (gltexture->glTexID[cm] == 0)
-    glGenTextures(1, &gltexture->glTexID[cm]);
+    glGenTextures(1, (GLuint *)&gltexture->glTexID[cm]);
   glBindTexture(GL_TEXTURE_2D, gltexture->glTexID[cm]);
 #ifdef USE_GLU_IMAGESCALE
   if ((gltexture->buffer_width > gltexture->tex_width) ||
@@ -750,7 +750,7 @@ void gld_BindFlat(GLTexture *gltexture) {
                        !(gltexture->mipmap & use_mipmapping) &
                            gl_paletted_texture);
   if (gltexture->glTexID[CR_DEFAULT] == 0)
-    glGenTextures(1, &gltexture->glTexID[CR_DEFAULT]);
+    glGenTextures(1, (GLuint *)&gltexture->glTexID[CR_DEFAULT]);
   glBindTexture(GL_TEXTURE_2D, gltexture->glTexID[CR_DEFAULT]);
 #ifdef USE_GLU_MIPMAP
   if (gltexture->mipmap & use_mipmapping) {
@@ -815,7 +815,7 @@ static void gld_CleanTextures(void) {
   for (i = 0; i < numtextures; i++) {
     if (gld_GLTextures[i]) {
       for (j = 0; j < (CR_LIMIT + MAXPLAYERS); j++)
-        glDeleteTextures(1, &(gld_GLTextures[i]->glTexID[j]));
+        glDeleteTextures(1, (GLuint *)&(gld_GLTextures[i]->glTexID[j]));
       Z_Free(gld_GLTextures[i]);
     }
   }
@@ -830,7 +830,7 @@ static void gld_CleanPatchTextures(void) {
   for (i = 0; i < numlumps; i++) {
     if (gld_GLPatchTextures[i]) {
       for (j = 0; j < (CR_LIMIT + MAXPLAYERS); j++)
-        glDeleteTextures(1, &(gld_GLPatchTextures[i]->glTexID[j]));
+        glDeleteTextures(1, (GLuint *)&(gld_GLPatchTextures[i]->glTexID[j]));
       Z_Free(gld_GLPatchTextures[i]);
     }
   }

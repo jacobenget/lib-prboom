@@ -540,8 +540,8 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
   if (mode == VID_MODE32) {
     if (!Palettes32) {
       // set int palette
-      Palettes32 =
-          (int *)malloc(numPals * 256 * sizeof(int) * VID_NUMCOLORWEIGHTS);
+      Palettes32 = (unsigned int *)malloc(numPals * 256 * sizeof(int) *
+                                          VID_NUMCOLORWEIGHTS);
       for (p = 0; p < numPals; p++) {
         for (i = 0; i < 256; i++) {
           r = gtable[pal[(256 * p + i) * 3 + 0]];
@@ -569,8 +569,8 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
   } else if (mode == VID_MODE16) {
     if (!Palettes16) {
       // set short palette
-      Palettes16 =
-          (short *)malloc(numPals * 256 * sizeof(short) * VID_NUMCOLORWEIGHTS);
+      Palettes16 = (unsigned short *)malloc(numPals * 256 * sizeof(short) *
+                                            VID_NUMCOLORWEIGHTS);
       for (p = 0; p < numPals; p++) {
         for (i = 0; i < 256; i++) {
           r = gtable[pal[(256 * p + i) * 3 + 0]];
@@ -598,8 +598,8 @@ void V_UpdateTrueColorPalette(video_mode_t mode) {
   } else if (mode == VID_MODE15) {
     if (!Palettes15) {
       // set short palette
-      Palettes15 =
-          (short *)malloc(numPals * 256 * sizeof(short) * VID_NUMCOLORWEIGHTS);
+      Palettes15 = (unsigned short *)malloc(numPals * 256 * sizeof(short) *
+                                            VID_NUMCOLORWEIGHTS);
       for (p = 0; p < numPals; p++) {
         for (i = 0; i < 256; i++) {
           r = gtable[pal[(256 * p + i) * 3 + 0]];

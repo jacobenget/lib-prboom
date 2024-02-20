@@ -377,7 +377,7 @@ void gld_Init(int width, int height) {
   lprintf(LO_INFO, "GL_EXTENSIONS:\n");
   {
     char ext_name[256];
-    const char *extensions = glGetString(GL_EXTENSIONS);
+    const char *extensions = (const char *)glGetString(GL_EXTENSIONS);
     const char *rover = extensions;
     const char *p = rover;
 
@@ -397,7 +397,7 @@ void gld_Init(int width, int height) {
     }
   }
 
-  gld_InitExtensions(glGetString(GL_EXTENSIONS));
+  gld_InitExtensions((const char *)glGetString(GL_EXTENSIONS));
   // gl_shared_texture_palette = false;
   gld_InitPalettedTextures();
 
