@@ -95,21 +95,25 @@ void T_MoveCeiling(ceiling_t *ceiling) {
       // movers with texture change, change the texture then get removed
       case genCeilingChgT:
       case genCeilingChg0:
-        ceiling->sector->special = ceiling->newspecial;
-        // jff 3/14/98 transfer old special field as well
-        ceiling->sector->oldspecial = ceiling->oldspecial;
       case genCeilingChg:
+        if (ceiling->type != genCeilingChg) {
+          ceiling->sector->special = ceiling->newspecial;
+          // jff 3/14/98 transfer old special field as well
+          ceiling->sector->oldspecial = ceiling->oldspecial;
+        }
         ceiling->sector->ceilingpic = ceiling->texture;
         P_RemoveActiveCeiling(ceiling);
         break;
 
       // crushers reverse direction at the top
       case silentCrushAndRaise:
-        S_StartSound((mobj_t *)&ceiling->sector->soundorg, sfx_pstop);
       case genSilentCrusher:
       case genCrusher:
       case fastCrushAndRaise:
       case crushAndRaise:
+        if (ceiling->type == silentCrushAndRaise) {
+          S_StartSound((mobj_t *)&ceiling->sector->soundorg, sfx_pstop);
+        }
         ceiling->direction = -1;
         break;
 
@@ -150,10 +154,14 @@ void T_MoveCeiling(ceiling_t *ceiling) {
       // make platform stop at bottom of all crusher strokes
       // except generalized ones, reset speed, start back up
       case silentCrushAndRaise:
-        S_StartSound((mobj_t *)&ceiling->sector->soundorg, sfx_pstop);
       case crushAndRaise:
-        ceiling->speed = CEILSPEED;
       case fastCrushAndRaise:
+        if (ceiling->type != fastCrushAndRaise) {
+          if (ceiling->type == silentCrushAndRaise) {
+            S_StartSound((mobj_t *)&ceiling->sector->soundorg, sfx_pstop);
+          }
+          ceiling->speed = CEILSPEED;
+        }
         ceiling->direction = 1;
         break;
 
@@ -161,10 +169,12 @@ void T_MoveCeiling(ceiling_t *ceiling) {
       // then remove the active ceiling
       case genCeilingChgT:
       case genCeilingChg0:
-        ceiling->sector->special = ceiling->newspecial;
-        // jff add to fix bug in special transfers from changes
-        ceiling->sector->oldspecial = ceiling->oldspecial;
       case genCeilingChg:
+        if (ceiling->type != genCeilingChg) {
+          ceiling->sector->special = ceiling->newspecial;
+          // jff add to fix bug in special transfers from changes
+          ceiling->sector->oldspecial = ceiling->oldspecial;
+        }
         ceiling->sector->ceilingpic = ceiling->texture;
         P_RemoveActiveCeiling(ceiling);
         break;
@@ -266,10 +276,12 @@ int EV_DoCeiling(line_t *line, ceiling_e type) {
 
     case silentCrushAndRaise:
     case crushAndRaise:
-      ceiling->crush = true;
-      ceiling->topheight = sec->ceilingheight;
     case lowerAndCrush:
     case lowerToFloor:
+      if ((type == silentCrushAndRaise) || (type == crushAndRaise)) {
+        ceiling->crush = true;
+        ceiling->topheight = sec->ceilingheight;
+      }
       ceiling->bottomheight = sec->floorheight;
       if (type != lowerToFloor)
         ceiling->bottomheight += 8 * FRACUNIT;

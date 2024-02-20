@@ -160,6 +160,8 @@ int P_SwitchWeapon(player_t *player) {
     case 1:
       if (!player->powers[pw_strength]) // allow chainsaw override
         break;
+      newweapon = wp_fist;
+      break;
     case 0:
       newweapon = wp_fist;
       break;

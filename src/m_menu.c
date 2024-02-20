@@ -5833,14 +5833,16 @@ void M_Init(void) {
     ReadMenu1[0].routine = M_FinishReadThis;
     break;
   case registered:
-    // Episode 2 and 3 are handled,
-    //  branching to an ad screen.
-
-    // killough 2/21/98: Fix registered Doom help screen
-    // killough 10/98: moved to second screen, moved up to the top
-    ReadDef2.y = 15;
-
   case shareware:
+    if (gamemode == registered) {
+      // Episode 2 and 3 are handled,
+      //  branching to an ad screen.
+
+      // killough 2/21/98: Fix registered Doom help screen
+      // killough 10/98: moved to second screen, moved up to the top
+      ReadDef2.y = 15;
+    }
+
     // We need to remove the fourth episode.
     EpiDef.numitems--;
     break;

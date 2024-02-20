@@ -444,8 +444,10 @@ int EV_DoFloor(line_t *line, floor_e floortype) {
       break;
 
     case raiseFloorCrush:
-      floor->crush = true;
     case raiseFloor:
+      if (floortype == raiseFloorCrush) {
+        floor->crush = true;
+      }
       floor->direction = 1;
       floor->sector = sec;
       floor->speed = FLOORSPEED;

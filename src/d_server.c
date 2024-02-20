@@ -634,31 +634,32 @@ int main(int argc, char **argv) {
             printf("%d requests resend from %d\n", from, ptic(packet));
           remoteticto[from] = ptic(packet);
         } break;
-        case PKT_QUIT: {
-          int from = *(byte *)(packet + 1);
-          if (badplayer(from))
-            break;
-
-          if (!ingame && playerstate[from] != pc_unused) {
-            // If we already got a PKT_GO, we have to remove this player frmo
-            // the count of ready players. And we then flag this player slot as
-            // vacant.
-            printf("player %d pulls out\n", from);
-            if (playerstate[from] == pc_confirmedready)
-              curplayers--;
-            playerstate[from] = pc_unused;
-          } else if (playerleftgame[from] == INT_MAX) { // In the game
-            playerleftgame[from] = ptic(packet);
-            --curplayers;
-            if (verbose)
-              printf("%d quits at %d (%d left)\n", from, ptic(packet),
-                     curplayers);
-            if (ingame && !curplayers)
-              exit(0); // All players have exited
-          }
-        }
-          // Fall through and broadcast it
+        case PKT_QUIT:
         case PKT_EXTRA:
+          if (packet->type == PKT_QUIT) {
+            int from = *(byte *)(packet + 1);
+            if (badplayer(from))
+              break;
+
+            if (!ingame && playerstate[from] != pc_unused) {
+              // If we already got a PKT_GO, we have to remove this player frmo
+              // the count of ready players. And we then flag this player slot
+              // as vacant.
+              printf("player %d pulls out\n", from);
+              if (playerstate[from] == pc_confirmedready)
+                curplayers--;
+              playerstate[from] = pc_unused;
+            } else if (playerleftgame[from] == INT_MAX) { // In the game
+              playerleftgame[from] = ptic(packet);
+              --curplayers;
+              if (verbose)
+                printf("%d quits at %d (%d left)\n", from, ptic(packet),
+                       curplayers);
+              if (ingame && !curplayers)
+                exit(0); // All players have exited
+            }
+            // Fall through and broadcast it
+          }
           BroadcastPacket(packet, len);
           if (packet->type == PKT_EXTRA) {
             if (verbose > 2)

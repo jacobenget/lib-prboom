@@ -191,8 +191,10 @@ void T_VerticalDoor(vldoor_t *door) {
         door->direction = 1;
         if (!comp[comp_blazing]) {
           S_StartSound((mobj_t *)&door->sector->soundorg, sfx_bdopn);
-          break;
+        } else {
+          S_StartSound((mobj_t *)&door->sector->soundorg, sfx_doropn);
         }
+        break;
 
       default: // other types bounce off the obstruction
         door->direction = 1;

@@ -2603,17 +2603,18 @@ static void P_SpawnScrollers(void) {
       break;
 
     case 251: // scroll effect floor
-    case 253: // scroll and carry objects on floor
-      for (s = -1; (s = P_FindSectorFromLineTag(l, s)) >= 0;)
-        Add_Scroller(sc_floor, -dx, dy, control, s, accel);
-      if (special != 253)
-        break;
-
     case 252: // carry objects on floor
-      dx = FixedMul(dx, CARRYFACTOR);
-      dy = FixedMul(dy, CARRYFACTOR);
-      for (s = -1; (s = P_FindSectorFromLineTag(l, s)) >= 0;)
-        Add_Scroller(sc_carry, dx, dy, control, s, accel);
+    case 253: // scroll and carry objects on floor
+      if ((special == 251) || (special == 253)) {
+        for (s = -1; (s = P_FindSectorFromLineTag(l, s)) >= 0;)
+          Add_Scroller(sc_floor, -dx, dy, control, s, accel);
+      }
+      if ((special == 252) || (special == 253)) {
+        dx = FixedMul(dx, CARRYFACTOR);
+        dy = FixedMul(dy, CARRYFACTOR);
+        for (s = -1; (s = P_FindSectorFromLineTag(l, s)) >= 0;)
+          Add_Scroller(sc_carry, dx, dy, control, s, accel);
+      }
       break;
 
       // killough 3/1/98: scroll wall according to linedef
