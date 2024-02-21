@@ -234,7 +234,7 @@ int displaycounter;
 boolean n_players_in_state(int n, int ps) {
   int i, j;
   for (i = j = 0; i < MAXPLAYERS; i++)
-    if (playerstate[i] == ps)
+    if ((int)playerstate[i] == ps)
       j++;
   return (j == n);
 }

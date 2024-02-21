@@ -466,7 +466,8 @@ static boolean P_SmartMove(mobj_t *actor) {
   // haleyjd: allow all friends of HelperType to also jump down
 
   if ((actor->type == MT_DOGS ||
-       (actor->type == (HelperThing - 1) && actor->flags & MF_FRIEND)) &&
+       (actor->type == (mobjtype_t)(HelperThing - 1) &&
+        actor->flags & MF_FRIEND)) &&
       target && dog_jumping && !((target->flags ^ actor->flags) & MF_FRIEND) &&
       P_AproxDistance(actor->x - target->x, actor->y - target->y) <
           FRACUNIT * 144 &&
@@ -563,7 +564,7 @@ static void P_DoNewChaseDir(mobj_t *actor, fixed_t deltax, fixed_t deltay) {
       if (tdir != turnaround && (actor->movedir = tdir, P_TryWalk(actor)))
         return;
   } else
-    for (tdir = DI_SOUTHEAST; tdir != DI_EAST - 1; tdir--)
+    for (tdir = DI_SOUTHEAST; tdir != (dirtype_t)(DI_EAST - 1); tdir--)
       if (tdir != turnaround && (actor->movedir = tdir, P_TryWalk(actor)))
         return;
 

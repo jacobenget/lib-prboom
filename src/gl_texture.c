@@ -846,8 +846,8 @@ void gld_Precache(void) {
 
   {
     size_t size = numflats > numsprites ? numflats : numsprites;
-    hitlist =
-        Z_Malloc((size_t)numtextures > size ? numtextures : size, PU_LEVEL, 0);
+    hitlist = Z_Malloc((size_t)numtextures > size ? (size_t)numtextures : size,
+                       PU_LEVEL, 0);
   }
 
   // Precache flats.

@@ -4994,7 +4994,8 @@ boolean M_Responder(event_t *ev) {
       if (setup_select)    // incoming key or button gets bound
       {
         if (ev->type == ev_joystick) {
-          int oldbutton, group;
+          int oldbutton;
+          setup_group group;
           boolean search = true;
 
           if (!ptr1->m_joy)
@@ -5030,7 +5031,8 @@ boolean M_Responder(event_t *ev) {
                   }
           *ptr1->m_joy = ch;
         } else if (ev->type == ev_mouse) {
-          int i, oldbutton, group;
+          int i, oldbutton;
+          setup_group group;
           boolean search = true;
 
           if (!ptr1->m_mouse)
@@ -5065,7 +5067,8 @@ boolean M_Responder(event_t *ev) {
           *ptr1->m_mouse = ch;
         } else // keyboard key
         {
-          int i, oldkey, group;
+          int i, oldkey;
+          setup_group group;
           boolean search = true;
 
           // see if 'ch' is already bound elsewhere. if so, you have

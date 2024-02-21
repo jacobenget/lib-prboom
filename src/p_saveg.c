@@ -793,8 +793,9 @@ void P_UnArchiveSpecials(void) {
         door->sector = &sectors[(uintptr_t)door->sector];
 
         // jff 1/31/98 unarchive line remembered by door as well
-        door->line =
-            (uintptr_t)door->line != -1 ? &lines[(uintptr_t)door->line] : NULL;
+        door->line = (uintptr_t)door->line != (uintptr_t)-1
+                         ? &lines[(uintptr_t)door->line]
+                         : NULL;
 
         door->sector->ceilingdata = door; // jff 2/22/98
         door->thinker.function = T_VerticalDoor;

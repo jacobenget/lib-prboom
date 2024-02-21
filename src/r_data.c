@@ -214,7 +214,7 @@ static void R_InitTextures(void) {
     texture->height = SHORT(mtexture->height);
     texture->patchcount = SHORT(mtexture->patchcount);
 
-    /* Mattias Engdegård emailed me of the following explenation of
+    /* Mattias Engdegï¿½rd emailed me of the following explenation of
      * why memcpy doesnt work on some systems:
      * "I suppose it is the mad unaligned allocation
      * going on (and which gcc in some way manages to cope with
@@ -245,7 +245,7 @@ static void R_InitTextures(void) {
     #else
     */
     {
-      int j;
+      size_t j;
       for (j = 0; j < sizeof(texture->name); j++)
         texture->name[j] = mtexture->name[j];
     }
@@ -645,7 +645,7 @@ void R_PrecacheLevel(void) {
 
   {
     size_t size = numflats > numsprites ? numflats : numsprites;
-    hitlist = malloc((size_t)numtextures > size ? numtextures : size);
+    hitlist = malloc((size_t)numtextures > size ? (size_t)numtextures : size);
   }
 
   // Precache flats.

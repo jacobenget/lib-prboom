@@ -262,7 +262,7 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
     flags &= ~VPT_TRANS;
 
   if (V_GetMode() == VID_MODE8 && !(flags & VPT_STRETCH)) {
-    int col;
+    unsigned int col;
     byte *desttop = screens[scrn].data + y * screens[scrn].byte_pitch +
                     x * V_GetPixelDepth();
     unsigned int w = patch->width;
@@ -280,7 +280,7 @@ static void V_DrawMemPatch(int x, int y, int scrn, const rpatch_t *patch,
 
     w--; // CPhipps - note: w = width-1 now, speeds up flipping
 
-    for (col = 0; (unsigned int)col <= w; desttop++, col++, x++) {
+    for (col = 0; col <= w; desttop++, col++, x++) {
       int i;
       const int colindex = (flags & VPT_FLIP) ? (w - col) : (col);
       const rcolumn_t *column = R_GetPatchColumn(patch, colindex);

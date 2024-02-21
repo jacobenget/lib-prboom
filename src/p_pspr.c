@@ -524,7 +524,11 @@ void A_Saw(player_t *player, pspdef_t *psp) {
                           linetarget->y);
 
   if (angle - player->mo->angle > ANG180) {
-    if (angle - player->mo->angle < -ANG90 / 20)
+    if (angle - player->mo->angle < (angle_t)(-ANG90 / 20))
+      // Jake E.: I have to imagine ^^^ this comparison of an unsigned value to
+      // a negative value cast to an unsigned value must be a bug, because I
+      // can't imagine an instance where this `if` ever takes the 'true' branch.
+      // TODO: test this code out.
       player->mo->angle = angle + ANG90 / 21;
     else
       player->mo->angle -= ANG90 / 20;

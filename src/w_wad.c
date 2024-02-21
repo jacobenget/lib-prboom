@@ -308,7 +308,7 @@ int(W_CheckNumForName)(register const char *name, register int li_namespace) {
   // Doom wads.
 
   while (i >= 0 && (strncasecmp(lumpinfo[i].name, name, 8) ||
-                    lumpinfo[i].li_namespace != li_namespace))
+                    (int)lumpinfo[i].li_namespace != li_namespace))
     i = lumpinfo[i].next;
 
   // Return the matching lump, or -1 if none found.
