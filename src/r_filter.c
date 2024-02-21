@@ -80,10 +80,10 @@ void R_FilterInit(void) {
   }
 
   // fill the uvMap. this will return:
-  // 0/\1
-  // /4 \
-  // \  /
-  // 2\/3
+  // 0/\1 //
+  // /4 \ //
+  // \  / //
+  // 2\/3 //
   // .. based on the uv coordinates
   for (i = 0; i < FILTER_UVDIM; i++) {
     for (j = 0; j < FILTER_UVDIM; j++) {

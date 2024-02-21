@@ -538,9 +538,11 @@ int S_AdjustSoundParams(mobj_t *listener, mobj_t *source, int *vol, int *sep,
   //
   // Stack trace is:
   // P_SetupLevel() \ P_LoadThings() \ P_SpawnMapThing()
-  // \ P_SpawnPlayer(players[0]) \
-  // P_SetupPsprites() \ P_BringUpWeapon() \ S_StartSound(players[0]->mo,
-  // sfx_sawup) \ S_StartSoundAtVolume()
+  // \ P_SpawnPlayer(players[0])
+  // \ P_SetupPsprites()
+  // \ P_BringUpWeapon()
+  // \ S_StartSound(players[0]->mo, sfx_sawup)
+  // \ S_StartSoundAtVolume()
   // \ S_AdjustSoundParams(players[displayplayer]->mo, ...);
   // players[displayplayer]->mo is NULL
   //
