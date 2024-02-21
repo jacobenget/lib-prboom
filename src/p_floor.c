@@ -839,7 +839,7 @@ int EV_DoDonut(line_t *line) {
       // jff 3/29/98 use true two-sidedness, not the flag
       //  killough 4/5/98: changed demo_compatibility to compatibility
       if (comp[comp_model]) {
-        if ((!s2->lines[i]->flags & ML_TWOSIDED) ||
+        if (((!s2->lines[i]->flags) & ML_TWOSIDED) ||
             (s2->lines[i]->backsector == s1))
           continue;
       } else if (!s2->lines[i]->backsector || s2->lines[i]->backsector == s1)

@@ -485,13 +485,13 @@ void gld_BindTexture(GLTexture *gltexture) {
       return;
   }
   buffer = (unsigned char *)Z_Malloc(gltexture->buffer_size, PU_STATIC, 0);
-  if (!(gltexture->mipmap & use_mipmapping) & gl_paletted_texture)
+  if ((!(gltexture->mipmap & use_mipmapping)) & gl_paletted_texture)
     memset(buffer, transparent_pal_index, gltexture->buffer_size);
   else
     memset(buffer, 0, gltexture->buffer_size);
   patch = R_CacheTextureCompositePatchNum(gltexture->index);
   gld_AddPatchToTexture(gltexture, buffer, patch, 0, 0, CR_DEFAULT,
-                        !(gltexture->mipmap & use_mipmapping) &
+                        (!(gltexture->mipmap & use_mipmapping)) &
                             gl_paletted_texture);
   R_UnlockTextureCompositePatchNum(gltexture->index);
   if (gltexture->glTexID[CR_DEFAULT] == 0)
@@ -742,12 +742,12 @@ void gld_BindFlat(GLTexture *gltexture) {
   }
   flat = W_CacheLumpNum(gltexture->index);
   buffer = (unsigned char *)Z_Malloc(gltexture->buffer_size, PU_STATIC, 0);
-  if (!(gltexture->mipmap & use_mipmapping) & gl_paletted_texture)
+  if ((!(gltexture->mipmap & use_mipmapping)) & gl_paletted_texture)
     memset(buffer, transparent_pal_index, gltexture->buffer_size);
   else
     memset(buffer, 0, gltexture->buffer_size);
   gld_AddFlatToTexture(gltexture, buffer, flat,
-                       !(gltexture->mipmap & use_mipmapping) &
+                       (!(gltexture->mipmap & use_mipmapping)) &
                            gl_paletted_texture);
   if (gltexture->glTexID[CR_DEFAULT] == 0)
     glGenTextures(1, (GLuint *)&gltexture->glTexID[CR_DEFAULT]);
