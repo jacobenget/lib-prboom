@@ -744,7 +744,9 @@ void M_ReadSaveStrings(void) {
       LoadMenue[i].status = 0;
       continue;
     }
-    fread(&savegamestrings[i], SAVESTRINGSIZE, 1, fp);
+    if (fread(&savegamestrings[i], SAVESTRINGSIZE, 1, fp) != 1) {
+      // TODO: report a read error
+    }
     fclose(fp);
     LoadMenue[i].status = 1;
   }
