@@ -520,7 +520,7 @@ boolean rendering_stats;
 
 static void R_ShowStats(void) {
 // e6y
-#if USE_SDL
+#ifdef USE_SDL
   static unsigned int FPS_SavedTick = 0, FPS_FrameCount = 0;
   unsigned int tick = SDL_GetTicks();
   FPS_FrameCount++;
