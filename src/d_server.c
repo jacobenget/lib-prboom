@@ -631,7 +631,7 @@ int main(int argc, char **argv) {
             break;
 
           if (verbose > 2)
-            printf("%d requests resend from %d\n", from, ptic(packet));
+            printf("%d requests resend from %ld\n", from, ptic(packet));
           remoteticto[from] = ptic(packet);
         } break;
         case PKT_QUIT:
@@ -653,7 +653,7 @@ int main(int argc, char **argv) {
               playerleftgame[from] = ptic(packet);
               --curplayers;
               if (verbose)
-                printf("%d quits at %d (%d left)\n", from, ptic(packet),
+                printf("%d quits at %ld (%d left)\n", from, ptic(packet),
                        curplayers);
               if (ingame && !curplayers)
                 exit(0); // All players have exited
