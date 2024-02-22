@@ -1672,7 +1672,12 @@ void WI_loadData(void) {
           // MONDO HACK!
           if (wbs->epsd != 1 || j != 8) {
             // animations
-            sprintf(name, "WIA%d%.2d%.2d", wbs->epsd, j, i);
+            // (use snprintf to ensure that we don't write past the `name`
+            // buffer)
+            size_t result =
+                snprintf(name, sizeof(name), "WIA%d%.2d%.2d", wbs->epsd, j, i);
+            if (result >= sizeof(name))
+              abort(); // we weren't able to write the entire string!
             R_SetPatchNum(&a->p[i], name);
           } else {
             // HACK ALERT!
