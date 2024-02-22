@@ -123,7 +123,16 @@ void MD5Final(md5byte digest[16], struct MD5Context *ctx) {
 
   byteSwap(ctx->buf, 4);
   memcpy(digest, ctx->buf, 16);
-  memset(ctx, 0, sizeof(ctx)); /* In case it's sensitive */
+  {
+    // Jake E: only clearing the first few bytes of ctx here is probably a
+    // 'bug', and this instance of `sizeof(ctx)` should probably be
+    // `sizeof(*ctx)`, but I can't yet prove that making this change won't break
+    // anything, so in resolving the related [-Wsizeof-pointer-memaccess]
+    // warning I'm only restucturing this code but leaving it logically the same
+    // (but possibly still wrong).
+    size_t numberOfBytesToClear = sizeof(ctx);
+    memset(ctx, 0, numberOfBytesToClear); /* In case it's sensitive */
+  }
 }
 
 #ifndef ASM_MD5
