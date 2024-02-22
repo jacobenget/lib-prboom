@@ -1063,7 +1063,7 @@ static void gld_FlatConvexCarver(int ssidx, int num, divline_t *list) {
 
   if (!numedgepoints) {
     if (levelinfo)
-      fprintf(levelinfo, "All carved away: subsector %i - sector %i\n",
+      fprintf(levelinfo, "All carved away: subsector %ti - sector %i\n",
               ssec - subsectors, ssec->sector->iSectorID);
   } else {
     if (numedgepoints >= 3) {
