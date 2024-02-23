@@ -1900,8 +1900,9 @@ void gld_EndDrawScene(void) {
   gld_Set2DMode();
 
   if (viewangleoffset <= 1024 << ANGLETOFINESHIFT ||
-      viewangleoffset >= -1024
-                             << ANGLETOFINESHIFT) { // don't draw on side views
+      viewangleoffset >=
+          (int)(((unsigned)-1024)
+                << ANGLETOFINESHIFT)) { // don't draw on side views
     R_DrawPlayerSprites();
   }
   if (player->fixedcolormap == 32) {
