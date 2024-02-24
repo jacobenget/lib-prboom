@@ -173,7 +173,7 @@ int P_GetFriction(const mobj_t *mo, int *frictionfactor) {
  * killough 8/28/98: rewritten
  */
 
-int P_GetMoveFactor(const mobj_t *mo, int *frictionp) {
+int P_GetMoveFactor(mobj_t *mo, int *frictionp) {
   int movefactor, friction;
 
   // e6y
@@ -190,8 +190,8 @@ int P_GetMoveFactor(const mobj_t *mo, int *frictionp) {
       else if (friction > ORIG_FRICTION) // ice
       {
         movefactor = mo->movefactor;
-        ((mobj_t *)mo)->movefactor = ORIG_FRICTION_FACTOR; // reset
-      } else                                               // sludge
+        mo->movefactor = ORIG_FRICTION_FACTOR; // reset
+      } else                                   // sludge
       {
 
         // phares 3/11/98: you start off slowly, then increase as
@@ -208,7 +208,7 @@ int P_GetMoveFactor(const mobj_t *mo, int *frictionp) {
         else if (momentum > MORE_FRICTION_MOMENTUM)
           movefactor <<= 1;
 
-        ((mobj_t *)mo)->movefactor = ORIG_FRICTION_FACTOR; // reset
+        mo->movefactor = ORIG_FRICTION_FACTOR; // reset
       }
     } //     ^
 
