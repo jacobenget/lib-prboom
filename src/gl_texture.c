@@ -58,6 +58,11 @@
 #include "v_video.h"
 #include "w_wad.h"
 #include <SDL.h>
+// If we find evidence that glext.h has already been included
+#ifdef GL_GLEXT_VERSION
+// then prevent SDL from attempting to include its own version of glext.h
+#define NO_SDL_GLEXT
+#endif
 #include <SDL_opengl.h>
 #include <math.h>
 #include <stdio.h>
