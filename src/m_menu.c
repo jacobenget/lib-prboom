@@ -4937,7 +4937,8 @@ boolean M_Responder(event_t *ev) {
               value = 0;
             if (old_value != value)
               S_StartSound(NULL, sfx_pstop);
-            *ptr1->var.def->location.ppsz = ptr1->selectstrings[value];
+            M_FreeCurrentStringValueAndAssignNewValue(
+                ptr1->var.def, strdup(ptr1->selectstrings[value]));
           }
         }
         if (ch == key_menu_right) {
@@ -4965,7 +4966,8 @@ boolean M_Responder(event_t *ev) {
               value = old_value;
             if (old_value != value)
               S_StartSound(NULL, sfx_pstop);
-            *ptr1->var.def->location.ppsz = ptr1->selectstrings[value];
+            M_FreeCurrentStringValueAndAssignNewValue(
+                ptr1->var.def, strdup(ptr1->selectstrings[value]));
           }
         }
         if (ch == key_menu_enter) {

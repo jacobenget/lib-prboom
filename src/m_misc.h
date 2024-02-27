@@ -71,7 +71,9 @@ typedef struct default_s {
    */
   struct {
     int *pi;
-    const char **ppsz;
+    const char **ppsz; // Once M_LoadDefaults is called then the underlying
+                       // const char * pointed to here, by any default_t in
+                       // defaults[], is owned by this pointer
   } location;
   struct {
     int i;
