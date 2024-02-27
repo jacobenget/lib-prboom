@@ -5205,7 +5205,11 @@ boolean M_Responder(event_t *ev) {
           if (chat_string_buffer[chat_index] != 0)
             chat_index++;
         } else if ((ch == key_menu_enter) || (ch == key_menu_escape)) {
-          *ptr1->var.def->location.ppsz = chat_string_buffer;
+          // The string setting that's being edited should have already been set
+          // to point to the actual string being edited. Assert that this is
+          // true, and then we can be sure that all edits made to this string
+          // have already been applied.
+          assert(*ptr1->var.def->location.ppsz == chat_string_buffer);
           M_SelectDone(ptr1); // phares 4/17/98
         }
 
