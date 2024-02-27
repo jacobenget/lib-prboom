@@ -2567,7 +2567,16 @@ void M_FreeCurrentStringValueAndAssignNewValue(default_t *setting,
   assert(setting->type == def_str);
 
   if ((*setting->location.ppsz) != newValue) {
+    // Temporarily turn off the warning that we're about to cast away the
+    // const-ness of a char*
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wcast-qual"
+#endif
     char *nonConstString = (char *)*setting->location.ppsz;
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
     free(nonConstString);
 
     *setting->location.ppsz = newValue;
