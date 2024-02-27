@@ -98,6 +98,12 @@ typedef struct default_s {
   struct setup_menu_s *setup_menu; /* Xref to setup menu item, if any */
 } default_t;
 
+// Any change, outside of M_LoadDefaults, to where a def_str default_t points to
+// for its char* value should use this function to make that change, to ensure
+// that the previously pointed to char* is correctly free'd
+void M_FreeCurrentStringValueAndAssignNewValue(default_t *setting,
+                                               char *newValue);
+
 #define IS_STRING(dv) ((dv).type == def_str)
 // CPhipps - What is the max. key code that X will send us?
 #define MAX_KEY 65536

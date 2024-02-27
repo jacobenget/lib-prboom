@@ -2488,8 +2488,8 @@ void M_LoadDefaults(void) {
                   (defaults[i].maxvalue == UL || defaults[i].maxvalue >= parm))
                 *(defaults[i].location.pi) = parm;
             } else {
-              free((char *)*(defaults[i].location.ppsz)); /* phares 4/13/98 */
-              *(defaults[i].location.ppsz) = newstring;
+              M_FreeCurrentStringValueAndAssignNewValue(defaults + i,
+                                                        newstring);
             }
             break;
           }
@@ -2560,4 +2560,16 @@ void M_ScreenShot(void) {
 
   doom_printf("M_ScreenShot: Couldn't create screenshot");
   return;
+}
+
+void M_FreeCurrentStringValueAndAssignNewValue(default_t *setting,
+                                               char *newValue) {
+  assert(setting->type == def_str);
+
+  if ((*setting->location.ppsz) != newValue) {
+    char *nonConstString = (char *)*setting->location.ppsz;
+    free(nonConstString);
+
+    *setting->location.ppsz = newValue;
+  }
 }

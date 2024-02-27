@@ -3845,8 +3845,8 @@ static void M_ResetDefaults(void) {
                                              p->m_mouse == dp->location.pi ||
                                              p->m_joy == dp->location.pi) {
             if (IS_STRING(*dp))
-              free((char *)*dp->location.ppsz),
-                  *dp->location.ppsz = strdup(dp->defaultvalue.psz);
+              M_FreeCurrentStringValueAndAssignNewValue(
+                  dp, strdup(dp->defaultvalue.psz));
             else
               *dp->location.pi = dp->defaultvalue.i;
 
@@ -5305,8 +5305,8 @@ boolean M_Responder(event_t *ev) {
         // set chat table pointer to working buffer
         // and free old string's memory.
 
-        free((char *)*ptr1->var.def->location.ppsz);
-        *ptr1->var.def->location.ppsz = chat_string_buffer;
+        M_FreeCurrentStringValueAndAssignNewValue(ptr1->var.def,
+                                                  chat_string_buffer);
         chat_index = 0; // current cursor position in chat_string_buffer
       } else if (flags & S_RESET)
         default_verify = true;
