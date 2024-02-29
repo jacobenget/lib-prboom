@@ -192,6 +192,9 @@ AC_ARG_WITH(net,
     ],$SDL_LIBS)
   ])
 
+dnl - Turn all warnings into errors (this needs to be done AFTER the above check for SDL which uses $CFLAGS, probably because the AC_TRY_COMPILE there produces a warning)
+AC_C_COMPILE_FLAGS(-Werror)
+
 dnl - Other libs
 AC_CHECK_LIB(png,png_create_info_struct)
 AC_EGREP_HEADER(sockaddr_in6,netinet/in.h,AC_DEFINE(HAVE_IPv6,1,[Define if you have struct sockaddr_in6]))
@@ -218,8 +221,6 @@ if test "$enable_heapdump" = "yes"
 then
     AC_DEFINE(HEAPDUMP,1,[Uncomment this to cause heap dumps to be generated. Only useful if INSTRUMENTED is also defined.])
 fi
-
-CFLAGS="$CFLAGS -Werror"
 
 AM_CONDITIONAL(WAD_MMAP,test "$ac_cv_func_mmap" = yes)
 AC_SUBST(MIXER_CFLAGS)
